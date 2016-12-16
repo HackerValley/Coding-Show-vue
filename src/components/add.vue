@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div class="row">
       <h2>{{ act }}项目 <span class="fr"><small><a href="/pages/Project/public">返回列表</a></small></span></h2>
       <hr>
@@ -64,11 +64,7 @@
             </div>
           </div>
           <div class="from-group form-group-lg text-right">
-            <div class="well">
-              {{ toast }}
-            </div>
             <hr>
-            <button type="submit" class="btn btn-danger btn-lg" v-on:click.prevent='jump'>跳转</button>
             <a class="btn btn-lg btn-info" v-on:click='request'>{{ act }}</a>
           </div>
         </form>
