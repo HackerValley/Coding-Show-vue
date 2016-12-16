@@ -1,5 +1,35 @@
 # coding-show-vue
 
+// 分支 feature/withVuex
+
+使用vuex存储数据，使用vuex的module特性，每个页面的数据分成多个模块分开进行存储  
+** Vuex 模块划分**
+ - 新增页面 / 添加页面   
+ - 项目列表页面
+ - 项目详细页面
+ - 登陆页面
+ - 个人资料页面
+ - 后台管理页面
+ 
+### Vuex 文件夹结构  
+``` 
+ src/
+   store/
+      modules/
+        proj-list.js
+        proj-details.js
+        proj-create.js
+        user-reg.js
+        user-profile.js
+        admin-skill.js
+        admin-request.js
+        admin-professor.js
+      mutations.js
+      mutation-type.js
+      actions.js
+    ...
+```
+
 > Vue version Coding-Show
 
 ## 已创建文件结构
