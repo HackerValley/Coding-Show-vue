@@ -5,12 +5,18 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import App from './app.vue'
 
-import Index from './components/Index'
+import Index from './components/index'
 import UserLogin from './components/userLogin'
 import UserReg from './components/userReg'
 import Add from './components/add'
+import Modify from './components/modi'
 import Publish from './components/publish'
 import Develop from './components/develop'
+import AdminSkill from './components/adminSkill'
+import AdminRequest from './components/adminRequest'
+import AdminProfessor from './components/adminProfessor'
+import Detail from './components/detail'
+
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
@@ -26,6 +32,12 @@ const routes = [{
   path: '/add',
   component: Add
 },{
+  path: '/modi',
+  component: Modify
+},{
+  path: '/detail',
+  component: Detail
+},{
   path: '/publish',
   component: Publish
 },{
@@ -34,6 +46,15 @@ const routes = [{
 },{
   path: '/reg',
   component: UserReg
+},{
+  path: '/admin/skill',
+  component: AdminSkill
+},{
+  path: '/admin/professor',
+  component: AdminProfessor
+},{
+  path: '/admin/request',
+  component: AdminRequest
 }]
 
 const router = new VueRouter({
