@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <h2>{{ act }}项目 <span class="fr"><small><a href="/pages/Project/public">返回列表</a></small></span></h2>
+      <h2>{{ act }}项目 <span class="fr"><small><a href="/">返回首页</a></small></span></h2>
       <hr>
     </div>
     <div class="row">
@@ -88,7 +88,7 @@ export default{
       details_all: '',
       hashbang: window.location.hash,
       aim: {
-        act: '...',  // 动作
+        act: '添加',  // 动作
         id: '',  // 参数
         hashbang: '#!/', // 默认hashbang
         trimhash: false // 默认不更改hash

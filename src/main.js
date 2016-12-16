@@ -8,6 +8,7 @@ import App from './app.vue'
 import Index from './components/index'
 import UserLogin from './components/userLogin'
 import UserReg from './components/userReg'
+import UserProfile from './components/userProfile'
 import Add from './components/add'
 import Modify from './components/modi'
 import Publish from './components/publish'
@@ -29,6 +30,12 @@ const routes = [{
   path: '/login',
   component: UserLogin
 },{
+  path: '/reg',
+  component: UserReg
+},{
+  path: '/user/profile',
+  component: UserProfile
+},{
   path: '/add',
   component: Add
 },{
@@ -43,9 +50,6 @@ const routes = [{
 },{
   path: '/develop',
   component: Develop
-},{
-  path: '/reg',
-  component: UserReg
 },{
   path: '/admin/skill',
   component: AdminSkill

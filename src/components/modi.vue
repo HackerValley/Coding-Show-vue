@@ -1,9 +1,7 @@
 <template>
   <div>
-      <header-component></header-component>
-  <div class="container">
     <div class="row">
-      <h2>{{ act }}项目 <span class="fr"><small><a href="/pages/Project/public">返回列表</a></small></span></h2>
+      <h2>{{ act }}项目 <span class="fr"><small><a href="/">返回首页</a></small></span></h2>
       <hr>
     </div>
     <div class="row">
@@ -66,28 +64,61 @@
             </div>
           </div>
           <div class="from-group form-group-lg text-right">
-            <div class="well">
-              {{ toast }}
-            </div>
             <hr>
-            <button type="submit" class="btn btn-danger btn-lg" v-on:click='jump'>跳转</button>
             <a class="btn btn-lg btn-info" v-on:click='request'>{{ act }}</a>
           </div>
         </form>
       </div>
     </div>
   </div>
-    <other-component></other-component>
-  </div>
 </template>
 <style>
-/*Modi.vue*/
-    body{
-        background-color:#fefef5;
-    }
-    div[class$='pool'] {padding:0 0 2em 0;overflow: hidden;}
-    div[class$='pool'] img{border:none; border-radius:6px; margin:.6em;float: left;}
+  .fr{float: right}
+  div[class$='pool'] {padding:0 0 2em 0;overflow: hidden;}
+  div[class$='pool'] img{border:none; border-radius:6px; margin:.6em;float: left;}
 
-    .proj{overflow:hidden}
-    .proj div{float:left;margin:10px;border:thin solid red ;width:100px ;height:100px;text-align:center}
+  .proj{overflow:hidden}
+  .proj div{float:left;margin:10px;border:thin solid red ;width:100px ;height:100px;text-align:center}
 </style>
+<script>
+import axios from 'axios'
+export default{
+  data () {
+    return {
+      details_all: '',
+      hashbang: window.location.hash,
+      aim: {
+        act: '修改',  // 动作
+        id: '',  // 参数
+        hashbang: '#!/', // 默认hashbang
+        trimhash: false // 默认不更改hash
+      },
+      data: {
+        'developer_count': 10,
+        'description': '预设1',
+        'details': ['pre_string2'],
+        'project_link': '预设2',
+        'imagePath': ['pre_string4'],
+        'dev_projects': {},
+        'project_name': '预设3'
+      },
+      toast: '---',
+      msg: '预留44',
+      status: 2323
+    }
+  },
+  computed: {
+    act () {
+      return this.aim.act
+    }
+  },
+  methods: {
+    request () {
+      return null
+    },
+    jump () {
+      return null
+    }
+  }
+}
+</script>
