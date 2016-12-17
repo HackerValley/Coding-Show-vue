@@ -12,7 +12,7 @@
 
 <template>
 
-<div class="container">
+<div>
     <div class="row">
         <h2>
             后台管理-项目审核
@@ -49,11 +49,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-repeat="applicants">
-                            <td>{{ name }}</td>
-                            <td>{{ telephone }}</td>
-                            <td>{{ wechat }}</td>
-                            <td>{{ project_name }}</td>
+                        <tr v-for='item in data.applicants'>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.telephone }}</td>
+                            <td>{{ item.wechat }}</td>
+                            <td>{{ item.project_name }}</td>
                             <td>
                                 <button class="btn btn-default btn-xs" type="button" name="button">通过</button>
                                 <button class="btn btn-default btn-xs" type="button" name="button">拒绝</button>
