@@ -5,7 +5,8 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import App from './app.vue'
 
-import Index from './components/index'
+import PageMap from './components/pageMap'
+import Home from './components/home'
 import UserLogin from './components/userLogin'
 import UserReg from './components/userReg'
 import UserProfile from './components/userProfile'
@@ -25,7 +26,13 @@ Vue.use(Vuex)
 /* 启用路由 */
 const routes = [{
   path: '/',
-  component: Index
+  redirect: '/page-map'
+},{
+  path: '/page-map',
+  component: PageMap
+},{
+  path: '/Home',
+  component: Home
 },{
   path: '/user/login',
   component: UserLogin
@@ -68,6 +75,7 @@ const routes = [{
 }]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 /* eslint-disable no-new */
