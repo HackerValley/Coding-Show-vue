@@ -10,7 +10,7 @@
           <router-link to='/'>运营的项目</router-link>
         </li>
         <li>
-          <router-link to='/'>专业用户入口</router-link>
+          <router-link to='/admin/skill'>专业用户入口</router-link>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right" slot='nav'>
@@ -18,21 +18,21 @@
           <router-link to='/add'>添加项目</router-link>
         </li>
         <li>
-          <router-link to='/publish'>发布的项目</router-link>
+          <router-link to='/user/publish'>发布的项目</router-link>
         </li>
         <li>
-          <router-link to='/develop'>开发的项目</router-link>
+          <router-link to='/user/develop'>开发的项目</router-link>
         </li>
         <li>
-          <router-link to='/reg'>注册</router-link>
+          <router-link to='/user/reg'>注册</router-link>
         </li>
         <li>
-          <router-link to='/login'>登入</router-link>
+          <router-link to='/user/login'>登入</router-link>
         </li>
       </ul>
     </header-component>
     <section class="container">
-      <div class="col-xs-10 col-xs-offset-1">
+      <div class="row">
         <router-view></router-view>
       </div>
     </section>

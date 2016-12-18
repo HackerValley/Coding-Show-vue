@@ -14,8 +14,8 @@ import Modify from './components/modi'
 import Publish from './components/publish'
 import Develop from './components/develop'
 import AdminSkill from './components/adminSkill'
-import AdminRequest from './components/adminRequest'
-import AdminProfessor from './components/adminProfessor'
+import AdminProject from './components/adminProject'
+import AdminExpert from './components/adminExpert'
 import Detail from './components/detail'
 
 
@@ -27,11 +27,14 @@ const routes = [{
   path: '/',
   component: Index
 },{
-  path: '/login',
+  path: '/user/login',
   component: UserLogin
 },{
-  path: '/reg',
+  path: '/user/reg',
   component: UserReg
+},{
+  path: '/user/profile',
+  component: UserProfile
 },{
   path: '/user/profile/:id',
   component: UserProfile
@@ -48,20 +51,20 @@ const routes = [{
   path: '/detail/:id',
   component: Detail
 },{
-  path: '/publish',
+  path: '/user/publish',
   component: Publish
 },{
-  path: '/develop',
+  path: '/user/develop',
   component: Develop
 },{
   path: '/admin/skill',
   component: AdminSkill
 },{
-  path: '/admin/professor',
-  component: AdminProfessor
+  path: '/admin/expert',
+  component: AdminExpert
 },{
-  path: '/admin/request',
-  component: AdminRequest
+  path: '/admin/project',
+  component: AdminProject
 }]
 
 const router = new VueRouter({
