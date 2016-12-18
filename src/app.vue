@@ -2,12 +2,12 @@
   <div id="wrapper">
     <header-component>
       <ul class="nav navbar-nav" slot='nav-left'>
-        <li><a class="navbar-brand" href="#" v-text='sitename'>Coding-Show</a></li>
+        <li><router-link to='/page-map' class="navbar-brand" v-text='sitename'>Coding-Show</router-link></li>
         <li>
-          <router-link to='/'>开源项目</router-link>
+          <router-link to='/home'>开源项目</router-link>
         </li>
         <li>
-          <router-link to='/'>运营的项目</router-link>
+          <router-link to='/' class='disable'>运营的项目</router-link>
         </li>
         <li>
           <router-link to='/admin/skill'>专业用户入口</router-link>

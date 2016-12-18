@@ -11,20 +11,8 @@
 </style>
 
 <template>
-
-<div>
-    <div class="row">
-        <h2>
-            后台管理-项目审核
-             <span class="fr button-top">
-               <a href="#" title="expert" class="btn btn-info">专家审核</a>
-               <a href="#" title="skill" class="btn btn-info">技能审核</a>
-               <a href="#" title="project" class="btn btn-info">项目审核</a>
-               <a href="#" title="index" class="btn btn-info">返回首页</a>
-             </span>
-          </h2>
-        <hr>
-    </div>
+  <div class="col-xs-10 col-xs-offset-1">
+    <admin-title></admin-title>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
             <div class="row search-box">
@@ -69,8 +57,12 @@
 </template>
 
 <script>
+import AdminTitle from './adminTitle.vue'
 
 export default {
+  components: {
+    AdminTitle
+  },
     data() {
         return {
             data: {
