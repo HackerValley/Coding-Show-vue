@@ -3,7 +3,7 @@
 > Vue version Coding-Show
 
 ## 已创建文件结构
-文件结构：
+文件结构
 ```
 src/
   components/
@@ -12,12 +12,12 @@ src/
     searchBar.vue        [init]
     adminTitle.vue       [init]
     adminSkill.vue
-    adminRequest.vue
-    adminProfessor.vue
+    adminProject.vue *adminRequest.vue*  [slimwang]
+    adminExpert.vue
     userLogin.vue
     userReg.vue
     index.vue
-    publish.vue
+    publish.vue          [yaojiang]
     develop.vue
     detail.vue
     add.vue              [larry]
