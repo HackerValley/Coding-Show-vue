@@ -7,7 +7,7 @@
         <router-link class='list-group-item' to="/publish">发布的项目</router-link>
         <router-link class='list-group-item' to="/develop">开发的项目</router-link>
         <router-link class='list-group-item' to="/add"><span class="badge">·</span>添加项目</router-link>
-        <router-link class='list-group-item' to="/modi">修改项目</router-link>
+        <router-link class='list-group-item' to="/modi/67987">修改项目</router-link>
         <router-link class='list-group-item' to="/detail">项目详情</router-link>
         <router-link class='list-group-item' to="/login">登陆</router-link>
         <router-link class='list-group-item' to="/reg">注册</router-link>

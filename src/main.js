@@ -33,16 +33,19 @@ const routes = [{
   path: '/reg',
   component: UserReg
 },{
-  path: '/user/profile',
+  path: '/user/profile/:id',
   component: UserProfile
 },{
   path: '/add',
   component: Add
 },{
   path: '/modi',
+  redirect: '/add'
+},{
+  path: '/modi/:id',
   component: Modify
 },{
-  path: '/detail',
+  path: '/detail/:id',
   component: Detail
 },{
   path: '/publish',
