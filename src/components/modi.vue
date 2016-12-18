@@ -1,11 +1,14 @@
 <template>
-  <div>
+  <div class="col-xs-10 col-xs-offset-1">
     <div class="row">
       <h2>{{ act }}项目 <span class="fr"><small><a href="/">返回首页</a></small></span></h2>
       <hr>
     </div>
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1">
+      <div class="well">
+        <pre>{{ msg }}</pre>
+      </div>
         <form action="" role="form" class="form-horizontal">
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label ' for="projName">项目名称</label>
@@ -24,7 +27,7 @@
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label ' for="details">项目要求</label>
             <div class="col-xs-9 col-md-8">
-              <textarea class="form-control" v-model='details_all' rows="7" name="details" id='details' placeholder="项目详情"></textarea>
+              <textarea class="form-control" v-model='data.details' rows="7" name="details" id='details' placeholder="项目详情"></textarea>
               <p class="form-control-static text-muted">详细描述您项目的所有要点和要求，逐条写清</p>
             </div>
           </div>
@@ -65,7 +68,7 @@
           </div>
           <div class="from-group form-group-lg text-right">
             <hr>
-            <a class="btn btn-lg btn-info" v-on:click='request'>{{ act }}</a>
+            <a class="btn btn-lg btn-info" v-on:click='modify'>{{ aim.act }}</a>
           </div>
         </form>
       </div>
@@ -81,30 +84,26 @@
   .proj div{float:left;margin:10px;border:thin solid red ;width:100px ;height:100px;text-align:center}
 </style>
 <script>
-import axios from 'axios'
+import * as api from '../api/request'
+
 export default{
+  beforeMount () {
+    // this.request()
+    api.getProjDetail((x)=>{
+      this.msg = x.msg
+      this.status = x.status
+      this.data = x.data
+    }, this.$route.params.id)
+  },
   data () {
     return {
-      details_all: '',
-      hashbang: window.location.hash,
       aim: {
         act: '修改',  // 动作
-        id: '',  // 参数
-        hashbang: '#!/', // 默认hashbang
-        trimhash: false // 默认不更改hash
+        id: this.$route.params.id,  // 参数
       },
-      data: {
-        'developer_count': 10,
-        'description': '预设1',
-        'details': ['pre_string2'],
-        'project_link': '预设2',
-        'imagePath': ['pre_string4'],
-        'dev_projects': {},
-        'project_name': '预设3'
-      },
-      toast: '---',
-      msg: '预留44',
-      status: 2323
+      data: {},
+      msg: '',
+      status: -1
     }
   },
   computed: {
@@ -113,10 +112,15 @@ export default{
     }
   },
   methods: {
-    request () {
-      return null
-    },
-    jump () {
+    modify () {
+      api.updateProj((x) => {
+        this.msg = x.msg
+        if(x.msg != 'error'){
+          console.log(x)
+        } else {
+          console.error('update error')
+        }
+      }, { id: this.aim.id, data: this.data})
       return null
     }
   }
