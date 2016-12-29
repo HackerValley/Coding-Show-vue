@@ -62,3 +62,18 @@ export function addProj (cb, { data }) {
     cb(rep.data)
   })
 }
+
+/* 
+ * 注册新用户
+ **/
+export function userReg (cb, { regdata }) {
+  console.log( { regdata } )
+  if( !regdata) {
+    console.log('无效数据')
+    cb({msg: 'client error'})
+    return null
+  }
+  axios.post('/api/user/register', querystring.stringify(regdata)).then((rep) => {
+    cb(rep.data)
+  })
+}
