@@ -37,6 +37,9 @@ const routes = [{
   path: '/Home',
   component: Home
 },{
+  path: '/Home/:page_num',
+  component: Home
+},{
   path: '/user/login',
   component: UserLogin
 },{

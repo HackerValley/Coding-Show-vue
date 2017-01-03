@@ -26,7 +26,6 @@
             <div class="checkbox">
             </div>
             <div class="from-group form-group-lg col-xs-offset-4 col-xs-2">
-              <a class="btn btn-lg btn-info" @click.prevent='turn'>Checkbox</a>
               <a class="btn btn-lg btn-info" @click.prevent='login'>登录</a>
             </div>
           </form>
@@ -81,9 +80,6 @@ export default {
     }
   },
   methods: {
-    turn () {
-      this.remember = !this.remember
-    },
     setusername:_.debounce(
         function () {
           console.log(this.username)
@@ -117,7 +113,7 @@ export default {
           // 跳转到首页
           this.$store.dispatch('setAuthed', true)
           this.$store.dispatch('setUser', this.logindata.username)
-          this.$router.push({ path: '/user/publish' })
+          this.$router.replace({ path: '/user/publish' })
         } 
       },{ logindata:this.logindata })
     }
