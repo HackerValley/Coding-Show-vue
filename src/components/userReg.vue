@@ -15,6 +15,13 @@
                       </div>
                   </div>
                   <div class="form-group">
+                    <label for="email" class="col-xs-3 col-sm-2 control-label ">E-Mail</label>
+                    <div class="col-xs-9 col-sm-8 col-md-6">
+                      <input type="text" name="email" id="email" placeholder="邮箱地址" class="form-control" v-model='formdata.email'>
+                      <p class="form-control-static text-muted">邮箱地址</p>
+                    </div>
+                  </div>
+                  <div class="form-group">
                       <label for="nickName" class="col-xs-3 col-sm-2 control-label ">昵称</label>
                       <div class="col-xs-9">
                           <input type="text" v-model='formdata.nickname' name="nickName" id="nickName" placeholder="昵称" class="form-control">
@@ -184,6 +191,7 @@
         formdata: {
           skills:[],
           username: '',
+          email:'',
           nickname: '',
           pwd: '',
           pwdconfirm: '',
@@ -197,7 +205,7 @@
         // 表单校验
         // 是否首次输入
         var pwd = null
-        var ok = false
+        var ok = true
         var form = 'init form alert'
         pwd = (this.formdata.pwd !== this.formdata.pwdconfirm)?'两次输入不一致':'1'
 
@@ -235,7 +243,11 @@
         }
         console.group('注册')
         api.userReg((x)=>{
-          this.msg = x.msg
+          if (x.status === 0 ) {
+            this.msg = '注册成功'
+          }else{
+            this.msg = x.msg
+          }
           console.log(x)
         },{regdata:this.regdata})
         console.groupEnd()

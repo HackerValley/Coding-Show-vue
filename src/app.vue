@@ -30,6 +30,9 @@
           <router-link to='/user/login' v-if='!authed'>登入</router-link>
         </li>
         <li>
+          <router-link to='/user/profile' v-if='authed'>个人资料</router-link>
+        </li>
+        <li>
           <a v-if='authed' @click.prevent='logout'>登出</a>
         </li>
       </ul>
@@ -44,6 +47,7 @@
 </template>
 
 <script>
+import * as api from './api/request'
 import HeaderComponent from './components/header'
 import FooterComponent from './components/footer'
 require('../node_modules/bootstrap/dist/css/bootstrap.min.css')
@@ -62,7 +66,14 @@ export default {
   },
   methods:{
     logout () {
-      this.$store.dispatch('setAuthed', false)
+      api.logOut((x)=>{
+        if(x.status === 0){
+          this.$store.dispatch('setAuthed', false)
+          this.$router.push({path:'/home'})
+        } else {
+          console.log('登出失败')
+        }
+      })
     }
   },
   components: {
