@@ -19,9 +19,12 @@ import AdminProject from './components/adminProject'
 import AdminExpert from './components/adminExpert'
 import Detail from './components/detail'
 
+import store from './store'
+
+import { initState } from './store/actions'
 
 Vue.use(VueRouter)
-Vue.use(Vuex)
+// Vue.use(Vuex)
 
 /* 启用路由 */
 const routes = [{
@@ -82,6 +85,9 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
+
+initState(store)

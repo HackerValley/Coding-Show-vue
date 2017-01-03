@@ -77,3 +77,18 @@ export function userReg (cb, { regdata }) {
     cb(rep.data)
   })
 }
+
+/* 
+ * 用户登陆
+ **/
+export function userLogin (cb, { logindata }) {
+  console.log( { logindata } )
+  if( !logindata) {
+    console.log('无效数据')
+    cb({msg: 'client error'})
+    return null
+  }
+  axios.post('/api/user/login', querystring.stringify(logindata)).then((rep) => {
+    cb(rep.data)
+  })
+}
