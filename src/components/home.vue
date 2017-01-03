@@ -5,141 +5,79 @@
       <hr>
     </div>
     <div class="row">
-      <div class="col-xs-6 col-sm-6 col-md-3">
+      <div class="col-xs-6 col-sm-6 col-md-3" v-for='item in list'>
         <div class="thumbnail item">
           <a href=""><img data-src="holder.js/300x300" /></a>
           <div class="caption">
-            <h4><a href="#">项目名称</a></h4>
+            <h4><a href="#">{{ item.project_name }}</a></h4>
             <div class="intro">
-              <p>项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介</p>
+              <p>用户【{{ item.uid }}】 <br>于 {{ item.create_time }} 创建</p>
             </div>
             <div class="row">
               <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-comment"></span></a>
-                <span>355</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-wrench"></span></a>
-                <span>234</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                <span>334</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
                 <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-                <span>456</span>
+                <span>{{ item.star_count }}</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-xs-6 col-sm-6 col-md-3">
-        <div class="thumbnail item">
-          <a href=""><img data-src="holder.js/300x300"></a>
-          <div class="caption">
-            <h4><a href="#">项目名称</a></h4>
-            <div class="intro">
-              <p>项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介</p>
-            </div>
-            <div class="row">
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-comment"></span></a>
-                <span>355</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-wrench"></span></a>
-                <span>234</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                <span>334</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-                <span>456</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-6 col-md-3">
-        <div class="thumbnail item">
-          <a href=""><img data-src="holder.js/300x300"></a>
-          <div class="caption">
-            <h4><a href="#">项目名称</a></h4>
-            <div class="intro">
-              <p>项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介</p>
-            </div>
-            <div class="row">
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-comment"></span></a>
-                <span>355</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-wrench"></span></a>
-                <span>234</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                <span>334</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-                <span>456</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-6 col-sm-6 col-md-3">
-        <router-link to='/detail/6789' tag='div' class="thumbnail item">
-          <a href=""><img data-src="holder.js/300x300"></a>
-          <div class="caption">
-            <h4><a href="#">项目名称</a></h4>
-            <div class="intro">
-              <p>项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介</p>
-            </div>
-            <div class="row">
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-comment"></span></a>
-                <span>355</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-wrench"></span></a>
-                <span>234</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                <span>334</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-                <span>456</span>
-              </div>
-            </div>
-          </div>
-        </router-link>
       </div>
     </div>
     <div class="row">
       <hr>
       <nav class="text-center">
         <ul class="pagination pagination-lg">
-          <li class="previous disabled"><a href="#">← </a></li>
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li class="next"><a href="#">→</a></li>
+          <li class="previous" :class="{disabled: page_nums[0] === 1}"><a href="#">← </a></li>
+          <li v-for='page in page_nums'><a href="#">{{ page }}</a></li>
+          <li class="next" :class="{disabled: page_nums[page_nums.length - 1] === page_total}"><a href="#">→</a></li>
         </ul>
       </nav>
     </div>
   </div>
 </template>
 <script>
-  
+  import * as api from '../api/request'
+
+  export default {
+    created () {
+      this.getHome()
+    },
+    data () {
+      return {
+        list:[],
+        page_num:-1,
+        page_size:-1,
+        page_total:-1,
+        project_total:-1,
+      }
+    },
+    computed: {
+      page_nums: function () {
+        let arr = [];
+        for (var i = 0;i<5; i++){
+          arr[i] = this.page_num -2 + i
+        }
+        console.log(arr)
+        return arr.filter((val)=>{
+          return (val>0 && val<=this.page_total)
+        })
+      }
+    },
+    methods: {
+      getHome () {
+        api.getProjIndex((x)=>{
+          if(x.status === 0){
+            this.msg = x.msg
+            this.list = x.data.list
+            this.page_num = x.data.page_num
+            this.page_size = x.data.page_size
+            this.page_total = x.data.page_total
+            this.project_total = x.data.project_total
+          }
+        })
+      }
+    }
+  }
 </script>
 <style type="text/css">
   .item {
