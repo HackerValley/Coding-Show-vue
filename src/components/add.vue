@@ -6,7 +6,7 @@
     </div>
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1">
-      <div class="well" v-if='msg'>
+      <div class="well">
         <pre>{{ msg }}</pre>
       </div>
         <form action="" role="form" class="form-horizontal">
@@ -25,9 +25,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class='col-xs-3 col-sm-2 control-label ' for="detail">项目要求</label>
+            <label class='col-xs-3 col-sm-2 control-label ' for="details">项目要求</label>
             <div class="col-xs-9 col-md-8">
-              <textarea class="form-control" v-model='data.detail' rows="7" name="detail" id='detail' placeholder="项目详情"></textarea>
+              <textarea class="form-control" v-model='data.details' rows="7" name="details" id='details' placeholder="项目详情"></textarea>
               <p class="form-control-static text-muted">详细描述您项目的所有要点和要求，逐条写清</p>
             </div>
           </div>
@@ -98,7 +98,7 @@ export default{
       },
       data: {
         'description': '',
-        'detail': '',
+        'details': '',
         'dev_projects': {},
         'developer_count': -1,
         'imagePath': [

@@ -19,12 +19,9 @@ import AdminProject from './components/adminProject'
 import AdminExpert from './components/adminExpert'
 import Detail from './components/detail'
 
-import store from './store'
-
-import { initState } from './store/actions'
 
 Vue.use(VueRouter)
-// Vue.use(Vuex)
+Vue.use(Vuex)
 
 /* 启用路由 */
 const routes = [{
@@ -35,9 +32,6 @@ const routes = [{
   component: PageMap
 },{
   path: '/Home',
-  component: Home
-},{
-  path: '/Home/:page_num',
   component: Home
 },{
   path: '/user/login',
@@ -88,9 +82,6 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
-  store,
   template: '<App/>',
   components: { App }
 })
-
-initState(store)
