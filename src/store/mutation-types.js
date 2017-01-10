@@ -6,6 +6,8 @@ export const SET_LASTUSER = 'SET_LASTUSER'
 // tips modules
 // 清空提示信息
 export const TOAST_CLEAR_ALL = 'TOAST_CLEAR_ALL'
+// 删除若干条数到指定大小
+export const TOAST_SPLICE_TO = 'TOAST_SPLICE_TO'
 // 删除最早的一条提示信息
 export const TOAST_SHIFT = 'TOAST_SHIFT'
 // 添加一条提示信息

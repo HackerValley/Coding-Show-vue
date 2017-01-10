@@ -36,6 +36,7 @@
 <script>
 import * as api from '../api/request.js'
 import _ from 'lodash'
+import { mapActions } from 'vuex'
 
 export default {
   beforeCreate () {
@@ -80,6 +81,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'newToast'
+    ]),
     setusername:_.debounce(
         function () {
           console.log(this.username)
@@ -95,6 +99,10 @@ export default {
       for (let i = 0; i < varr.length; i++){  
         if(this.logindata[varr[i]] === ''){
           console.log(`字段${varr[i]}为空`)
+          this.newToast({
+            type: 'danger',
+            message: `字段${varr[i]}为空`
+          })
           result = false
         }
       }
@@ -103,6 +111,10 @@ export default {
     login () {
       if(!this.formvalid()){
         console.log('valid 未通过')
+        this.newToast({
+          type: 'danger',
+          message: 'Valid 未通过'
+        })
         return null
       }
       console.log('尝试登陆')
@@ -110,11 +122,20 @@ export default {
         console.log(x)
         if(x.status === 0){
           console.log('登陆成功')
+          this.newToast({
+            type: 'success',
+            message: this.logindata.username + ' 登陆成功'
+          })
           // 跳转到首页
           this.$store.dispatch('setAuthed', true)
           this.$store.dispatch('setUser', this.logindata.username)
           this.$router.replace({ path: '/user/publish' })
-        } 
+        } else {
+          this.newToast({
+            type: 'danger',
+            message: x.msg
+          })
+        }
       },{ logindata:this.logindata })
     }
   }
