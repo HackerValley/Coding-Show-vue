@@ -1,39 +1,52 @@
 <template>
   <div class="col-xs-12 col-sm-10 col-sm-offset-1">
     <div class="row">
-      <h2>我开发的项目</h2>
+      <h2>我发布的项目</h2>
       <hr>
     </div>
     <div class="row">
-      <div v-for='item in list' class="col-xs-6 col-sm-6 col-md-3">
-        <router-link to='/detail/6789' tag='div' class="thumbnail item">
-          <a href=""><img data-src="holder.js/300x300"></a>
+      <h1 v-if='msg === "没有项目"' style="text-align:center">没有项目</h1>
+      <div class="col-xs-6 col-sm-6 col-md-3" v-for='item in list'>
+        <div class="thumbnail item">
+          <a href=""><img data-src="holder.js/300x300" /></a>
           <div class="caption">
             <h4><a href="#">{{ item.project_name }}</a></h4>
             <div class="intro">
               <p>{{ username }} 于 <time>{{ item.create_time }}</time> 创建</p>
             </div>
             <div class="row">
-              <div class="col-xs-12 text-right">
+              <div class="col-xs-6 col-sm-3 col-md-3">
+                <a href="#"><span class="glyphicon glyphicon-comment"></span></a>
+                <span>{{ item.star_count }}</span>
+              </div>
+              <div class="col-xs-6 col-sm-3 col-md-3">
+                <a href="#"><span class="glyphicon glyphicon-wrench"></span></a>
+                <span>{{ item.star_count }}</span>
+              </div>
+              <div class="col-xs-6 col-sm-3 col-md-3">
+                <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <span>{{ item.star_count }}</span>
+              </div>
+              <div class="col-xs-6 col-sm-3 col-md-3">
                 <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>
                 <span>{{ item.star_count }}</span>
               </div>
             </div>
           </div>
-        </router-link>
+        </div>
       </div>
     </div>
     <div class="row">
       <hr>
       <nav class="text-center">
         <ul class="pagination pagination-lg">
-          <li class="previous" :class="{disabled: page_nums[0] === 1}">
+          <li class="previous" :class="{disabled: +page_nums[0] <= 1}">
             <router-link to='/home'>← </router-link>
           </li>
           <li v-for='page in page_nums'>
             <router-link to='/home'>{{ page }}</router-link>
           </li>
-          <li class="next" :class="{disabled: page_nums[page_nums.length - 1] === page_total}">
+          <li class="next" :class="{disabled: +page_nums[page_nums.length - 1] >= page_total}">
             <router-link to='/home'> →</router-link>
           </li>
         </ul>
@@ -46,7 +59,7 @@ import * as api from '../api/request'
 import { mapActions } from 'vuex'
 export default {
   created () {
-    this.getDev()
+    this.getRelease()
   },
   data () {
     return {
@@ -78,8 +91,9 @@ export default {
     ...mapActions([
       'newToast'
     ]),
-    getDev () {
-      api.getProjDev((x)=>{
+    getRelease () {
+      api.getProjRelease((x)=>{
+        this.msg = x.msg
         if(x.status === 0){
           this.msg = '已' + x.msg
           this.list = x.data.list
@@ -98,40 +112,3 @@ export default {
 }
   
 </script>
-<style type="text/css">
-  .item {
-    overflow: hidden;
-    box-sizing: border-box;
-    background: rgba(0, 0, 0, .05);
-    padding: 10px;
-    margin: 10px 0;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .3);
-    border-radius: 4px;
-  }
-  
-  .item img {
-    display: block;
-    width: 100%;
-    margin: 0 auto;
-    min-height: 150px;
-    background-color: aqua;
-  }
-  
-  .item .intro {
-    position: relative;
-    font-size: 14px;
-  }
-  
-  .item h4 {
-    font-size: 19px;
-  }
-  
-  .item h4 a {
-    text-decoration: none;
-    color: #000000;
-  }
-  
-  .item h4 a:hover {
-    color: darkcyan;
-  }
-  </style>

@@ -15,12 +15,10 @@
       </ul>
       <ul class="nav navbar-nav navbar-right" slot='nav'>
         <li>
-          <a @click='add2()'>Add</a>
-        </li><li>
           <router-link to='/add'>添加项目</router-link>
         </li>
         <li>
-          <router-link to='/user/publish'>发布的项目</router-link>
+          <router-link to='/user/release'>发布的项目</router-link>
         </li>
         <li>
           <router-link to='/user/develop'>开发的项目</router-link>

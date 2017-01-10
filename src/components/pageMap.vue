@@ -4,17 +4,12 @@
     <p>页面打开均为空。</p>
     <hr> <h4>显示一个toast 消息</h4>
     <p> 父子组件通信<a class="btn btn-primary" @click='toastTop'>Failed</a></p>
-    <p> Vuex 操作 
+    <p> Vuex 操作 <small>1.5s自动消失</small><br>
       <a class="btn btn-primary" @click="act1_add">新Toast</a>
-      <a class="btn btn-primary" @click="act4">4</a>
-      <br>
-      <a class="btn btn-primary" @click="act2_shift">删除最后一个Toast</a>
-      <a class="btn btn-primary" @click="act3_clear">清空Toast</a>
-      <br>
-      <a class="btn btn-primary" @click="newToast">newToast</a>
+      <a class="btn btn-primary" @click="newToast()">newToast</a>
     </p>
     <div class="list-group">
-      <router-link class='list-group-item' to="/user/publish"><span class="badge">/user/publish</span>发布的项目</router-link>
+      <router-link class='list-group-item' to="/user/release"><span class="badge">/user/release</span>发布的项目</router-link>
       <router-link class='list-group-item' to="/user/develop"><span class="badge">/user/develop</span>开发的项目</router-link>
       <router-link class='list-group-item' to="/add"><span class="badge">1</span><span class="badge">/add</span>添加项目</router-link>
       <router-link class='list-group-item' to="/modi/67987"><span class="badge">2</span><span class="badge">/modi/67987</span>修改项目</router-link>
@@ -37,7 +32,9 @@
       },
       act1_add () {
         // Vuex act 1
-        this.$store.dispatch('newToast', { toast: {id:Math.random(),type:'info',message:'test'}})
+        let tmpToast = {type:'danger',message:'红色信息'}
+        this.newToast(tmpToast)
+        // this.$store.dispatch('newToast', tmpToast)
       },
       act2_shift () {
         // Vuex act 2
@@ -49,7 +46,7 @@
       },
       act4 () {
         // Vuex act 4
-
+        this.newToast({})
       },
       ...mapActions([
           'newToast'
