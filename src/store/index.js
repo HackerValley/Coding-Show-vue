@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import * as getters from './getters'
 import * as actions from './actions'
 import mutations from './mutations'
+import toasts from './modules/toasts'
 
 Vue.use(Vuex)
 
@@ -11,12 +12,15 @@ const state = {
   identity: {
     username: '',
   },
-  lastuser: '',
+  lastuser: ''
 }
 
 export default new Vuex.Store({
   state,
   getters,
   actions,
-  mutations
+  mutations,
+  modules: {
+    toasts
+  }
 })

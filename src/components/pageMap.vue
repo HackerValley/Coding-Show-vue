@@ -2,6 +2,15 @@
   <div class="col-sm-6 col-sm-offset-3">
     <h3>临时索引</h3>
     <p>页面打开均为空。</p>
+    <hr> <h4>显示一个toast 消息</h4>
+    <p> 父子组件通信<a class="btn btn-primary" @click='toastTop'>Failed</a></p>
+    <p> Vuex 操作 
+      <a class="btn btn-primary" @click="act1">1</a>
+      <a class="btn btn-primary" @click="act2">2</a>
+      <a class="btn btn-primary" @click="act3">3</a>
+      <a class="btn btn-primary" @click="act4">4</a>
+      <a class="btn btn-primary" @click="newToast">newToast</a>
+    </p>
     <div class="list-group">
       <router-link class='list-group-item' to="/user/publish"><span class="badge">/user/publish</span>发布的项目</router-link>
       <router-link class='list-group-item' to="/user/develop"><span class="badge">/user/develop</span>开发的项目</router-link>
@@ -17,3 +26,30 @@
     </div>
   </div>
 </template>
+<script>
+  import { mapActions } from 'vuex'
+  export default {
+    methods: {
+      toastTop () {
+        // this.$emit()
+      },
+      act1 () {
+        // Vuex act 1
+        this.$store.dispatch('newToast', { toast: {type:'info',message:'test'}})
+      },
+      act2 () {
+        // Vuex act 2
+      },
+      act3 () {
+        // Vuex act 3
+      },
+      act4 () {
+        // Vuex act 4
+
+      },
+      ...mapActions([
+          'newToast'
+        ])
+    }
+  }
+</script>
