@@ -5,10 +5,12 @@
     <hr> <h4>显示一个toast 消息</h4>
     <p> 父子组件通信<a class="btn btn-primary" @click='toastTop'>Failed</a></p>
     <p> Vuex 操作 
-      <a class="btn btn-primary" @click="act1">1</a>
-      <a class="btn btn-primary" @click="act2">2</a>
-      <a class="btn btn-primary" @click="act3">3</a>
+      <a class="btn btn-primary" @click="act1_add">新Toast</a>
       <a class="btn btn-primary" @click="act4">4</a>
+      <br>
+      <a class="btn btn-primary" @click="act2_shift">删除最后一个Toast</a>
+      <a class="btn btn-primary" @click="act3_clear">清空Toast</a>
+      <br>
       <a class="btn btn-primary" @click="newToast">newToast</a>
     </p>
     <div class="list-group">
@@ -33,15 +35,17 @@
       toastTop () {
         // this.$emit()
       },
-      act1 () {
+      act1_add () {
         // Vuex act 1
-        this.$store.dispatch('newToast', { toast: {type:'info',message:'test'}})
+        this.$store.dispatch('newToast', { toast: {id:Math.random(),type:'info',message:'test'}})
       },
-      act2 () {
+      act2_shift () {
         // Vuex act 2
+        this.$store.dispatch('shiftone')
       },
-      act3 () {
+      act3_clear () {
         // Vuex act 3
+        this.$store.dispatch('clearAll')
       },
       act4 () {
         // Vuex act 4

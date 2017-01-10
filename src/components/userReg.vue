@@ -180,21 +180,15 @@
         </div>
     </div>
     <div class="row tip">
-      <transition-group name='a-complete'>
-        <div :class="'alert-' + tip.type" class="alert alert-dismissible a-complete-item" role="alert" :key='tip.id' v-for='(tip,idx) in tips'>
-          <strong>.</strong> {{ tip.message }}.
-        </div>
-      </transition-group>
+
     </div>
   </div>
 </template>
 <script>
   import * as api from '../api/request'
-  import Tip from './common/tip.vue'
 
   export default {
     components: {
-      Tip
     },
     data (){
       return {
@@ -345,22 +339,3 @@
     }
   }
 </script>
-<style>
-.row.tip{
-  background: rgba(255, 255, 255, .5); 
-  position: fixed;
-  top:10%;
-  width: 60%;
-  left: 20%;
-}
-.a-complete-item{
-  transition: all 1s;
-}
-.a-complete-enter, .a-complete-leave-active {
-  opacity: 0;
-  transform: translateX(30px);
-}
-.a-complete-leave-active {
-  position: absolute;width: 100%;
-}
-</style>

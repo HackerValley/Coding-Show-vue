@@ -43,12 +43,15 @@
       <div class="row">
         <router-view></router-view>
       </div>
-      <div class="row tip">
+      <div class="row tip" style="display:none">
         <transition-group name='a-complete'>
-          <div :class="'alert-' + tip.type" class="alert alert-dismissible a-complete-item" role="alert" :key='tip.type' v-for='(tip,idx) in this.$store.state.toasts.toasts'>
+          <div :class="'alert-' + tip.type" class="alert alert-dismissible a-complete-item" role="alert" :key='idx' v-for='(tip,idx) in this.$store.state.toasts.toasts'>
             <strong>.</strong> {{ tip.message }}.
           </div>
         </transition-group>
+      </div>
+      <div class="row tip tip2">
+        <toast></toast>
       </div>
     </section>
     <footer-component></footer-component>
@@ -59,6 +62,7 @@
 import * as api from './api/request'
 import HeaderComponent from './components/header'
 import FooterComponent from './components/footer'
+import Toast from './components/common/toast'
 require('../node_modules/bootstrap/dist/css/bootstrap.min.css')
 
 export default {
@@ -108,7 +112,18 @@ export default {
   },
   components: {
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    Toast
   }
 }
 </script>
+<style>
+  
+.row.tip{ 
+  position: fixed;
+  top:6%;
+  width: 35%;
+  left: 60%;
+}
+
+</style>

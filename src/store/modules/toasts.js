@@ -6,7 +6,7 @@ const state = {
 
 // getters
 const getters = {
-  allTips: state => state.toasts
+  allToasts: state => state.toasts
 }
 
 const actions = {
@@ -26,13 +26,16 @@ const mutations = {
     state.toasts.splice(0, state.toasts.length)
   },
   [types.TOAST_SHIFT] (state) {
-    state.toasts.shift(0)
+    state.toasts.shift()
   },
   [types.TOAST_NEW] (state, { toast }) {
     toast = toast || {
-      id: 0,
+      id: Math.random(),
       type: 'info',
-      message: '空信息'
+      message: '空信息' + Math.random()
+    }
+    if (state.toasts.length > 4) {
+      state.toasts.shift()
     }
     state.toasts.push(toast)
   }
