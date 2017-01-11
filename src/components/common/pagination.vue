@@ -1,6 +1,5 @@
 <template>
-  <nav class="text-center" v-if=''>
-    {{ display }} <br>
+  <nav class="text-center" v-if='display'>
     <ul class="pagination pagination-lg">
       <li class="previous" :class="{disabled: !pagination.prev}">
         <router-link to='/home'>← </router-link>
@@ -32,10 +31,13 @@ import { mapGetters, mapActions } from 'vuex'
     computed: {
       ...mapGetters(['pagination']),
       display () {
-        console.log(this.$route.fullPath)
-        console.log(this.$route.path)
-        console.log(this.$route.matched)
-        return 'a'
+        // 按需显示
+        let listpage= [
+          '/home',
+          '/user/release',
+          '/user/develop'
+        ]
+        return listpage.indexOf(this.$route.path) !== -1
       },
       rrr () {
         // console.log('test')
