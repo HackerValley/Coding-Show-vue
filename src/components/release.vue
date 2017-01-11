@@ -87,6 +87,8 @@ export default {
             page_total: x.data.page_total,
             project_total: x.data.project_total
           })
+        } else {
+          this.getPage()
         }
         this.newToast({
           type: 'info',

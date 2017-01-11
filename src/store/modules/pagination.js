@@ -26,6 +26,13 @@ const getters = {
 
 const actions = {
   getPage ({ commit }, pagedata) {
+    // 当不传参数的时候，清空页码
+    pagedata = pagedata || {
+      page_num: 1,
+      page_size: 0,
+      page_total: 0,
+      project_total: 0 
+    }
     commit( types.GET_PAGE_DATA, pagedata )
   }
 }

@@ -2,13 +2,13 @@
   <nav class="text-center" v-if='display'>
     <ul class="pagination pagination-lg">
       <li class="previous" :class="{disabled: !pagination.prev}">
-        <router-link to='/home'>← </router-link>
+        <router-link :to='basePath'>← </router-link>
       </li>
       <li v-for='page in pagination.available'>
-        <router-link to='/home'>{{ page }}</router-link>
+        <router-link :to='basePath'>{{ page }}</router-link>
       </li>
       <li class="next" :class="{disabled: !pagination.next}">
-        <router-link to='/home'> →</router-link>
+        <router-link :to='basePath'> →</router-link>
       </li>
     </ul>
   </nav>
@@ -39,7 +39,7 @@ import { mapGetters, mapActions } from 'vuex'
         ]
         return listpage.indexOf(this.$route.path) !== -1
       },
-      rrr () {
+      basePath () {
         // console.log('test')
         return this.$route.path
       }
