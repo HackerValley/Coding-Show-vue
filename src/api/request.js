@@ -13,11 +13,22 @@ export function getProjIndex (cb) {
 }
 
 /* 
+ * 获取项目列表 - 我发布的项目，
+ * author: larry
+ **/
+export function getProjRelease (cb, id = '') {
+  axios.get('/api/projects/release').then((rep) => {
+    cb(rep.data)
+  })
+}
+
+/* 
  * 获取项目列表 - 我开发的项目，
  * author: larry
  **/
-export function getProjDevelopment (cb, id = '') {
-  axios.get('/api/projects/release').then((rep) => {
+export function getProjDev (cb, id = '') {
+  // /api/projects/development Inter Error
+  axios.get('/api/projects/list').then((rep) => {
     cb(rep.data)
   })
 }

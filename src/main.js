@@ -12,7 +12,7 @@ import UserReg from './components/userReg'
 import UserProfile from './components/userProfile'
 import Add from './components/add'
 import Modify from './components/modi'
-import Publish from './components/publish'
+import Release from './components/release'
 import Develop from './components/develop'
 import AdminSkill from './components/adminSkill'
 import AdminProject from './components/adminProject'
@@ -64,8 +64,8 @@ const routes = [{
   path: '/detail/:id',
   component: Detail
 },{
-  path: '/user/publish',
-  component: Publish
+  path: '/user/release',
+  component: Release
 },{
   path: '/user/develop',
   component: Develop
