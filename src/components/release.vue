@@ -76,6 +76,7 @@ export default {
       'newToast', 'getPage'
     ]),
     getRelease () {
+      console.log(this.$route.params.page || 1)
       api.getProjRelease((x)=>{
         let pagedata = null
         this.msg = x.msg

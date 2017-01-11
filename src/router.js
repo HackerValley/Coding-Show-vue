@@ -30,17 +30,14 @@ const routes = [{
   path: '/page-map',
   component: PageMap
 },{
-  path: '/Home',
+  path: '/home',
   component: Home,
   children: [
     {
-      path: ':id',
+      path: ':page',
       component: Home
     }
   ]
-},{
-  path: '/Home/:page_num',
-  component: Home
 },{
   path: '/user/login',
   component: UserLogin
@@ -73,7 +70,7 @@ const routes = [{
   component: Release,
   children: [
     {
-      path: ':id',
+      path: ':page',
       component: Release
     }
   ]
@@ -82,7 +79,7 @@ const routes = [{
   component: Develop,
   children: [
     {
-      path: ':id',
+      path: ':page',
       component: Develop
     }
   ]

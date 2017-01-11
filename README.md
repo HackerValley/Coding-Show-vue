@@ -97,14 +97,14 @@ methods:{
 ## 页码的设计
 使用computed属性，计算可以用的页面数组，然后通过列表渲染的方式显示。
 
-## TODO 
+## TODO   
 - [ ] 页码做成使用Vuex的，这样就不需要每个页面都重复写一遍页码部分的代码了。可以做成组件。  
 - [ ] 后台api  
 - [ ] 详情页面  
 - [ ] list 页面数据缓存。每次页面跳转都请求远程数据是不必要的  
-- [ ] 分页的路由还没有做。  
- - [ ] 动态路由 匹配
+- [x] 分页的路由。  
+ - [ ] 动态路由 匹配  
 - [x] router 文件独立，设置懒加载。  
-- [ ] Nav 样式优化 
-- [ ] api.js中请求失败的错误信息处理方式，[参考](https://github.com/vuejs/vue-router/tree/dev/examples/data-fetching)
-- [ ] router-view 添加过渡效果。
+- [ ] Nav 样式优化  
+- [ ] api.js中请求失败的错误信息处理方式，[参考](https://github.com/vuejs/vue-router/tree/dev/examples/data-fetching)  
+- [ ] router-view 添加过渡效果。  
