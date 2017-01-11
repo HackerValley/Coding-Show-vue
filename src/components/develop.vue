@@ -23,22 +23,6 @@
         </router-link>
       </div>
     </div>
-    <div class="row">
-      <hr>
-      <nav class="text-center">
-        <ul class="pagination pagination-lg">
-          <li class="previous" :class="{disabled: page_nums[0] === 1}">
-            <router-link to='/home'>← </router-link>
-          </li>
-          <li v-for='page in page_nums'>
-            <router-link to='/home'>{{ page }}</router-link>
-          </li>
-          <li class="next" :class="{disabled: page_nums[page_nums.length - 1] === page_total}">
-            <router-link to='/home'> →</router-link>
-          </li>
-        </ul>
-      </nav>
-    </div>
   </div>
 </template>
 <script>
@@ -76,17 +60,19 @@ export default {
   },
   methods: {
     ...mapActions([
-      'newToast'
+      'newToast', 'getPage'
     ]),
     getDev () {
       api.getProjDev((x)=>{
         if(x.status === 0){
           this.msg = '已' + x.msg
           this.list = x.data.list
-          this.page_num = x.data.page_num
-          this.page_size = x.data.page_size
-          this.page_total = x.data.page_total
-          this.project_total = x.data.project_total
+          this.getPage({
+            page_num: x.data.page_num,
+            page_size: x.data.page_size,
+            page_total: x.data.page_total,
+            project_total: x.data.project_total
+          })
         }
         this.newToast({
           type: 'info',

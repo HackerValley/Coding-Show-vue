@@ -129,7 +129,7 @@ export default {
           // 跳转到首页
           this.$store.dispatch('setAuthed', true)
           this.$store.dispatch('setUser', this.logindata.username)
-          this.$router.replace({ path: '/user/publish' })
+          this.$router.replace({ path: '/user/release' })
         } else {
           this.newToast({
             type: 'danger',

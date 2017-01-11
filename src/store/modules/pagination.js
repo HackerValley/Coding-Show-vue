@@ -12,11 +12,15 @@ const state = {
 const getters = {
   pagination: state => {
     // 计算pages
-    return {
-      prev: false,
-      next: false,
-      available: []
+    let prev, next, available = []
+    for (let i = 0; i <5; i++) {
+      // 计算前后共5页
+      available[i] = state.page_num - 2 + i
     }
+    available = available.filter( v => v > 0 && v <= state.page_total )
+    prev = state.page_num <= 1
+    next = state.page_num >= state.page_total
+    return { prev, next, available }
   } 
 }
 
@@ -35,3 +39,9 @@ const mutations = {
   }
 }
 
+export default {
+  state,
+  getters,
+  actions,
+  mutations
+}

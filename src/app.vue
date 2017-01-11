@@ -42,7 +42,10 @@
         <router-view></router-view>
       </div>
       <div class="row">
-        <pagination></pagination>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+          <hr>
+          <pagination></pagination>
+        </div>
       </div>
       <div class="row tip" style="display:none">
         <transition-group name='a-complete'>
