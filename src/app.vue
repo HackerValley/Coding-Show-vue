@@ -43,6 +43,9 @@
       <div class="row">
         <router-view></router-view>
       </div>
+      <div class="row">
+        <pagination></pagination>
+      </div>
       <div class="row tip" style="display:none">
         <transition-group name='a-complete'>
           <div :class="'alert-' + tip.type" class="alert alert-dismissible a-complete-item" role="alert" :key='idx' v-for='(tip,idx) in this.$store.state.toasts.toasts'>
@@ -62,6 +65,7 @@
 import * as api from './api/request'
 import HeaderComponent from './components/header'
 import FooterComponent from './components/footer'
+import Pagination from './components/common/pagination'
 import Toast from './components/common/toast'
 require('../node_modules/bootstrap/dist/css/bootstrap.min.css')
 
@@ -113,7 +117,8 @@ export default {
   components: {
     HeaderComponent,
     FooterComponent,
-    Toast
+    Toast,
+    Pagination
   }
 }
 </script>
