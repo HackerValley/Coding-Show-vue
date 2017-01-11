@@ -56,9 +56,9 @@
     methods: {
       getHome () {
         api.getProjIndex((x)=>{
-          console.log(typeof x)
-          console.log(Object.keys(x))
-          console.log(Object.values(x))
+          // console.log(typeof x)
+          // console.log(Object.keys(x))
+          /// console.log(Object.values(x))
           if(x.status === 0){
             this.msg = '已' + x.msg
             this.list = x.data.list
