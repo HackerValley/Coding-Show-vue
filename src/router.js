@@ -31,7 +31,13 @@ const routes = [{
   component: PageMap
 },{
   path: '/Home',
-  component: Home
+  component: Home,
+  children: [
+    {
+      path: ':id',
+      component: Home
+    }
+  ]
 },{
   path: '/Home/:page_num',
   component: Home
@@ -52,19 +58,34 @@ const routes = [{
   component: Add
 },{
   path: '/modi',
-  redirect: '/add'
-},{
-  path: '/modi/:id',
-  component: Modify
+  component: Modify,
+  children: [
+    {
+      path: ':id',
+      component: Modify
+    }
+  ]
 },{
   path: '/detail/:id',
   component: Detail
 },{
   path: '/user/release',
-  component: Release
+  component: Release,
+  children: [
+    {
+      path: ':id',
+      component: Release
+    }
+  ]
 },{
   path: '/user/develop',
-  component: Develop
+  component: Develop,
+  children: [
+    {
+      path: ':id',
+      component: Develop
+    }
+  ]
 },{
   path: '/admin/skill',
   component: AdminSkill
@@ -77,6 +98,6 @@ const routes = [{
 }]
 
 export const router = new VueRouter({
-  /*mode: 'history',*/
+  mode: 'history',
   routes
 })

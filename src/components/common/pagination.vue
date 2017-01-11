@@ -1,5 +1,8 @@
 <template>
-  <nav class="text-center" v-if='display'>
+  <nav class="text-center" v-if='true || display'>
+    <div class="well">
+      1: {{ matchedPath }} 
+    </div>
     <ul class="pagination pagination-lg">
       <li class="previous" :class="{disabled: !pagination.prev}">
         <router-link :to='basePath'>← </router-link>
@@ -42,6 +45,14 @@ import { mapGetters, mapActions } from 'vuex'
       basePath () {
         // console.log('test')
         return this.$route.path
+      },
+      matchedPath () {
+        console.log('加载一次')
+        console.log(this.$route.matched.length)
+        // console.log(this.$route.matched)
+        // console.log(this.$route.matched[0])
+        // console.log(this.$route.matched[0].path)
+        return this.$route.matched.length // this.$route.matched[0].path
       }
     }
   }

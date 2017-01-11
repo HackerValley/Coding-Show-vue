@@ -77,19 +77,19 @@ export default {
     ]),
     getRelease () {
       api.getProjRelease((x)=>{
+        let pagedata = null
         this.msg = x.msg
         if(x.status === 0){
           this.msg = '已' + x.msg
           this.list = x.data.list
-          this.getPage({
+          pagedata = ({
             page_num: x.data.page_num,
             page_size: x.data.page_size,
             page_total: x.data.page_total,
             project_total: x.data.project_total
           })
-        } else {
-          this.getPage()
         }
+        this.getPage(pagedata)
         this.newToast({
           type: 'info',
           message: this.msg
