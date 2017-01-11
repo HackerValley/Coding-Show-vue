@@ -103,4 +103,8 @@ methods:{
 - [ ] 详情页面  
 - [ ] list 页面数据缓存。每次页面跳转都请求远程数据是不必要的  
 - [ ] 分页的路由还没有做。  
-- [x] router 文件独立，设置懒加载。
+ - [ ] 动态路由 匹配
+- [x] router 文件独立，设置懒加载。  
+- [ ] Nav 样式优化 
+- [ ] api.js中请求失败的错误信息处理方式，[参考](https://github.com/vuejs/vue-router/tree/dev/examples/data-fetching)
+- [ ] router-view 添加过渡效果。

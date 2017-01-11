@@ -2,19 +2,25 @@ import VueRouter from 'vue-router'
 
 /* 使用 AMD 风格 require resolve 懒加载*/
 
-const PageMap = resolve => require (['./components/pageMap'], resolve)
+import PageMap from './components/pageMap'
+// const PageMap = resolve => require (['./components/pageMap'], resolve)
+
 const Home = resolve => require (['./components/home'], resolve)
-const UserLogin = resolve => require (['./components/userLogin'], resolve)
-const UserReg = resolve => require (['./components/userReg'], resolve)
-const UserProfile = resolve => require (['./components/userProfile'], resolve)
-const Add = resolve => require (['./components/add'], resolve)
-const Modify = resolve => require (['./components/modi'], resolve)
-const Release = resolve => require (['./components/release'], resolve)
-const Develop = resolve => require (['./components/develop'], resolve)
-const AdminSkill = resolve => require (['./components/adminSkill'], resolve)
-const AdminProject = resolve => require (['./components/adminProject'], resolve)
-const AdminExpert = resolve => require (['./components/adminExpert'], resolve)
-const Detail = resolve => require (['./components/detail'], resolve)
+
+const UserLogin = r => require.ensure([], () => r(require('./components/userLogin')), '/user')
+const UserReg = r => require.ensure([], () => r(require('./components/userReg')), '/user')
+const UserProfile = r => require.ensure([], () => r(require('./components/userProfile')), '/user')
+
+const Add = r => require.ensure([], () => r(require('./components/add')), '/add')
+const Modify = r => require.ensure([], () => r(require('./components/modi')), '/add')
+const Detail = r => require.ensure([], () => r(require('./components/detail')), '/add')
+
+const Release = r => require.ensure([], () => r(require('./components/release')), '/user/release')
+const Develop = r => require.ensure([], () => r(require('./components/develop')), '/user/release')
+
+const AdminSkill = r => require.ensure([], () => r(require('./components/adminSkill')), '/admin/skill')
+const AdminProject = r => require.ensure([], () => r(require('./components/adminProject')), '/admin/skill')
+const AdminExpert = r => require.ensure([], () => r(require('./components/adminExpert')), '/admin/skill')
 
 /* 启用路由 */
 const routes = [{
