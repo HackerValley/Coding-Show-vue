@@ -9,6 +9,9 @@ import querystring from 'querystring'
 export function getProjIndex (cb) {
   axios.get('/api/projects/list').then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
   })
 }
 
@@ -19,6 +22,9 @@ export function getProjIndex (cb) {
 export function getProjRelease (cb, id = '') {
   axios.get('/api/projects/release').then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
   })
 }
 
@@ -30,6 +36,9 @@ export function getProjDev (cb, id = '') {
   // /api/projects/development Inter Error
   axios.get('/api/projects/list').then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
   })
 }
 
@@ -40,6 +49,9 @@ export function getProjDev (cb, id = '') {
 export function getProjDetail (cb, id = '') {
   axios.get('/api/projects/' + id).then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
   })
 }
 
@@ -56,6 +68,9 @@ export function updateProj (cb, { id, data }) {
   }
   axios.put('/api/projects/' + id, querystring.stringify(data)).then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
   })
 }
 
@@ -71,6 +86,9 @@ export function addProj (cb, { data }) {
   }
   axios.post('/api/projects/', querystring.stringify(data)).then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
   })
 }
 
@@ -86,6 +104,9 @@ export function userReg (cb, { regdata }) {
   }
   axios.post('/api/user/register', querystring.stringify(regdata)).then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
   })
 }
 
@@ -95,6 +116,9 @@ export function userReg (cb, { regdata }) {
 export function userInfo (cb) {
   axios.get('/api/user').then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
   })
 }
 
@@ -110,6 +134,9 @@ export function userLogin (cb, { logindata }) {
   }
   axios.post('/api/user/login', querystring.stringify(logindata)).then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
   })
 }
 
@@ -120,5 +147,9 @@ export function logOut (cb) {
   console.log('登出')
   axios.get('/api/user/logout').then((rep) => {
     cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err)
   })
 }
+

@@ -31,6 +31,7 @@
         </li>
         <li>
           <router-link to='/user/profile' v-if='authed'>个人资料</router-link>
+          <router-link to='/user/logout' v-if='false'>X</router-link>
         </li>
         <li>
           <a v-if='authed' @click.prevent='logout'>登出</a>
@@ -39,16 +40,19 @@
     </header-component>
     <section class="container">
       <div class="row">
-        <router-view></router-view>
-      </div>
-      <div class="row tip" style="display:none">
-        <transition-group name='a-complete'>
-          <div :class="'alert-' + tip.type" class="alert alert-dismissible a-complete-item" role="alert" :key='idx' v-for='(tip,idx) in this.$store.state.toasts.toasts'>
-            <strong>.</strong> {{ tip.message }}.
+          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <transition name='slide-left'>
+            <router-view class='child-view'></router-view>
+        </transition>
           </div>
-        </transition-group>
       </div>
-      <div class="row tip tip2">
+      <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+          <hr>
+          <pagination></pagination>
+        </div>
+      </div>
+      <div class="row tip">
         <toast></toast>
       </div>
     </section>
@@ -60,6 +64,7 @@
 import * as api from './api/request'
 import HeaderComponent from './components/header'
 import FooterComponent from './components/footer'
+import Pagination from './components/common/pagination'
 import Toast from './components/common/toast'
 require('../node_modules/bootstrap/dist/css/bootstrap.min.css')
 
@@ -111,17 +116,36 @@ export default {
   components: {
     HeaderComponent,
     FooterComponent,
-    Toast
+    Toast,
+    Pagination
   }
 }
 </script>
 <style>
-  
+.fr{float: right}
 .row.tip{ 
   position: fixed;
   top:6%;
   width: 35%;
   left: 60%;
 }
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+.child-view {
+  transition: all .35s;
+  width: 100%;
+}
+.slide-left-enter, .slide-right-leave-active {
+  opacity: 0;
+  transform: translate(30px, 0);
+}
+.slide-left-leave-active, .slide-right-enter {
+  opacity: 0;
+  position: absolute;
+  transform: translate(-30px, 0);
+}
 </style>

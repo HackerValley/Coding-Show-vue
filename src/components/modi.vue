@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+  <div>
     <div class="row">
       <h2>{{ act }}项目 <span class="fr"><small><a href="/">返回首页</a></small></span></h2>
       <hr>
@@ -76,7 +76,6 @@
   </div>
 </template>
 <style>
-  .fr{float: right}
   div[class$='pool'] {padding:0 0 2em 0;overflow: hidden;}
   div[class$='pool'] img{border:none; border-radius:6px; margin:.6em;float: left;}
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xs-10 col-xs-offset-1">
+  <div>
     <div class="row">
       <h2>{{ act }}项目 <span class="fr"><small><a href="/">返回首页</a></small></span></h2>
       <hr>
