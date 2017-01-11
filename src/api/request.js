@@ -149,7 +149,7 @@ export function logOut (cb) {
     cb(rep.data)
   }).catch(err => {
     // 处理方式等待更新
-    console.log(err.response.statusText)
+    console.log(err)
   })
 }
 

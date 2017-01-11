@@ -8,7 +8,7 @@ import App from './app.vue'
 import { router } from './router'
 import store from './store'
 
-import { initState } from './store/actions'
+import { initState, setAuthed } from './store/actions'
 
 Vue.use(VueRouter)
 // Vue.use(Vuex)

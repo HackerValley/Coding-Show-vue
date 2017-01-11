@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+  <div>
     <div class="row">
       <h2>开源项目</h2>
       <hr>
@@ -118,4 +118,4 @@
   .item h4 a:hover {
     color: darkcyan;
   }
-  </style>
+</style>

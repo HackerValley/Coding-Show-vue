@@ -1,7 +1,7 @@
 <template>
-  <div class="col-xs-10 col-xs-offset-1">
+  <div>
       <div class="row">
-          <h2>注册 <span class="fr"><small><router-link to="/login">已有账户登录</router-link>&nbsp;&nbsp;&nbsp;&nbsp;<router-link to='/'>返回首页</router-link></small></span></h2>
+          <h2>登陆 <span class="fr"><small><router-link to="/login">已有账户登录</router-link>&nbsp;&nbsp;&nbsp;&nbsp;<router-link to='/'>返回首页</router-link></small></span></h2>
           <hr>
       </div>
       <div class="row">

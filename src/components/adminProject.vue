@@ -11,7 +11,7 @@
 </style>
 
 <template>
-  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+  <div>
     <admin-title></admin-title>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">

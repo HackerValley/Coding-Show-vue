@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+  <div>
     <div class="row">
       <h2>个人信息设置 <span class="fr"><small><router-link to="/">返回首页</router-link></small></span></h2>
       <hr>

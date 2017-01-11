@@ -1,5 +1,5 @@
 import VueRouter from 'vue-router'
-
+import { logOut } from './api/request.js'
 /* 使用 AMD 风格 require resolve 懒加载*/
 
 import PageMap from './components/pageMap'
@@ -38,6 +38,16 @@ const routes = [{
       component: Home
     }
   ]
+},{
+  path: '/user/logout',
+  beforeEnter (to, from, next) {
+    console.log('退出登陆')
+    // 此处不能执行 store 的操作
+    logOut((x) => {
+      console.log(x)
+    })
+    next('/')
+  }
 },{
   path: '/user/login',
   component: UserLogin

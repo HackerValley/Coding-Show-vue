@@ -39,7 +39,6 @@ import { mapGetters, mapActions } from 'vuex'
           '/user/release',
           '/user/develop'
         ]
-        console.log(m)
         return listpage.indexOf(m) !== -1
       },
       basePath () {
