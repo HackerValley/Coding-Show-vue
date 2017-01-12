@@ -41,6 +41,13 @@ export default {
 </script>
 <style>
 /**/
+
+.row.tip{ 
+  position: fixed;
+  top:15%;
+  width: 35%;
+  left: 60%;
+}
 .a-complete-item{
   transition: all .3s;
 }
