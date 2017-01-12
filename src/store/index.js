@@ -12,6 +12,7 @@ const state = {
   authed: null,
   identity: {
     username: '',
+    avatar: ''
   },
   lastuser: ''
 }

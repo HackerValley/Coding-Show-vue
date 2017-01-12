@@ -43,7 +43,7 @@ export default {
     // 如果登陆，则跳转到
     if(this.$store.state.authed){
       console.log('已经登陆了？')
-      this.$router.push({ path: '/user/publish' })
+      this.$router.go(-1)
     }
   },
   data () {
