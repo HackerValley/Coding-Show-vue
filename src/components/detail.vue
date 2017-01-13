@@ -41,11 +41,11 @@
             </form>
             <div class="comments">
               <div class="comment" v-for="(v, i) in tmp">
-                <div class="figure"><img data-src="holder.js/100%x180" alt="..."></div>
-                <div>
-                  <span class="nick">user {{ i }}</span>
-                  <span class="time">· {{ 10 - i }} minutes ago</span>
-                  <div class="content">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</div>
+                <div class="figure"><img data-src="holder.js/100%x180" alt="..." src="/static/assets/figure_blank_2.png"></div>
+                <div class="context">
+                  <span class="nick"><b>user {{ i }}</b></span>
+                  <span class="time text-muted">· {{ 10 - i }} minutes ago</span>
+                  <div class="content">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh udapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh udapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</div>
                 </div>
               </div>
             </div>
@@ -125,3 +125,36 @@ export default {
   }
 }
 </script>
+<style>
+  .comments {
+
+  }
+  .comment{
+    min-height: 80px;
+    overflow: hidden;
+    line-height: 2em;
+    padding-bottom: 2em;
+  }
+  .comment .figure {
+    float: left;
+    height: 100%;
+    margin:10px;
+  }
+  .comment .figure img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+  .comment .context{
+    padding-left: 80px;
+  }
+  .comment .context span{
+    display: inline-block;
+  }
+  .comment .context .nick {
+
+  }
+  .comment .context .content {
+    line-height: 1.4em;
+  }
+</style>
