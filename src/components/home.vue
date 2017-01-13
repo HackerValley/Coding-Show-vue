@@ -7,9 +7,9 @@
     <div class="row">
       <div class="col-xs-6 col-sm-6 col-md-3" v-for='item in list'>
         <div class="thumbnail item">
-          <a href=""><img data-src="holder.js/300x300" /></a>
+          <router-link :to="'/detail/' + item._id"><img data-src="holder.js/300x300" /></router-link>
           <div class="caption">
-            <h4><a href="#">{{ item.project_name }}</a></h4>
+            <h4><a href="#"><router-link :to="'/detail/' + item._id">{{ item.project_name }}</router-link></h4>
             <div class="intro">
               <p>用户【{{ item.uid }}】 <br>于 {{ item.create_time }} 创建</p>
             </div>
