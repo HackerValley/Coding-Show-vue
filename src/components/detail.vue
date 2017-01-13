@@ -25,31 +25,7 @@
             </p>
             <hr>
           </div>
-          <div class="panel-body">
-            <form class="form-horizontal" role="form">
-              <div class="form-group">
-                <label for="comment" class="col-sm-2 control-label">留言板</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control" rows="3"></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-info">回复</button>
-                </div>
-              </div>
-            </form>
-            <div class="comments">
-              <div class="comment" v-for="(v, i) in tmp">
-                <div class="figure"><img data-src="holder.js/100%x180" alt="..." src="/static/assets/figure_blank_2.png"></div>
-                <div class="context">
-                  <span class="nick"><b>user {{ i }}</b></span>
-                  <span class="time text-muted">· {{ 10 - i }} minutes ago</span>
-                  <div class="content">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh udapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh udapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <comment></comment>
         </div>
       </div>
       <div class="col-sm-4">
@@ -90,6 +66,7 @@
   </div>
 </template>
 <script>
+import Comment from './common/comment'
 import * as api from '../api/request.js'
 export default {
   name: 'detail-page',
@@ -97,8 +74,7 @@ export default {
     return {
       content: {},
       status: null,
-      msg: null,
-      tmp: Array.apply(null,{length: 6})
+      msg: null
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -122,39 +98,11 @@ export default {
   },
   methods: {
 
+  },
+  components: {
+    Comment
   }
 }
 </script>
 <style>
-  .comments {
-
-  }
-  .comment{
-    min-height: 80px;
-    overflow: hidden;
-    line-height: 2em;
-    padding-bottom: 2em;
-  }
-  .comment .figure {
-    float: left;
-    height: 100%;
-    margin:10px;
-  }
-  .comment .figure img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-  }
-  .comment .context{
-    padding-left: 80px;
-  }
-  .comment .context span{
-    display: inline-block;
-  }
-  .comment .context .nick {
-
-  }
-  .comment .context .content {
-    line-height: 1.4em;
-  }
 </style>
