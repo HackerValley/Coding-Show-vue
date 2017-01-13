@@ -46,15 +46,49 @@ export function getProjDev (cb, id = '') {
  * 根据id获取项目详细信息，
  * author: larry
  **/
-export function getProjDetail (cb, id = '') {
+export function getProjDetail (id = '', cb) {
+  if (!id) {
+    cb(new Error('需传入项目_id.'))
+    return
+  }
   axios.get('/api/projects/' + id).then((rep) => {
-    cb(rep.data)
+    cb(null, rep.data)
   }).catch(err => {
-    // 处理方式等待更新
-    console.log(err.response.statusText)
+    cb(err)
   })
 }
 
+/* 
+ * 根据id获取项目的评论内容，
+ * author: larry
+ **/
+export function getProjComments (id = '', cb) {
+  if (!id) {
+    cb(new Error('需传入项目_id.'))
+    return
+  }
+  axios.get('/api/comment/' + id).then((rep) => {
+    cb(null, rep.data)
+  }).catch(err => {
+    cb(err)
+  })
+}
+
+/* 
+ * 添加评论，
+ * author: larry
+ **/
+export function addComments (comment, cb) {
+  if (!comment.comment) {
+    cb(new Error('需传入comment.'))
+    return
+  }
+  axios.post('/api/comment',querystring.stringify(comment)).then((rep) => {
+    cb(null, rep.data)
+  }).catch(err => {
+    cb(err)
+  })
+}
 /* 
  * 更新项目详细信息
  * author: larry

@@ -1,14 +1,11 @@
 <template>
   <div>
     <div class="row">
-      <h2>{{ act }}项目 <span class="fr"><small><a href="/">返回首页</a></small></span></h2>
+      <h2>{{ act }}项目 <span class="fr"><small><router-link to="/">返回首页</router-link></small></span></h2>
       <hr>
     </div>
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1">
-      <div class="well">
-        <pre>{{ msg }}</pre>
-      </div>
         <form action="" role="form" class="form-horizontal">
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label ' for="projName">项目名称</label>
