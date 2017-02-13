@@ -10,7 +10,6 @@
             <dt>id</dt>
             <dd>{{ userdata._id }}</dd>
             <dt>用户名</dt>
-            {{ userdata.username }}
             <dd>{{ userdata.username }}</dd>
             <dt>邮箱</dt>
             <dd>{{ userdata.email }}</dd>

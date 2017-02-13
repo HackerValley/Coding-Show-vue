@@ -23,14 +23,9 @@
           </span>
           <transition name="slide-fade">
             <div class="expand" v-if='infopanel'>
-              <!--<svg width="260" height="30">
+              <svg width="260" height="30">
                 <polygon :points="points"></polygon>
               </svg>
-              <svg width="260px" height="160px">
-                <path d="M10 10 C 20 20, 40 20, 50 10" stroke="3" fill="blue"/>
-                <path d="M180 100 C 180 130, 230 130, 230 100" stroke="3" fill="black"/>
-                <path d="M180 0 S 180 30, 230 0" stroke="3" fill="green"/>
-              </svg>-->
               <ul class='nav nav-pills nav-stacked'>
                 <router-link to='/add' active-class='active' tag='li'><a>添加项目</a></router-link>
                 <router-link to='/user/release' active-class='active' tag='li'><a>我发布的项目</a></router-link>
@@ -42,7 +37,7 @@
         </li>
         <li>
           <router-link to='/user/login' v-if='!authed' class='primary'><span class="badge">登入</span></router-link>
-          <a v-if='authed' @click.prevent='logout'><span>登出</span></a>
+          <a v-if='authed' @click.prevent='logout'><span class="badge">登出</span></a>
         </li>
         <slot name="nav"></slot>
       </ul>
@@ -67,23 +62,20 @@
     position: absolute; left: 2px;top: 2px;
     width: 60px;height: 60px;
     border-radius: 50%;
-    /* box-shadow: inset 0 4px 4px 4px #000, 0 2px 4px -1px rgba(0,0,0,.3), 0 -1px 1px 0px rgba(0,0,0,.3)*/
+    box-shadow: inset 0 4px 4px 4px #000, 0 2px 4px -1px rgba(0,0,0,.3), 0 -1px 1px 0px rgba(0,0,0,.3)
   }
   .navbar li .expand {
-    border-top: 4px solid sienna;
     position: absolute;
     width: 260px;
     min-height: 100px;
     height: auto;
     border-radius: 10px;
-    /* background: #fff; */
-    background: radial-gradient(32px circle at 205px 64px, rgba(255,255,255,0) 80%,rgba(255,255,255,1));
+    background: #fff;
     box-shadow: 0 3px 14px -4px rgba(0,0,0,.9);
     top:58px;
     right:-30px;
     z-index: 8;
     overflow: hidden;
-    background-position: 0 -64px;
   }
   .expand svg { display: block; }
   .expand polygon { fill: #41B883;box-shadow: 0 0 3px 0 #000 }
@@ -104,19 +96,19 @@ import * as api from '../../api/request.js'
 export default {
   name: 'header',
   data () {
-    // var defaultSides = 10
-    // var h = 12 // 默认吞掉的高度
-    // var stats = Array.apply(null,{length: defaultSides}).map(() => 100)
+    var defaultSides = 10
+    var h = 12 // 默认吞掉的高度
+    var stats = Array.apply(null,{length: defaultSides}).map(() => 100)
     return {
       sitename: 'Coding-Show',
-      // h,
-      // stats,
-      // points: generateDatas(stats,h),
-      infopanel: false
+      h,
+      stats,
+      points: generateDatas(stats,h),
+      infopanel: true
     }
   },
   watch: {
-/*    h (a, b) {
+    h (a, b) {
       // 当吞掉的高度变化的时候，形成关键帧动画
       console.log('h changed')
       let i = 0
@@ -134,7 +126,6 @@ export default {
         }
       })()
     }
-*/
   },
   computed:{
     authed () {
@@ -166,15 +157,15 @@ export default {
     }
   }
 }
-/*
+
 function pointValue (start, range, index, total, r, h) {
   // 10个点，两端是端点，分成了9部分，所以有total - 1
   // 加入 start 是旋转的弧度
-  var angel = start + range / (total - 1) * index
+  var angel = start + range / (total - 1) * index 
   var cos = Math.cos(angel)
   var sin = Math.sin(angel)
   var x = - r * cos + 206
-  var y = r * sin - r + h
+  var y = r * sin - r + h 
   return {x, y}
 }
 function generateDatas (stats, h=12) {
@@ -191,5 +182,4 @@ function generateDatas (stats, h=12) {
   }).join(' ')
   return `0,0 ${xy} 260,1 260,20 0,30`
 }
-*/
 </script>
