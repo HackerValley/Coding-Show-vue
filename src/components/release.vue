@@ -7,40 +7,15 @@
     <div class="row">
       <h1 v-if='msg === "没有项目"' style="text-align:center">没有项目</h1>
       <div class="col-xs-6 col-sm-6 col-md-3" v-for='item in list'>
-        <div class="thumbnail item">
-          <a href=""><img data-src="holder.js/300x300" /></a>
-          <div class="caption">
-            <h4><a href="#">{{ item.project_name }}</a></h4>
-            <div class="intro">
-              <p>{{ username }} 于 <time>{{ item.create_time }}</time> 创建</p>
-            </div>
-            <div class="row">
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-comment"></span></a>
-                <span>{{ item.star_count }}</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-wrench"></span></a>
-                <span>{{ item.star_count }}</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
-                <span>{{ item.star_count }}</span>
-              </div>
-              <div class="col-xs-6 col-sm-3 col-md-3">
-                <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-                <span>{{ item.star_count }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <project-item :itemdata
     </div>
   </div>
 </template>
 <script>
 import * as api from '../api/request'
 import { mapActions } from 'vuex'
+import ProjectItem from './common/project-item'
+
 export default {
   created () {
     this.getRelease()
@@ -97,7 +72,10 @@ export default {
         })
       })
     }
+  },
+  components: {
+    ProjectItem
   }
 }
-  
+
 </script>
