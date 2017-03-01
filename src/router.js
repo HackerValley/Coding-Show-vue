@@ -5,7 +5,7 @@ import { logOut } from './api/request.js'
 import PageMap from './components/pageMap'
 // const PageMap = resolve => require (['./components/pageMap'], resolve)
 
-const Home = resolve => require (['./components/home'], resolve)
+const Home = resolve => require(['./components/home'], resolve)
 
 const UserLogin = r => require.ensure([], () => r(require('./components/userLogin')), '/user')
 const UserReg = r => require.ensure([], () => r(require('./components/userReg')), '/user')
@@ -26,10 +26,10 @@ const AdminExpert = r => require.ensure([], () => r(require('./components/adminE
 const routes = [{
   path: '/',
   redirect: '/page-map'
-},{
+}, {
   path: '/page-map',
   component: PageMap
-},{
+}, {
   path: '/home',
   component: Home,
   children: [
@@ -38,9 +38,9 @@ const routes = [{
       component: Home
     }
   ]
-},{
+}, {
   path: '/user/logout',
-  beforeEnter (to, from, next) {
+  beforeEnter(to, from, next) {
     console.log('退出登陆')
     // 此处不能执行 store 的操作
     logOut((x) => {
@@ -48,22 +48,23 @@ const routes = [{
     })
     next('/')
   }
-},{
+}, {
   path: '/user/login',
   component: UserLogin
-},{
+}, {
   path: '/user/reg',
   component: UserReg
-},{
+}, {
   path: '/user/profile',
   component: UserProfile
-},{
+}, {
   path: '/user/profile/:id',
   component: UserProfile
-},{
+}, {
   path: '/add',
-  component: Add
-},{
+  component: Add,
+  meta: { requiresAuth: true }
+}, {
   path: '/modi',
   component: Modify,
   children: [
@@ -72,19 +73,21 @@ const routes = [{
       component: Modify
     }
   ]
-},{
+}, {
   path: '/detail/:id',
   component: Detail
-},{
+}, {
   path: '/user/release',
   component: Release,
+  meta: { requiresAuth: true },
   children: [
     {
       path: ':page',
-      component: Release
+      component: Release,
+      meta: { requiresAuth: true }
     }
   ]
-},{
+}, {
   path: '/user/develop',
   component: Develop,
   children: [
@@ -93,18 +96,22 @@ const routes = [{
       component: Develop
     }
   ]
-},{
+}, {
   path: '/admin/skill',
-  component: AdminSkill
-},{
+  component: AdminSkill,
+  meta: { requiresAuth: true }
+}, {
   path: '/admin/expert',
-  component: AdminExpert
-},{
+  component: AdminExpert,
+  meta: { requiresAuth: true }
+}, {
   path: '/admin/project',
-  component: AdminProject
+  component: AdminProject,
+  meta: { requiresAuth: true }
 }]
 
 export const router = new VueRouter({
   /* mode: 'history',*/
   routes
 })
+

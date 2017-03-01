@@ -16,3 +16,7 @@ export const setAuthed = ({ commit }, authed) => {
 export const setUser = ({ commit }, username) => {
   commit(types.SET_USERNAME, { username })
 }
+
+export const setIdentity = ({ commit }, identity) => {
+  commit(types.SET_IDENTITY, { identity })
+}
