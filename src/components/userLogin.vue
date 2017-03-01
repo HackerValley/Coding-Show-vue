@@ -162,6 +162,15 @@
             return
           }
           this.$store.dispatch('setAuthed', true)
+          var identity = {
+            avatar: x.data.avatar,
+            nickname: x.data.nickname,
+            level: x.data.level,
+            skill: x.data.skill,
+            last_login_time: x.data.last_login_time,
+            sns_type: x.data.sns_type
+          }
+          this.$store.dispatch('setIdentity', identity)
           if (x.data.username) {
             this.newToast({
               type: 'success',
