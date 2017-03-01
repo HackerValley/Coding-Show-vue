@@ -12,7 +12,12 @@ const state = {
   authed: null,
   identity: {
     username: '',
-    avatar: ''
+    avatar: '',
+    nickname: '',
+    level: '',
+    skill: [],
+    last_login_time: '',
+    sns_type: null
   },
   lastuser: ''
 }

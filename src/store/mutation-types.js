@@ -3,6 +3,8 @@ export const SET_AUTHED = 'SET_AUTHED'
 export const SET_USERNAME = 'SET_USERNAME'
 export const SET_LASTUSER = 'SET_LASTUSER'
 
+export const SET_IDENTITY = 'SET_IDENTITY'
+
 // tips module
 // 清空提示信息
 export const TOAST_CLEAR_ALL = 'TOAST_CLEAR_ALL'
