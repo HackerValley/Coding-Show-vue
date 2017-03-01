@@ -11,9 +11,7 @@
             <label for="userName" class="col-xs-3 col-sm-2 control-label ">用户名</label>
             <div class="col-xs-9 col-sm-8 col-md-6">
               <input type="text" name="username" id="userName" placeholder="您的用户名" class="form-control" v-model='username'>
-              <label for="rememberUsername" class="control-label "></label>
-              <input type="checkbox" name="rememberUsername" v-model='remember'>记住用户名
-              <p class="form-control-static text-muted">用户名或邮箱</p>
+              <p class="form-control-static text-muted">用户名</p>
             </div>
           </div>
           <div class="form-group">
@@ -33,10 +31,9 @@
     </div>
     <div class="row thirdLogin">
       <div class="col-xs-10 col-xs-offset-1">
-        <hr>
-        第三方登录：
-          <a href="/api/user/oauth2/github" class="btn btn-default">Github</a>
-          <a href="/api/user/oauth2/weibo" class="btn btn-default">weibo</a>
+        <hr> 第三方登录：
+        <a href="/api/user/oauth2/github" class="btn btn-default">Github</a>
+        <a href="/api/user/oauth2/weibo" class="btn btn-default">weibo</a>
       </div>
     </div>
   </div>
@@ -53,6 +50,9 @@
         console.log('已经登陆了？')
         this.$router.go(-1)
       }
+    },
+    created() {
+      this.fetchLoginStatus()
     },
     data() {
       return {
@@ -127,7 +127,7 @@
         }
         console.log('尝试登陆')
         api.userLogin((x) => {
-          console.log(x)
+          // console.log(x)
           if (x.status === 0) {
             console.log('登陆成功')
             this.newToast({
@@ -145,13 +145,48 @@
             })
           }
         }, { logindata: this.logindata })
+      },
+      fetchLoginStatus() {
+        console.log('验证登录状态')
+        api.userInfo(x => {
+          console.log(x)
+          if ( typeof x === 'string' && x[0] === '<'){
+            this.$store.dispatch('setAuthed', false)
+            return 0
+          }
+          if (x.status != 0) {
+            this.newToast({
+              type: 'danger',
+              message: '服务器有点异常，登录功能可能无用'
+            })
+            return
+          }
+          this.$store.dispatch('setAuthed', true)
+          if (x.data.username) {
+            this.newToast({
+              type: 'success',
+              message: '已经登录'
+            })
+            // 并跳转
+            this.$store.dispatch('setUser', x.data.username)
+            this.$router.replace({ path: '/user/release' })
+          } else {
+            // 需要补充用户的注册信息，至少补充一个用户名
+            this.newToast({
+              type: 'info',
+              message: '需补充信息，至少填写一下用户名'
+            })
+            this.$store.dispatch('setUser', '')
+            this.$router.replace({ path: '/user/profile' })
+          }
+        })
       }
     }
   }
 
 </script>
 <style>
-  .thirdLogin{
-    padding-top:2em;
+  .thirdLogin {
+    padding-top: 2em;
   }
 </style>
