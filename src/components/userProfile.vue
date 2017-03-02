@@ -80,7 +80,7 @@ import * as api from '../api/request'
     methods: {
       getLoginInfo () {
         api.loginInfo((x)=>{
-          console.log(x)
+          // console.log(x)
           if(x[0] === '<') {
             console.log('没有登陆')
             this.$store.dispatch('setAuthed', false)
@@ -94,7 +94,7 @@ import * as api from '../api/request'
       },
       getUserInfo (id) {
         api.userInfo(id, (x)=>{
-          console.log('userinfo',x)
+          // console.log('userinfo',x)
           if(x[0] === '<'){
             console.log('未登录')
             this.$store.dispatch('setAuthed', false)

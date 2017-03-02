@@ -4,7 +4,7 @@
     <div class="caption">
       <h4><router-link :to="'/detail/' + itemdata._id">{{ itemdata.project_name }}</router-link></h4>
       <div class="intro">
-        <p><em>{{ itemdata.uid }}</em> <br> {{ itemdata.create_time | showTime }} </p>
+        <p><router-link :to="'/user/profile/' + itemdata.uid"><em>{{ itemdata.uid }}</em></router-link> <br> {{ itemdata.create_time | showTime }} </p>
       </div>
       <div class="row">
         <div class="col-xs-12">

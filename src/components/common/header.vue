@@ -27,7 +27,7 @@
             <img :src="identity.avatar" :alt="identity.username">
           </span>
             <transition name="slide-fade">
-              <div class="expand" v-if='infopanel'>
+              <div class="expand" v-if='infopanel' @click='toggleInfo'>
                 <!--<svg width="260" height="30">
                 <polygon :points="points"></polygon>
               </svg>
@@ -200,7 +200,6 @@
       },
       toggleInfo() {
         this.infopanel = !this.infopanel
-        this.h = this.h === 1 ? 12 : 1
       }
     }
   }
