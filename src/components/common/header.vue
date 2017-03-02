@@ -18,7 +18,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right" slot='nav'>
         <li v-if='!authed'>
-          <router-link to='/user/reg'><span class="badge">注册</span></router-link>
+          <router-link to='/user/reg'>注册</router-link>
         </li>
         <li class="rich" v-if='authed'>
           <a>&nbsp;</a>
@@ -47,7 +47,7 @@
           </div>
         </li>
         <li>
-          <router-link to='/user/login' v-if='!authed' class='primary'><span class="badge">登入</span></router-link>
+          <router-link to='/user/login' v-if='!authed' class='primary'>登入</router-link>
           <a v-if='authed' @click.prevent='logout'><span>登出</span></a>
         </li>
         <slot name="nav"></slot>

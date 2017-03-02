@@ -148,7 +148,7 @@
       },
       fetchLoginStatus() {
         console.log('验证登录状态')
-        api.userInfo(x => {
+        api.loginInfo(x => {
           console.log(x)
           if ( typeof x === 'string' && x[0] === '<'){
             this.$store.dispatch('setAuthed', false)

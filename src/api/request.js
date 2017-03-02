@@ -148,8 +148,21 @@ export function userReg(cb, { regdata }) {
 /*
  * 获取当前用户信息
  **/
-export function userInfo(cb) {
-  axios.get('/api/user').then((rep) => {
+export function loginInfo(cb) {
+  console.log(cb)
+  axios.get('/api/user/').then((rep) => {
+    cb(rep.data)
+  }).catch(err => {
+    // 处理方式等待更新
+    console.log(err.response.statusText)
+  })
+}
+
+/*
+ * 根据id 获取用户信息
+ **/
+export function userInfo(id, cb) {
+  axios.get('/api/user/' + id).then((rep) => {
     cb(rep.data)
   }).catch(err => {
     // 处理方式等待更新

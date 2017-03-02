@@ -52,6 +52,9 @@ const routes = [{
   path: '/user/login',
   component: UserLogin
 }, {
+  path: '/oauth2/success',
+  redirect: '/user/login'
+}, {
   path: '/user/reg',
   component: UserReg
 }, {

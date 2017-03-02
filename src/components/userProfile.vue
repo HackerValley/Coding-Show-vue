@@ -7,23 +7,26 @@
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1">
           <dl>
-            <dt>id</dt>
-            <dd>{{ userdata._id }}</dd>
-            <dt>用户名</dt>
-            {{ userdata.username }}
-            <dd>{{ userdata.username }}</dd>
-            <dt>邮箱</dt>
-            <dd>{{ userdata.email }}</dd>
+            <dt>头像</dt>
+            <dd>
+              <img v-if='userdata.avatar' :src="userdata.avatar" alt="userdata.nickname">
+              {{ userdata.avatar }}</dd>
             <dt>昵称</dt>
             <dd>{{ userdata.nickname }}</dd>
+            <dt>用户名</dt>
+            <dd>{{ userdata.username }}</dd>
+          </dl>
+          <dl v-if="!publish">
+            <dt>id</dt>
+            <dd>{{ userdata._id }}</dd>
+            <dt>邮箱</dt>
+            <dd>{{ userdata.email }}</dd>
             <dt>技能</dt>
             <dd>{{ userdata.skill }}</dd>
             <dt>最后一次登录时间</dt>
             <dd>{{ userdata.last_login_time }}</dd>
             <dt>创建时间</dt>
             <dd>{{ userdata.create_time }}</dd>
-            <dt>头像</dt>
-            <dd>{{ userdata.avatar }}</dd>
             <dt>账号绑定</dt>
             <dd>{{ userdata.sns_id }}</dd>
             <dt>第三方登陆类型</dt>
@@ -46,7 +49,13 @@ import * as api from '../api/request'
   export default {
     created () {
       // 渲染页面之前，获取登录信息，如果获取不到，说明不是合法的登陆状态，进行登出操作
-      this.getUserInfo()
+      if(this.$route.params.id){
+        this.getUserInfo(this.$route.params.id)
+        this.publish = true
+      } else {
+        this.getLoginInfo()
+        this.publish = false
+      }
     },
     data () {
       return {
@@ -64,12 +73,13 @@ import * as api from '../api/request'
           telephone: 0,
           level: 0,
           email: '',
-        }
+        },
+        publish: false
       }
     },
     methods: {
-      getUserInfo () {
-        api.userInfo((x)=>{
+      getLoginInfo () {
+        api.loginInfo((x)=>{
           console.log(x)
           if(x[0] === '<') {
             console.log('没有登陆')
@@ -78,6 +88,20 @@ import * as api from '../api/request'
             return
           }
           if (x.status === 0) {
+            this.userdata = x.data
+          }
+        })
+      },
+      getUserInfo (id) {
+        api.userInfo(id, (x)=>{
+          console.log('userinfo',x)
+          if(x[0] === '<'){
+            console.log('未登录')
+            this.$store.dispatch('setAuthed', false)
+            this.$router.replace({ path: '/user/login' })
+            return
+          }
+          if( x.status === 0){
             this.userdata = x.data
           }
         })
