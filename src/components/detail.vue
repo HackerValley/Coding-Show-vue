@@ -15,7 +15,7 @@
               项目要求：{{ content.detail }}
             </p>
             <p>
-              图片展示：{{ content.imagePath }}
+              图片展示：
             </p>
             <div class="imgpool">
               <img v-for='img in content.imagePath' :src="img">

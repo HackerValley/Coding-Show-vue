@@ -24,7 +24,7 @@
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label ' for="details">项目要求</label>
             <div class="col-xs-9 col-md-8">
-              <textarea class="form-control" v-model='data.details' rows="7" name="details" id='details' placeholder="项目详情"></textarea>
+              <textarea class="form-control" v-model='data.detail' rows="7" name="details" id='details' placeholder="项目详情"></textarea>
               <p class="form-control-static text-muted">详细描述您项目的所有要点和要求，逐条写清</p>
             </div>
           </div>
