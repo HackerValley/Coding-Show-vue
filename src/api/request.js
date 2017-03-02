@@ -51,10 +51,11 @@ export function getProjDetail(id = '', cb) {
     cb(new Error('需传入项目_id.'))
     return
   }
+  console.info('_id: ', id)
   axios.get('/api/projects/' + id).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
-    cb(err)
+    console.log('api err:', err)
   })
 }
 
@@ -93,7 +94,7 @@ export function addComments(comment, cb) {
  * 更新项目详细信息
  * author: larry
  **/
-export function updateProj(cb, { id, data }) {
+export function updateProj({ id, data }, cb) {
   console.log({ id, data })
   if (!id || !data) {
     console.log('无效更新数据')

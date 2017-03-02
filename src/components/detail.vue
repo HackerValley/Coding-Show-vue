@@ -9,7 +9,7 @@
         <div class="panel panel-info">
           <div class="panel-body">
             <p class="lead">
-              项目概要：{{ content.description }}
+              项目概要：{{ content.description }}  <router-link :to="'/modi/' + content._id" class='btn btn-primary'>修改项目</router-link>
             </p>
             <p>
               项目要求：{{ content.detail }}

@@ -39,7 +39,7 @@
           </div>
           <div class="row imgpool">
             <div class="col-xs-9 col-xs-offset-3 col-sm-10 col-sm-offset-2">
-              <img width="140" height="100" v-for='img in data.imagePath' v-bind:alt='img' src=''>
+              <img width="140" v-for='img in data.imagePath' :src='img'>
             </div>
           </div>
           <div class="form-group">
@@ -85,11 +85,12 @@ import * as api from '../api/request'
 export default{
   beforeMount () {
     // this.request()
-    api.getProjDetail((x)=>{
+    api.getProjDetail(this.$route.params.id, (err, x)=>{
+      console.log('result:',x)
       this.msg = x.msg
       this.status = x.status
-      this.data = x.data
-    }, this.$route.params.id)
+      this.data = x.data[0]
+    })
   },
   data () {
     return {
@@ -109,14 +110,14 @@ export default{
   },
   methods: {
     modify () {
-      api.updateProj((x) => {
+      api.updateProj({ id: this.aim.id, data: this.data}, (x) => {
         this.msg = x.msg
         if(x.msg != 'error'){
           console.log(x)
         } else {
           console.error('update error')
         }
-      }, { id: this.aim.id, data: this.data})
+      })
       return null
     }
   }

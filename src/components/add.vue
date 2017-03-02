@@ -34,15 +34,16 @@
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label' for="imgUpload">上传图像</label>
             <div class="col-xs-8 col-sm-7 col-md-5">
-              <input class="form-control" :type="retype" name="imgUpload" id='imgUpload' multiple="multiple" @change='onFileChange'>
+              <input class="form-control" :type="retype" name="imgUpload" id='imgUpload' multiple="multiple" file-type='img' @change='onFileChange'>
             </div>
             <div class="col-xs-1">
-              <button type="button" class="btn btn-default" @click='uploadMulti'>上传</button>
-              <a @click='switchItype' class="btn btn-danger">切换input type</a>
+              <button type="button" class="btn btn-default" @click="uploadMulti('img')">上传</button>
+              <a @click='discard' class="btn btn-danger">舍弃上传文件</a>
             </div>
           </div>
           <div class="row imgpool">
             <div class="col-xs-9 col-xs-offset-3 col-sm-10 col-sm-offset-2">
+            <p class='text-muted' v-if='data.imagePath.length'><small>点击以舍弃图片</small></p>
               <img v-for='(img,idx) in data.imagePath' :src='img' :alt='idx' v-if='img' @click='removeImg(idx)'>
             </div>
           </div>
@@ -56,7 +57,7 @@
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label' for="imgUpload">开发文档</label>
             <div class="col-xs-8 col-sm-7 col-md-5">
-              <input class="form-control" type="file" name="docUpload" id='docUpload' placeholder="开发文档">
+              <input class="form-control" type="file" file-type='doc' name="docUpload" id='docUpload' placeholder="开发文档">
             </div>
             <div class="col-xs-1">
               <button type="button" class="btn btn-default">上传</button>
@@ -131,7 +132,8 @@
         },
         previewimg:'',
         uploading: false,
-        prepare2upload: [],
+        prepare2uploadimg: [],
+        prepare2uploaddoc: [],
         abortuploads: [],   // 舍弃的文件，等待删除
         msg: '',
         status: -1,
@@ -148,12 +150,22 @@
           'newToast'
         ]),
       addproj() {
+        if(this.prepare2uploaddoc.length + this.prepare2uploadimg.length > 0){
+            this.newToast({
+              type: 'warning',
+              message: '有等待上传的文件'
+            })
+          return
+        }
         api.addProj((x) => {
           this.msg = x.msg
           if (x.msg != 'error') {
             console.log(x)
           } else {
-            console.error('update error')
+            this.newToast({
+              type: 'warning',
+              message: 'update error'
+            })
           }
         }, { data: this.data })
         return null
@@ -168,8 +180,16 @@
             message: '限制5张图片'
           })
         }
-        this.prepare2upload.push(...files)
-        this.createImage(files[0])
+        console.log(files)
+        let targettype = e.target.getAttribute('file-type')
+        console.log(targettype)
+        targettype = targettype || 'img'
+        if(targettype === 'img'){
+          this.prepare2uploadimg.push(...files)
+        } else {
+          // 目前只有两种上传场景
+          this.prepare2uploaddoc.push(...files)
+        }
       },
       createImage(file) {
         console.log(file)
@@ -187,18 +207,42 @@
         // 只管上传不管删除，单文件
         console.log('尝试上传文件')
         let data = new FormData()
-        data.append('attachment', this.prepare2upload[0]);
+        data.append('attachment', this.prepare2uploadimg[0]);
         api.upload(data, (x) => {
           console.log(x)
           this.data.imagePath.push(x.data.pic_src)
         })
       },
-      uploadMulti () {
+      uploadMulti (type) {
         // 顺序上传
-        let files = this.prepare2upload
+        let supportedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']
+        let files
+        if(type !== 'img'){
+          files = this.prepare2uploaddoc
+        }else{
+          files = this.prepare2uploadimg
+        }
+        // 不符合的格式文件不上传
+        files = files.filter((file,idx)=>{
+          if (file && supportedTypes.indexOf(file.type) >= 0) {
+              return true
+            } else {
+              this.newToast({
+                type: 'warning',
+                message: `第${idx}个文件格式不支持上传。${file.type}`
+              })
+              return false
+            }
+
+        })
+
         if(files.length === 0) {
           console.log('无文件')
           return
+        }
+        // 限制上传文件数量
+        if(files.length>8){
+          files = files.slice(0,8)
         }
         this.uploading = true
         let p = Promise.resolve()
@@ -228,7 +272,11 @@
           // 取消按钮的禁用状态
           vm.uploading = false
           // 清空准备上传的文件列表
-          vm.prepare2upload = []
+          if(type !== 'img'){
+            vm.prepare2uploaddoc = []
+          }else{
+            vm.prepare2uploadimg = []
+          }
           // 重置fileupload框状态
           vm.retype=''
           setTimeout(()=>{
@@ -244,6 +292,15 @@
       },
       switchItype () {
         this.retype = (this.retype === 'file')? '':'file'
+      },
+      discard () {
+        // 舍弃上传框的东西
+        this.retype=''
+        setTimeout(()=>{
+          this.retype='file'
+        },0)
+        this.prepare2uploaddoc = []
+        this.prepare2uploadimg = []
       }
     }
   }

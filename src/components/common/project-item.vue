@@ -1,6 +1,6 @@
 <template>
-  <div class="thumbnail item">
-    <router-link :to="'/detail/' + itemdata._id"><img src=""/><span class="blankimg"> </span></router-link>
+  <div class="thumbnail item" :style="imgBg">
+    <router-link :to="'/detail/' + itemdata._id" class='img'><img src="" v-if='!imgsrc'/><span class="blankimg"> </span></router-link>
     <div class="caption">
       <h4><router-link :to="'/detail/' + itemdata._id">{{ itemdata.project_name }}</router-link></h4>
       <div class="intro">
@@ -23,6 +23,26 @@ export default {
   data () {
     return {
       message: ''
+    }
+  },
+  computed: {
+    imgsrc () {
+      let pics = this.itemdata.imagePath.filter((path,idx)=>{
+        return /^(http:\/\/).*(.[jpg|png|gif|pdf])$/.test(path)
+      })
+
+      if(pics.length>0){
+        return this.itemdata.imagePath[0]
+      } else {
+        return ''
+      }
+    },
+    imgBg () {
+      return {
+       'background-image': 'url(' + this.imgsrc + ')',
+       'background-repeat': 'no-repeat',
+       'background-size': '100% auto'
+      }
     }
   },
   filters: {
@@ -55,10 +75,19 @@ export default {
   .item img[src='']{
     display:none
   }
-  span.blankimg{display: none}
-  .item img[src=''] + span.blankimg{
+  .item span.blankimg{display: none}
+
+  .item img[src=''] ~ span.blankimg{
     display: inline-block;
     background: lightskyblue;
+  }
+  .item .img {
+    display:block;
+    height:120px;
+    overflow:hidden
+  }
+  .item div.caption{
+    background:linear-gradient(rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.82),rgb(255, 255, 255),rgb(255, 255, 255));
   }
   .item .intro {
     position: relative;
