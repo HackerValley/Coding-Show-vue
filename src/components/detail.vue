@@ -15,8 +15,11 @@
               项目要求：{{ content.detail }}
             </p>
             <p>
-              原型展示：{{ content.imagePath }}
+              图片展示：{{ content.imagePath }}
             </p>
+            <div class="imgpool">
+              <img v-for='img in content.imagePath' :src="img">
+            </div>
             <p>
               视频介绍：{{ content.project_link }}
             </p>
@@ -143,5 +146,5 @@
   }
   ul.works, ul.works li { list-style: none;margin:0;padding:0}
   ul.works li {display: block;border-bottom: 1px solid #eee;padding:.3em  .6em;}
-
+  .imgpool img{max-width:320px;}
 </style>
