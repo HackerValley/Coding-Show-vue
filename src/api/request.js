@@ -2,11 +2,11 @@ import axios from 'axios'
 
 import querystring from 'querystring'
 
-/* 
+/*
  * 获取项目列表 - 首页，
  * author: larry
  **/
-export function getProjIndex (cb) {
+export function getProjIndex(cb) {
   axios.get('/api/projects/list').then((rep) => {
     cb(rep.data)
   }).catch(err => {
@@ -15,11 +15,11 @@ export function getProjIndex (cb) {
   })
 }
 
-/* 
+/*
  * 获取项目列表 - 我发布的项目，
  * author: larry
  **/
-export function getProjRelease (cb, id = '') {
+export function getProjRelease(cb, id = '') {
   axios.get('/api/projects/release').then((rep) => {
     cb(rep.data)
   }).catch(err => {
@@ -28,11 +28,11 @@ export function getProjRelease (cb, id = '') {
   })
 }
 
-/* 
+/*
  * 获取项目列表 - 我开发的项目，
  * author: larry
  **/
-export function getProjDev (cb, id = '') {
+export function getProjDev(cb, id = '') {
   // /api/projects/development Inter Error
   axios.get('/api/projects/list').then((rep) => {
     cb(rep.data)
@@ -42,11 +42,11 @@ export function getProjDev (cb, id = '') {
   })
 }
 
-/* 
+/*
  * 根据id获取项目详细信息，
  * author: larry
  **/
-export function getProjDetail (id = '', cb) {
+export function getProjDetail(id = '', cb) {
   if (!id) {
     cb(new Error('需传入项目_id.'))
     return
@@ -58,11 +58,11 @@ export function getProjDetail (id = '', cb) {
   })
 }
 
-/* 
+/*
  * 根据id获取项目的评论内容，
  * author: larry
  **/
-export function getProjComments (id = '', cb) {
+export function getProjComments(id = '', cb) {
   if (!id) {
     cb(new Error('需传入项目_id.'))
     return
@@ -74,30 +74,30 @@ export function getProjComments (id = '', cb) {
   })
 }
 
-/* 
+/*
  * 添加评论，
  * author: larry
  **/
-export function addComments (comment, cb) {
+export function addComments(comment, cb) {
   if (!comment.comment) {
     cb(new Error('需传入comment.'))
     return
   }
-  axios.post('/api/comment',querystring.stringify(comment)).then((rep) => {
+  axios.post('/api/comment', querystring.stringify(comment)).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
     cb(err)
   })
 }
-/* 
+/*
  * 更新项目详细信息
  * author: larry
  **/
-export function updateProj (cb, { id, data }) {
-  console.log( { id, data } )
-  if(!id || !data) {
+export function updateProj(cb, { id, data }) {
+  console.log({ id, data })
+  if (!id || !data) {
     console.log('无效更新数据')
-    cb({msg: 'error'})
+    cb({ msg: 'error' })
     return null
   }
   axios.put('/api/projects/' + id, querystring.stringify(data)).then((rep) => {
@@ -108,14 +108,14 @@ export function updateProj (cb, { id, data }) {
   })
 }
 
-/* 
+/*
  * 添加一条新的项目
  **/
-export function addProj (cb, { data }) {
-  console.log( { data } )
-  if( !data) {
+export function addProj(cb, { data }) {
+  console.log({ data })
+  if (!data) {
     console.log('无效数据')
-    cb({msg: 'error'})
+    cb({ msg: 'error' })
     return null
   }
   axios.post('/api/projects/', querystring.stringify(data)).then((rep) => {
@@ -126,14 +126,14 @@ export function addProj (cb, { data }) {
   })
 }
 
-/* 
+/*
  * 注册新用户
  **/
-export function userReg (cb, { regdata }) {
-  console.log( { regdata } )
-  if( !regdata) {
+export function userReg(cb, { regdata }) {
+  console.log({ regdata })
+  if (!regdata) {
     console.log('无效数据')
-    cb({msg: 'client error'})
+    cb({ msg: 'client error' })
     return null
   }
   axios.post('/api/user/register', querystring.stringify(regdata)).then((rep) => {
@@ -144,10 +144,10 @@ export function userReg (cb, { regdata }) {
   })
 }
 
-/* 
+/*
  * 获取当前用户信息
  **/
-export function userInfo (cb) {
+export function userInfo(cb) {
   axios.get('/api/user').then((rep) => {
     cb(rep.data)
   }).catch(err => {
@@ -156,14 +156,14 @@ export function userInfo (cb) {
   })
 }
 
-/* 
+/*
  * 用户登陆
  **/
-export function userLogin (cb, { logindata }) {
-  console.log( { logindata } )
-  if( !logindata) {
+export function userLogin(cb, { logindata }) {
+  console.log({ logindata })
+  if (!logindata) {
     console.log('无效数据')
-    cb({msg: 'client error'})
+    cb({ msg: 'client error' })
     return null
   }
   axios.post('/api/user/login', querystring.stringify(logindata)).then((rep) => {
@@ -174,10 +174,10 @@ export function userLogin (cb, { logindata }) {
   })
 }
 
-/* 
+/*
  * 登出
  **/
-export function logOut (cb) {
+export function logOut(cb) {
   console.log('登出')
   axios.get('/api/user/logout').then((rep) => {
     cb(rep.data)
@@ -187,3 +187,17 @@ export function logOut (cb) {
   })
 }
 
+/*
+ * 上传文件
+ **/
+export function upload(data, cb) {
+  console.log('上传文件 - 单')
+  console.log(data)
+  axios.post('/api/upload', data)
+    .then((rep) => {
+      cb(rep.data)
+    })
+    .catch((err) => {
+      console.log('api', err)
+    })
+}
