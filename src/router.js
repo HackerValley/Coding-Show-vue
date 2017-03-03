@@ -66,16 +66,14 @@ const routes = [{
 }, {
   path: '/add',
   component: Add,
-  meta: { requiresAuth: true }
+  meta: { requiresAuth: true },
+  beforeEnter: (to, from, next) => {
+        console.log(from,to)
+        next()
+      }
 }, {
-  path: '/modi',
-  component: Modify,
-  children: [
-    {
-      path: ':id',
-      component: Modify
-    }
-  ]
+  path: '/modi/:id',
+  component: Add
 }, {
   path: '/detail/:id',
   component: Detail

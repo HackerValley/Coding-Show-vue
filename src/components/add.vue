@@ -1,14 +1,11 @@
 <template>
   <div>
     <div class="row">
-      <h2>{{ act }}项目 <span class="fr"><small><a href="/">返回首页</a></small></span></h2>
+      <h2>{{ aim.act }}项目 <span class="fr"><small><a href="/">返回首页</a></small></span></h2>
       <hr>
     </div>
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1">
-        <div class="well" v-if='msg'>
-          <pre>{{ msg }}</pre>
-        </div>
         <form action="" role="form" class="form-horizontal">
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label ' for="projName">项目名称</label>
@@ -70,7 +67,8 @@
           </div>
           <div class="from-group form-group-lg text-right">
             <hr>
-            <a class="btn btn-lg btn-info" v-on:click='addproj'>{{ aim.act }}</a>
+            <a v-if='aim.act == "添加"' class="btn btn-lg btn-info" v-on:click='addproj'>{{ aim.act }}</a>
+            <a v-if='aim.act == "修改"' class="btn btn-lg btn-info" v-on:click='modify'>{{ aim.act }}</a>
           </div>
         </form>
       </div>
@@ -112,13 +110,56 @@
   import { mapActions } from 'vuex'
 
   export default {
-    beforeMount() {
-      // this.request()
-      // this.data.details = 'aa'
+    beforeRouteEnter(to, from, next) {
+      if(to.params.id){
+        api.getProjDetail(to.params.id, (err, x)=>{
+          if (err) {
+            // display some global error message
+            next(false)
+          } else {
+            if (x.data.length < 1) {
+              next(false)
+              return
+            }
+            next(vm => {
+              // 按照_id获取，只获取第一个。
+              vm.aim.act =  '修改'
+              vm.aim.id = to.params.id
+              vm.msg = x.msg
+              vm.status = x.status
+              vm.data = x.data[0]
+              if(vm.msg !== ''){
+                vm.newToast({
+                  type:'info',
+                  message: vm.msg
+                })
+              }
+            })
+          }
+        })
+      } else {
+        next(vm=>{
+          vm.aim.act='添加'
+          vm.aim.id = ''
+          vm.msg = ''
+          vm.status = -1
+          vm.data = {
+            'description': '',
+            'detail': '',
+            'dev_projects': {},
+            'developer_count': -1,
+            'imagePath': [],
+            'project_link': '',
+            'project_name': ''
+          }
+          vm.discard()
+        })
+      }
     },
     data() {
       return {
         aim: {
+          id: '',
           act: '添加',  // 动作
         },
         data: {
@@ -140,11 +181,7 @@
         retype:'file'
       }
     },
-    computed: {
-      act() {
-        return this.aim.act
-      }
-    },
+    computed: {    },
     methods: {
     ...mapActions([
           'newToast'
@@ -157,17 +194,58 @@
             })
           return
         }
-        api.addProj((x) => {
+        api.addProj({ data: this.data }, (err, x) => {
+          if(err){
+            console.error(err)
+            return
+          }
           this.msg = x.msg
           if (x.msg != 'error') {
-            console.log(x)
+            // console.log(x)
+            this.newToast({
+              type: 'success',
+              message: '添加成功'
+            })
+            setTimeout(() => {
+              this.$router.push({ path: '/home' })
+            },0)
           } else {
             this.newToast({
               type: 'warning',
-              message: 'update error'
+              message: '添加未成功'
             })
           }
-        }, { data: this.data })
+        })
+        return null
+      },
+      modify () {
+        api.updateProj({ id: this.aim.id, data: this.data}, (err, x) => {
+          // this.msg = x.msg
+          if(err){
+            console.error(err)
+            this.newToast({
+              type: 'danger',
+              message: err
+            })
+            return
+          }
+          console.log(x)
+          if(x.msg != 'error' && x.status === 0){
+            this.newToast({
+              type: 'success',
+              message: '更新成功'
+            })
+            setTimeout(() => {
+              this.$router.push({ path: '/detail/' +  this.aim.id})
+            },0)
+          } else {
+            console.error(x.msg)
+            this.newToast({
+              type: 'danger',
+              message: x.msg
+            })
+          }
+        })
         return null
       },
       onFileChange(e) {
