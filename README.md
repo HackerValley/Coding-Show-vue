@@ -1,20 +1,39 @@
 # coding-show-vue
 
-## TODO   
-- [x] Nav 样式优化  
+## TODO
+
+- [x]	oAuth2
+- [x]	Modi/:_id
+- [x] 首页item信息块显示图片
+- 文件上传
+ - [x] 文件上传类型校验
+ - [x] 文件上传框的状态重置
+ - [x] 舍弃使用文件
+ - [ ] 弃用文件的待删除列表
+ - [x] 图片文件的显示
+ - [ ] 图片文件的后缀名判断
+ - [ ] 添加项目时，检查是否有未完成的准备上传
+ - [ ] 上传的进度
+ - [ ] 预览上传
+上传功能模块化
+- [x] Nav 样式优化
  - [x] 用户登录头像状态
- - [x] 下拉菜单。*使用了svg动画*  
- - [ ] Logo  
-- [ ] 详情页面  
-- [ ] list 页面数据缓存。每次页面跳转都请求远程数据是不必要的  
-- [ ] api.js中请求失败的错误信息处理方式，[参考](https://github.com/vuejs/vue-router/tree/dev/examples/data-fetching)  
-- [ ] auth-flow 参照vue-router示例，进行验证。  
-- [ ] 后台api  
-- [x] 页码做成使用Vuex的，这样就不需要每个页面都重复写一遍页码部分的代码了。可以做成组件。  
-- [x] 分页的路由。  
- - [x] 动态路由 匹配  
-- [x] router 文件独立，设置懒加载。  
-- [x] router-view 添加过渡效果。  
+ - [x] 下拉菜单。*使用了svg动画*
+ - [ ] Logo
+- [x] 详情页面
+- [ ] list 页面数据缓存。每次页面跳转都请求远程数据是不必要的
+- [x] api.js中请求失败的错误信息处理方式，[参考](https://github.com/vuejs/vue-router/tree/dev/examples/data-fetching)
+  - 更改request.js中api的参数和回调函数传入顺序
+- [x] auth-flow 参照vue-router示例，进行验证。
+- [x] 后台api
+- [x] 页码做成使用Vuex的，这样就不需要每个页面都重复写一遍页码部分的代码了。可以做成组件。
+- [x] 分页的路由。
+ - [x] 动态路由 匹配
+- [x] router 文件独立，设置懒加载。
+- [x] router-view 添加过渡效果。
+- 导航跳转
+ - [x] 添加和修改复用一个vue模板
+ - [x] 添加和修改成功之后，分别跳转home页、详情页
 
 > Vue version Coding-Show
 
