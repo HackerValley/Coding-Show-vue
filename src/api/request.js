@@ -52,6 +52,7 @@ export function getProjDetail(id = '', cb) {
     return
   }
   console.info('_id: ', id)
+  // return new Error('这儿调用了两次？！')
   axios.get('/api/projects/' + id).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
@@ -95,24 +96,23 @@ export function addComments(comment, cb) {
  * author: larry
  **/
 export function updateProj({ id, data }, cb) {
-  console.log({ id, data })
   if (!id || !data) {
     console.log('无效更新数据')
     cb({ msg: 'error' })
     return null
   }
   axios.put('/api/projects/' + id, querystring.stringify(data)).then((rep) => {
-    cb(rep.data)
+    cb(null, rep.data)
   }).catch(err => {
+    cb(err)
     // 处理方式等待更新
-    console.log(err.response.statusText)
   })
 }
 
 /*
  * 添加一条新的项目
  **/
-export function addProj(cb, { data }) {
+export function addProj({ data }, cb) {
   console.log({ data })
   if (!data) {
     console.log('无效数据')
@@ -120,10 +120,10 @@ export function addProj(cb, { data }) {
     return null
   }
   axios.post('/api/projects/', querystring.stringify(data)).then((rep) => {
-    cb(rep.data)
+    cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
-    console.log(err.response.statusText)
+    cb(err)
   })
 }
 

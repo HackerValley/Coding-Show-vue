@@ -86,7 +86,7 @@ export default{
   beforeMount () {
     // this.request()
     api.getProjDetail(this.$route.params.id, (err, x)=>{
-      console.log('result:',x)
+      // console.log('result:',x)
       this.msg = x.msg
       this.status = x.status
       this.data = x.data[0]
