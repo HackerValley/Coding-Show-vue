@@ -140,6 +140,9 @@
   import * as api from '../../api/request.js'
   export default {
     name: 'header',
+    mounted () {
+      // 每次重载，刷新一下 用户avatar
+    },
     data() {
       // var defaultSides = 10
       // var h = 12 // 默认吞掉的高度

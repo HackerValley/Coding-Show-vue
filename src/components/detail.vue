@@ -128,6 +128,15 @@
     methods: {
       likes() {
         console.log('点赞 + ')
+        if(!this.content._id){
+          return
+        }
+        console.log(this.content._id)
+        let pid = this.content._id
+        api.thumbup({pid},(x)=>{
+          console.log(x)
+          this.content.star_count += 1
+        })
       },
       partake() {
         console.log('参与 + ')

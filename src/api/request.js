@@ -215,3 +215,19 @@ export function upload(data, cb) {
       console.log('api', err)
     })
 }
+
+/*
+ * 点赞
+ *  */
+export function thumbup(data, cb) {
+  console.log('点赞')
+  // TODO 节流
+  console.log(data)
+  axios.post('/api/projects/star', data)
+    .then((rep) => {
+      cb(rep.data)
+    })
+    .catch((err) => {
+      console.log('api', err)
+    })
+}
