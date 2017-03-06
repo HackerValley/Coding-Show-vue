@@ -17,41 +17,42 @@ import { mapActions } from 'vuex'
 import ProjectItem from './common/project-item'
 
 export default {
-  created () {
-    this.getDev()
+  beforeRouteEnter(to, from, next) {
+    let page_num = to.params.page || 1
+    let page_size = to.params.size || 10
+    next(vm=>{
+      console.log('设置页码')
+      vm.getDev(page_num)
+    })
+  },
+  beforeRouteUpdate(to, from, next) {
+    if(this){
+      console.log(this.page_num)
+      console.log('get')
+      this.getDev(to.params.page)
+    }
+    next()
   },
   data () {
     return {
       msg: '',
       status: -1,
       list:[],
-      page_num:-1,
-      page_size:-1,
-      page_total:-1,
-      project_total:-1,
     }
   },
   computed: {
     username () {
       return this.$store.state.identity.username
-    },
-    page_nums: function () {
-      let arr = [];
-      for (var i = 0;i<5; i++){
-        arr[i] = this.page_num -2 + i
-      }
-      console.log(arr)
-      return arr.filter((val)=>{
-        return (val>0 && val<=this.page_total)
-      })
     }
   },
   methods: {
     ...mapActions([
-      'newToast', 'getPage'
+      'newToast', 'setPage'
     ]),
-    getDev () {
-      api.getProjDev((x)=>{
+    getDev (page_num) {
+      page_num = page_num || 1
+      let uid = null
+      api.getProjDev({page_num, uid}, (err, x)=>{
         let pagedata = null
         this.msg = x.msg
         if(x.status === 0){
@@ -64,7 +65,7 @@ export default {
             project_total: x.data.project_total
           })
         }
-        this.getPage(pagedata)
+        this.setPage(pagedata)
         this.newToast({
           type: 'info',
           message: this.msg

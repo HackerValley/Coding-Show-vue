@@ -60,7 +60,7 @@ export default {
         // console.log(x)
         if (err) {
           // display some global error message
-          
+
         } else {
           this.wrap = x
         }
@@ -95,7 +95,7 @@ export default {
     },
     ...mapActions([
       'newToast',
-      'getPage'
+      'setPage'
     ])
   }
 }

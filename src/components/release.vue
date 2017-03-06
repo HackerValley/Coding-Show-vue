@@ -7,7 +7,8 @@
     <div class="row">
       <h1 v-if='msg === "没有项目"' style="text-align:center">没有项目</h1>
       <div class="col-xs-6 col-sm-6 col-md-3" v-for='item in list'>
-        <project-item :itemdata
+        <project-item :itemdata='item'></project-item>
+      </div>
     </div>
   </div>
 </template>
@@ -48,11 +49,11 @@ export default {
   },
   methods: {
     ...mapActions([
-      'newToast', 'getPage'
+      'newToast', 'setPage'
     ]),
-    getRelease () {
+    getRelease (page) {
       console.log(this.$route.params.page || 1)
-      api.getProjRelease((x)=>{
+      api.getProjRelease({}, (err, x)=>{
         let pagedata = null
         this.msg = x.msg
         if(x.status === 0){
@@ -65,7 +66,7 @@ export default {
             project_total: x.data.project_total
           })
         }
-        this.getPage(pagedata)
+        this.setPage(pagedata)
         this.newToast({
           type: 'info',
           message: this.msg

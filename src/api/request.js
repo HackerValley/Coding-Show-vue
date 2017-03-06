@@ -6,12 +6,12 @@ import querystring from 'querystring'
  * 获取项目列表 - 首页，
  * author: larry
  **/
-export function getProjIndex(cb) {
-  axios.get('/api/projects/list').then((rep) => {
-    cb(rep.data)
+export function getProjIndex({ page_num = 1, page_size = 10},cb) {
+  axios.get(`/api/projects/list?page_num=${page_num}&page_size=${page_size}`).then((rep) => {
+    cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
-    console.log(err.response.statusText)
+    cb(err)
   })
 }
 
@@ -19,9 +19,9 @@ export function getProjIndex(cb) {
  * 获取项目列表 - 我发布的项目，
  * author: larry
  **/
-export function getProjRelease(cb, id = '') {
+export function getProjRelease({uid}, cb) {
   axios.get('/api/projects/release').then((rep) => {
-    cb(rep.data)
+    cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
     console.log(err.response.statusText)
@@ -32,10 +32,10 @@ export function getProjRelease(cb, id = '') {
  * 获取项目列表 - 我开发的项目，
  * author: larry
  **/
-export function getProjDev(cb, id = '') {
+export function getProjDev({page_num = 1, page_size = 10, uid}, cb) {
   // /api/projects/development Inter Error
-  axios.get('/api/projects/list').then((rep) => {
-    cb(rep.data)
+  axios.get(`/api/projects/list?page_num=${page_num}&page_size=${page_size}`).then((rep) => {
+    cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
     console.log(err.response.statusText)

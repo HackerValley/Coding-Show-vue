@@ -17,33 +17,34 @@
   import ProjectItem from './common/project-item'
 
   export default {
-    created () {
-      this.getHome()
+    beforeRouteEnter(to, from, next) {
+      let page_num = to.params.page || 1
+      let page_size = to.params.size || 10
+      next(vm=>{
+        console.log('设置页码')
+        vm.getHome(page_num)
+      })
+    },
+    beforeRouteUpdate(to, from, next) {
+      if(this){
+        console.log(this.page_num)
+        console.log('get')
+        this.getHome(to.params.page)
+      }
+      next()
     },
     data () {
       return {
-        list:[],
-        page_num:-1,
-        page_size:-1,
-        page_total:-1,
-        project_total:-1,
+        list: [],
       }
     },
     computed: {
-      page_nums: function () {
-        let arr = [];
-        for (var i = 0;i<5; i++){
-          arr[i] = this.page_num -2 + i
-        }
-        console.log(arr)
-        return arr.filter((val)=>{
-          return (val>0 && val<=this.page_total)
-        })
-      }
+
     },
     methods: {
-      getHome () {
-        api.getProjIndex((x)=>{
+      getHome (page_num) {
+        page_num = page_num || 1
+        api.getProjIndex({page_num},(err,x)=>{
           let pagedata = null
           this.msg = x.msg
           if(x.status === 0){
@@ -56,7 +57,7 @@
               project_total: x.data.project_total
             })
           }
-          this.getPage(pagedata)
+          this.setPage(pagedata)
           this.newToast({
             type: 'info',
             message: this.msg
@@ -65,7 +66,7 @@
       },
       ...mapActions([
           'newToast',
-          'getPage'
+          'setPage'
         ])
     },
     components: {
