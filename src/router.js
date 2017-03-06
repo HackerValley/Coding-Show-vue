@@ -25,7 +25,7 @@ const AdminExpert = r => require.ensure([], () => r(require('./components/adminE
 /* 启用路由 */
 const routes = [{
   path: '/',
-  redirect: '/page-map'
+  redirect: '/home'
 }, {
   path: '/page-map',
   component: PageMap
@@ -68,9 +68,9 @@ const routes = [{
   component: Add,
   meta: { requiresAuth: true },
   beforeEnter: (to, from, next) => {
-        console.log(from,to)
-        next()
-      }
+    console.log(from, to)
+    next()
+  }
 }, {
   path: '/modi/:id',
   component: Add
@@ -112,7 +112,10 @@ const routes = [{
 }]
 
 export const router = new VueRouter({
-  /* mode: 'history',*/
-  routes
+  mode: 'history',
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
 

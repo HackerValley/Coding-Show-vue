@@ -16,5 +16,6 @@ export const TOAST_SHIFT = 'TOAST_SHIFT'
 export const TOAST_NEW = 'TOAST_NEW'
 
 // pagination module
+
 // 页码数据赋值
-export const GET_PAGE_DATA = 'GET_PAGE_DATA'
+export const SET_PAGE_DATA = 'SET_PAGE_DATA'

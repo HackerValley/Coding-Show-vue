@@ -1,14 +1,14 @@
 <template>
   <nav class="text-center" v-if='display'>
     <ul class="pagination pagination-lg">
-      <li class="previous" :class="{disabled: !pagination.prev}">
-        <router-link :to='basePath'>← </router-link>
+      <li class="previous" :class="{disabled: pagination.prev}">
+        <router-link :to='basePath + "/" +(page_num - 1)'>← </router-link>
       </li>
       <li v-for='page in pagination.available'>
-        <router-link :to='basePath'>{{ page }}</router-link>
+        <router-link :to='basePath + "/" +page'>{{ page }}</router-link>
       </li>
-      <li class="next" :class="{disabled: !pagination.next}">
-        <router-link :to='basePath'> →</router-link>
+      <li class="next" :class="{disabled: pagination.next}">
+        <router-link :to='basePath + "/" +(page_num + 1)'> →</router-link>
       </li>
     </ul>
   </nav>
@@ -42,7 +42,14 @@ import { mapGetters, mapActions } from 'vuex'
         return listpage.indexOf(m) !== -1
       },
       basePath () {
-        return this.$route.path
+        return this.$route.matched[0].path
+      },
+      page_num () {
+        let pagenum = this.$route.params.page
+        if(!pagenum || pagenum < 0 ){
+          pagenum = 1
+        }
+        return pagenum
       }
     }
   }
