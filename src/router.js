@@ -25,7 +25,7 @@ const AdminExpert = r => require.ensure([], () => r(require('./components/adminE
 /* 启用路由 */
 const routes = [{
   path: '/',
-  redirect: '/page-map'
+  redirect: '/home'
 }, {
   path: '/page-map',
   component: PageMap
