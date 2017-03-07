@@ -70,6 +70,7 @@ export default {
 </script>
 <style>
 .fr{float: right}
+#wrapper{background: rgb(244,244,244)}
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s ease;
 }
