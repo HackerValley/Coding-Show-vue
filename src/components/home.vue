@@ -48,7 +48,6 @@
           let pagedata = null
           this.msg = x.msg
           if(x.status === 0){
-            this.msg = '已' + x.msg
             this.list = x.data.list
             pagedata = ({
               page_num: x.data.page_num,
@@ -58,10 +57,7 @@
             })
           }
           this.setPage(pagedata)
-          this.newToast({
-            type: 'info',
-            message: this.msg
-          })
+
         })
       },
       ...mapActions([

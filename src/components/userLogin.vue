@@ -51,8 +51,15 @@
         this.$router.go(-1)
       }
     },
-    created() {
-      this.fetchLoginStatus()
+    beforeRouteEnter: (to, from, next) => {
+      next(vm=>{
+        vm.fetchLoginStatus()
+      })
+    },
+    beforeRouteUpdate(){
+      if(this){
+        this.fetchLoginStatus()
+      }
     },
     data() {
       return {

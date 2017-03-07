@@ -58,11 +58,10 @@ export default {
   .item {
     overflow: hidden;
     box-sizing: border-box;
-    background: rgba(0, 0, 0, .01);
     margin: 10px -6px;
     padding: 0;
-    box-shadow: 0 1px 0px 0 rgba(0, 0, 0, .3);
-    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+    border-radius: 3px;
   }
 
   .item img,.item span.blankimg {
