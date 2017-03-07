@@ -20,7 +20,7 @@ export function getProjIndex({ page_num = 1, page_size = 10},cb) {
  * author: larry
  **/
 export function getProjRelease({uid}, cb) {
-  axios.get('/api/projects/release').then((rep) => {
+  axios.get('/api/projects/mine?query_type=release').then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
@@ -34,7 +34,7 @@ export function getProjRelease({uid}, cb) {
  **/
 export function getProjDev({page_num = 1, page_size = 10, uid}, cb) {
   // /api/projects/development Inter Error
-  axios.get(`/api/projects/list?page_num=${page_num}&page_size=${page_size}`).then((rep) => {
+  axios.get(`/api/projects/mine?query_type=develop`).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
