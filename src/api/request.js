@@ -6,7 +6,7 @@ import querystring from 'querystring'
  * 获取项目列表 - 首页，
  * author: larry
  **/
-export function getProjIndex({ page_num = 1, page_size = 10},cb) {
+export function getProjIndex({ page_num = 1, page_size = 12},cb) {
   axios.get(`/api/projects/list?page_num=${page_num}&page_size=${page_size}`).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
@@ -19,8 +19,8 @@ export function getProjIndex({ page_num = 1, page_size = 10},cb) {
  * 获取项目列表 - 我发布的项目，
  * author: larry
  **/
-export function getProjRelease({uid}, cb) {
-  axios.get('/api/projects/mine?query_type=release').then((rep) => {
+export function getProjRelease({page_num = 1, page_size = 12}, cb) {
+  axios.get(`/api/projects/mine?query_type=release&page_num=${page_num}&page_size=${page_size}`).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
@@ -32,9 +32,9 @@ export function getProjRelease({uid}, cb) {
  * 获取项目列表 - 我开发的项目，
  * author: larry
  **/
-export function getProjDev({page_num = 1, page_size = 10, uid}, cb) {
+export function getProjDev({page_num = 1, page_size = 12}, cb) {
   // /api/projects/development Inter Error
-  axios.get(`/api/projects/mine?query_type=develop`).then((rep) => {
+  axios.get(`/api/projects/mine?query_type=develop&page_num=${page_num}&page_size=${page_size}`).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
@@ -174,7 +174,7 @@ export function userInfo(id, cb) {
  * 用户登陆
  **/
 export function userLogin(cb, { logindata }) {
-  console.log({ logindata })
+  // console.log({ logindata })
   if (!logindata) {
     console.log('无效数据')
     cb({ msg: 'client error' })

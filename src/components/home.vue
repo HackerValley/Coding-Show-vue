@@ -27,8 +27,7 @@
     },
     beforeRouteUpdate(to, from, next) {
       if(this){
-        console.log(this.page_num)
-        console.log('get')
+        // console.log('page', this.page_num)
         this.getHome(to.params.page)
       }
       next()
