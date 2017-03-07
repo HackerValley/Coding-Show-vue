@@ -39,6 +39,41 @@ export default {
       tips: []
     }
   },
+  beforeCreate () {
+    // console.log('find this :',this)
+    api.loginInfo(x => {
+      // console.log(x)
+      if ( typeof x === 'string' && x[0] === '<'){
+        this.$store.dispatch('setAuthed', false)
+        this.$store.dispatch('setIdentity', {})
+        console.log('未登录')
+        return 0
+      }
+      if (x.status != 0) {
+        this.newToast({
+          type: 'danger',
+          message: '服务器有点异常，登录功能可能无用'
+        })
+        return
+      }
+      this.$store.dispatch('setAuthed', true)
+      var identity = {
+        avatar: x.data.avatar,
+        nickname: x.data.nickname,
+        level: x.data.level,
+        skill: x.data.skill,
+        last_login_time: x.data.last_login_time,
+        sns_type: x.data.sns_type
+      }
+      this.$store.dispatch('setIdentity', identity)
+      if (x.data.username) {
+        this.newToast({
+          type: 'success',
+          message: '已登录'
+        })
+      }
+    })
+  },
   methods:{
     add2: function (tmptip) {
       console.log(tmptip)

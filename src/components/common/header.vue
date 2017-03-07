@@ -9,7 +9,7 @@
           <router-link to='/home'>开源项目</router-link>
         </li>
         <li>
-          <router-link to='/' class='disable'>运营的项目</router-link>
+          <router-link to='/page-map' class='disable'>运营的项目</router-link>
         </li>
         <li>
           <router-link to='/admin/skill'>专业用户入口</router-link>
@@ -185,7 +185,7 @@
         let username = this.$store.state.identity.username
         let defaultA = '/static/assets/figure_blank.png'
         let avatar = this.$store.state.identity.avatar
-        avatar = avatar === '' ? defaultA : avatar
+        avatar = avatar ? avatar : defaultA
         return { username, avatar }
       }
     },
