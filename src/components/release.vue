@@ -18,46 +18,45 @@ import { mapActions } from 'vuex'
 import ProjectItem from './common/project-item'
 
 export default {
-  created () {
-    this.getRelease()
+  beforeRouteEnter(to, from, next) {
+    let page_num = to.params.page || 1
+    let page_size = to.params.size || 10
+    next(vm=>{
+      console.log('设置页码')
+      vm.getRelease(page_num)
+    })
+  },
+  beforeRouteUpdate(to, from, next) {
+    if(this){
+      console.log('page',this.page_num)
+      this.getRelease(to.params.page)
+    }
+    next()
   },
   data () {
     return {
       msg: '',
       status: -1,
-      list:[],
-      page_num:-1,
-      page_size:-1,
-      page_total:-1,
-      project_total:-1,
+      list:[]
     }
   },
   computed: {
     username () {
       return this.$store.state.identity.username
-    },
-    page_nums: function () {
-      let arr = [];
-      for (var i = 0;i<5; i++){
-        arr[i] = this.page_num -2 + i
-      }
-      console.log(arr)
-      return arr.filter((val)=>{
-        return (val>0 && val<=this.page_total)
-      })
     }
   },
   methods: {
     ...mapActions([
       'newToast', 'setPage'
     ]),
-    getRelease (page) {
-      console.log(this.$route.params.page || 1)
-      api.getProjRelease({}, (err, x)=>{
+    getRelease (page_num) {
+      page_num = page_num || 1
+      // console.log(this.$route.params.page || 1)
+      api.getProjRelease({page_num}, (err, x)=>{
         let pagedata = null
         this.msg = x.msg
         if(x.status === 0){
-          this.msg = '已' + x.msg
+          this.msg = '已获取列表'
           this.list = x.data.list
           pagedata = ({
             page_num: x.data.page_num,
