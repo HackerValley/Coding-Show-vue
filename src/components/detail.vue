@@ -9,7 +9,8 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <p class="lead">
-              项目概要：{{ content.description }}  <router-link :to="'/modi/' + content._id" class='btn btn-primary'>修改项目</router-link>
+              项目概要：{{ content.description }}
+              <router-link :to="'/modi/' + content._id" class='btn btn-primary'>修改项目</router-link>
             </p>
             <p>
               项目要求：{{ content.detail }}
@@ -37,7 +38,7 @@
             <h3 class="panel-title">项目概况</h3>
             <br>
             <p>星星数目 {{ content.star_count }}</p>
-            <a class="btn btn-default" @click.prevent='likes'><span class="glyphicon glyphicon-thumbs-up"></span> 点赞</a>
+            <button type='button' class="btn btn-default" @click.prevent='likes' :disabled="'likes' | checkdisable(disables)"><span class="glyphicon glyphicon-thumbs-up"></span> 点赞</button>
           </div>
         </div>
         <div class="panel panel-default partake">
@@ -61,7 +62,7 @@
             <a class="btn btn-default" :class="{disabled: !partake}" @click.prevent='partake'><span class="glyphicon glyphicon-link"></span> 参与</a>
           </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-default" v-show='false'>
           <div class="panel-heading">
             <h3 class="panel-title">已经开发完成的作品</h3>
           </div>
@@ -90,20 +91,19 @@
         content: {},
         status: null,
         msg: null,
-        partake: null,  // 参与开发
-        works:[
-          {
-            name: '作品1',
-            url: 'http://...github.com...',
-            following: 1020,
-            stars: 2040,
-          },{
-            name: '作品2',
-            url: 'http://...github.com...',
-            following: 21020,
-            stars: 12040,
-          }
-        ]
+        partake: null, // 参与开发
+        disables: [],
+        works: [{
+          name: '作品1',
+          url: 'http://...github.com...',
+          following: 1020,
+          stars: 2040,
+        }, {
+          name: '作品2',
+          url: 'http://...github.com...',
+          following: 21020,
+          stars: 12040,
+        }]
       }
     },
     beforeRouteEnter(to, from, next) {
@@ -127,19 +127,35 @@
     },
     methods: {
       likes() {
+        // 点赞按钮禁用
+        this.disables.push('likes')
         console.log('点赞 + ')
-        if(!this.content._id){
+        if (!this.content._id) {
           return
         }
-        console.log(this.content._id)
+        // console.log(this.content._id)
         let pid = this.content._id
-        api.thumbup({pid},(x)=>{
-          console.log(x)
-          this.content.star_count += 1
+        api.thumbup({ pid }, (err,x) => {
+          if(err){
+            console.error('api catch', err)
+          } else {
+            console.log('success',x)
+            this.content.star_count += 1
+          }
+          // 点赞按钮启用
+          this.disables.splice(this.disables.indexOf('likes'),1)
         })
       },
       partake() {
         console.log('参与 + ')
+      }
+    },
+    filters: {
+      checkdisable (target, pool) {
+        if (pool.indexOf(target))
+          return null
+        else
+          return 1
       }
     },
     components: {
@@ -149,11 +165,30 @@
 
 </script>
 <style>
-  .partake .panel-body span {display: inline-block;padding-right: .6em;}
+  .partake .panel-body span {
+    display: inline-block;
+    padding-right: .6em;
+  }
+
   .partake .panel-body span label::before {
     content: '参与'
   }
-  ul.works, ul.works li { list-style: none;margin:0;padding:0}
-  ul.works li {display: block;border-bottom: 1px solid #eee;padding:.3em  .6em;}
-  .imgpool img{max-width:320px;}
+
+  ul.works,
+  ul.works li {
+    list-style: none;
+    margin: 0;
+    padding: 0
+  }
+
+  ul.works li {
+    display: block;
+    border-bottom: 1px solid #eee;
+    padding: .3em .6em;
+  }
+
+  .imgpool img {
+    max-width: 320px;
+  }
+
 </style>
