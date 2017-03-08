@@ -35,7 +35,7 @@
             </div>
             <div class="col-xs-1">
               <button type="button" class="btn btn-default" @click="uploadMulti('img')">上传</button>
-              <a @click='discard' class="btn btn-danger">舍弃上传文件</a>
+              <a @click='discard' class="btn btn-text">清除</a>
             </div>
           </div>
           <div class="row imgpool">
