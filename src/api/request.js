@@ -220,14 +220,14 @@ export function upload(data, cb) {
  * 点赞
  *  */
 export function thumbup(data, cb) {
-  console.log('点赞')
+  // console.log('点赞')
   // TODO 节流
-  console.log(data)
+  // console.log(data)
   axios.post('/api/projects/star', data)
-    .then((rep) => {
-      cb(rep.data)
+    .then((reponse) => {
+      cb(null, reponse.data)
     })
     .catch((err) => {
-      console.log('api', err)
+      cb(err)
     })
 }

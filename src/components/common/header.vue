@@ -8,7 +8,7 @@
           <span class="icon-bar" data-target="navbar"></span>
           <span class="icon-bar" data-target="navbar"></span>
         </button>
-        <a href='#' class="navbar-brand" v-text='sitename'>Coding-Show</a>
+        <router-link to='/home' class="navbar-brand" v-text='sitename'>Coding-Show</router-link>
       </div>
       <div class="collapse navbar-collapse" :class="{in:toggles.indexOf('navbar') !== -1 }" id="navbar-collapse">
         <ul class="nav navbar-nav" slot='nav-left'>
@@ -27,6 +27,9 @@
           <li v-if='!authed'>
             <router-link to='/user/reg'>注册</router-link>
           </li>
+          <li>
+            <router-link to='/user/login' v-if='!authed' class='primary'>登入</router-link>
+          </li>
           <li class="dropdown" :class="{open: toggles.indexOf('user') !== -1 }" v-if='authed'>
             <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" data-target="user" @click='toggleItem'>
               <span class="avatar" data-target='user'>
@@ -37,14 +40,14 @@
             <ul class="dropdown-menu" @click='toggleClear'>
               <router-link to='/add' active-class='active' tag='li'><a>添加项目</a></router-link>
               <router-link to='/user/release' active-class='active' tag='li'><a>我发布的项目</a></router-link>
-              <router-link to='/user/develop' active-class='active' tag='li'><a>我开发的项目</a></router-link>
+              <!--
+                <router-link to='/user/develop' active-class='active' tag='li'><a>我开发的项目</a></router-link>
+              -->
+              <li role="separator" class="divider"></li>
               <router-link to='/user/profile' active-class='active' tag='li'><a>个人资料</a></router-link>
               <li role="separator" class="divider"></li>
+              <li> <a v-if='authed' @click.prevent='logout'><span>登出</span></a> </li>
             </ul>
-          </li>
-          <li>
-            <router-link to='/user/login' v-if='!authed' class='primary'>登入</router-link>
-            <a v-if='authed' @click.prevent='logout'><span>登出</span></a>
           </li>
           <li class="rich" v-if='authed'>
             <a>&nbsp;</a>

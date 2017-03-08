@@ -34,8 +34,8 @@
               <input class="form-control" :type="retype" name="imgUpload" id='imgUpload' multiple="multiple" file-type='img' @change='onFileChange'>
             </div>
             <div class="col-xs-1">
-              <button type="button" class="btn btn-default" @click="uploadMulti('img')">上传</button>
-              <a @click='discard' class="btn btn-danger">舍弃上传文件</a>
+              <button type="button" class="btn btn-default" @click="uploadMulti('img')" :disabled="'imgupload' | checkdisable(disables)">上传</button>
+              <button type="button" class="btn btn-text" @click='discard' :disabled="'，'">清除</button>
             </div>
           </div>
           <div class="row imgpool">
@@ -162,6 +162,7 @@
           id: '',
           act: '添加',  // 动作
         },
+        disables:[],
         data: {
           'description': '',
           'detail': '',
@@ -173,15 +174,23 @@
         },
         previewimg:'',
         uploading: false,
-        prepare2uploadimg: [],
-        prepare2uploaddoc: [],
-        abortuploads: [],   // 舍弃的文件，等待删除
+        prepare2uploadimg: [],  // 准备上传的图片
+        prepare2uploaddoc: [],  // 准备上传的文档
+        abortuploads: [],       // 舍弃的文件，等待删除
         msg: '',
         status: -1,
         retype:'file'
       }
     },
-    computed: {    },
+    computed: { },
+    filters: {
+      checkdisable (target, pool) {
+        if (pool.indexOf(target))
+          return null
+        else
+          return 1
+      }
+    },
     methods: {
     ...mapActions([
           'newToast'
@@ -316,13 +325,18 @@
 
         if(files.length === 0) {
           console.log('无文件')
+          this.newToast({
+            type: 'warning',
+            message: `无文件`
+          })
           return
         }
         // 限制上传文件数量
         if(files.length>8){
           files = files.slice(0,8)
         }
-        this.uploading = true
+        // 上传按钮变禁用状态
+        this.disables.push('imgupload')
         let p = Promise.resolve()
         let vm = this
         let tasks = new Array(files.length).fill(
@@ -348,7 +362,7 @@
         }, Promise.resolve()).then((x)=>{
           console.log('一共',x,"个文件")
           // 取消按钮的禁用状态
-          vm.uploading = false
+          vm.disables.splice(vm.disables.indexOf('imgupload'),1)
           // 清空准备上传的文件列表
           if(type !== 'img'){
             vm.prepare2uploaddoc = []
