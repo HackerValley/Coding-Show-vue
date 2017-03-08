@@ -40,7 +40,7 @@
           </div>
           <div class="row imgpool">
             <div class="col-xs-9 col-xs-offset-3 col-sm-10 col-sm-offset-2">
-            <p class='text-muted' v-if='data.imagePath.length'><small>点击以舍弃图片</small></p>
+              <p class='text-muted' v-if='data.imagePath.length'><small>点击以舍弃图片</small></p>
               <img v-for='(img,idx) in data.imagePath' :src='img' :alt='idx' v-if='img' @click='removeImg(idx)'>
             </div>
           </div>
@@ -104,15 +104,18 @@
     height: 100px;
     text-align: center
   }
+
 </style>
 <script>
   import * as api from '../api/request'
-  import { mapActions } from 'vuex'
+  import {
+    mapActions
+  } from 'vuex'
 
   export default {
     beforeRouteEnter(to, from, next) {
-      if(to.params.id){
-        api.getProjDetail(to.params.id, (err, x)=>{
+      if (to.params.id) {
+        api.getProjDetail(to.params.id, (err, x) => {
           if (err) {
             // display some global error message
             next(false)
@@ -123,14 +126,14 @@
             }
             next(vm => {
               // 按照_id获取，只获取第一个。
-              vm.aim.act =  '修改'
+              vm.aim.act = '修改'
               vm.aim.id = to.params.id
               vm.msg = x.msg
               vm.status = x.status
               vm.data = x.data[0]
-              if(vm.msg !== ''){
+              if (vm.msg !== '') {
                 vm.newToast({
-                  type:'info',
+                  type: 'info',
                   message: vm.msg
                 })
               }
@@ -138,8 +141,8 @@
           }
         })
       } else {
-        next(vm=>{
-          vm.aim.act='添加'
+        next(vm => {
+          vm.aim.act = '添加'
           vm.aim.id = ''
           vm.msg = ''
           vm.status = -1
@@ -160,9 +163,9 @@
       return {
         aim: {
           id: '',
-          act: '添加',  // 动作
+          act: '添加', // 动作
         },
-        disables:[],
+        disables: [],
         data: {
           'description': '',
           'detail': '',
@@ -172,19 +175,19 @@
           'project_link': '',
           'project_name': ''
         },
-        previewimg:'',
+        previewimg: '',
         uploading: false,
-        prepare2uploadimg: [],  // 准备上传的图片
-        prepare2uploaddoc: [],  // 准备上传的文档
-        abortuploads: [],       // 舍弃的文件，等待删除
+        prepare2uploadimg: [], // 准备上传的图片
+        prepare2uploaddoc: [], // 准备上传的文档
+        abortuploads: [], // 舍弃的文件，等待删除
         msg: '',
         status: -1,
-        retype:'file'
+        retype: 'file'
       }
     },
-    computed: { },
+    computed: {},
     filters: {
-      checkdisable (target, pool) {
+      checkdisable(target, pool) {
         if (pool.indexOf(target))
           return null
         else
@@ -192,19 +195,21 @@
       }
     },
     methods: {
-    ...mapActions([
-          'newToast'
-        ]),
+      ...mapActions([
+        'newToast'
+      ]),
       addproj() {
-        if(this.prepare2uploaddoc.length + this.prepare2uploadimg.length > 0){
-            this.newToast({
-              type: 'warning',
-              message: '有等待上传的文件'
-            })
+        if (this.prepare2uploaddoc.length + this.prepare2uploadimg.length > 0) {
+          this.newToast({
+            type: 'warning',
+            message: '有等待上传的文件'
+          })
           return
         }
-        api.addProj({ data: this.data }, (err, x) => {
-          if(err){
+        api.addProj({
+          data: this.data
+        }, (err, x) => {
+          if (err) {
             console.error(err)
             return
           }
@@ -216,8 +221,10 @@
               message: '添加成功'
             })
             setTimeout(() => {
-              this.$router.push({ path: '/home' })
-            },0)
+              this.$router.push({
+                path: '/home'
+              })
+            }, 0)
           } else {
             this.newToast({
               type: 'warning',
@@ -227,10 +234,13 @@
         })
         return null
       },
-      modify () {
-        api.updateProj({ id: this.aim.id, data: this.data}, (err, x) => {
+      modify() {
+        api.updateProj({
+          id: this.aim.id,
+          data: this.data
+        }, (err, x) => {
           // this.msg = x.msg
-          if(err){
+          if (err) {
             console.error(err)
             this.newToast({
               type: 'danger',
@@ -239,14 +249,16 @@
             return
           }
           console.log(x)
-          if(x.msg != 'error' && x.status === 0){
+          if (x.msg != 'error' && x.status === 0) {
             this.newToast({
               type: 'success',
               message: '更新成功'
             })
             setTimeout(() => {
-              this.$router.push({ path: '/detail/' +  this.aim.id})
-            },0)
+              this.$router.push({
+                path: '/detail/' + this.aim.id
+              })
+            }, 0)
           } else {
             console.error(x.msg)
             this.newToast({
@@ -271,7 +283,7 @@
         let targettype = e.target.getAttribute('file-type')
         console.log(targettype)
         targettype = targettype || 'img'
-        if(targettype === 'img'){
+        if (targettype === 'img') {
           this.prepare2uploadimg.push(...files)
         } else {
           // 目前只有两种上传场景
@@ -280,17 +292,17 @@
       },
       createImage(file) {
         console.log(file)
-          let image = new Image()
-          let reader = new FileReader()
-          var vm = this
+        let image = new Image()
+        let reader = new FileReader()
+        var vm = this
 
-          reader.onload = (e) => {
-            vm.previewimg = e.target.result
-          }
-          reader.readAsDataURL(file)
+        reader.onload = (e) => {
+          vm.previewimg = e.target.result
+        }
+        reader.readAsDataURL(file)
 
       },
-      upload () {
+      upload() {
         // 只管上传不管删除，单文件
         console.log('尝试上传文件')
         let data = new FormData()
@@ -300,30 +312,30 @@
           this.data.imagePath.push(x.data.pic_src)
         })
       },
-      uploadMulti (type) {
+      uploadMulti(type) {
         // 顺序上传
         let supportedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']
         let files
-        if(type !== 'img'){
+        if (type !== 'img') {
           files = this.prepare2uploaddoc
-        }else{
+        } else {
           files = this.prepare2uploadimg
         }
         // 不符合的格式文件不上传
-        files = files.filter((file,idx)=>{
+        files = files.filter((file, idx) => {
           if (file && supportedTypes.indexOf(file.type) >= 0) {
-              return true
-            } else {
-              this.newToast({
-                type: 'warning',
-                message: `第${idx}个文件格式不支持上传。${file.type}`
-              })
-              return false
-            }
+            return true
+          } else {
+            this.newToast({
+              type: 'warning',
+              message: `第${idx}个文件格式不支持上传。${file.type}`
+            })
+            return false
+          }
 
         })
 
-        if(files.length === 0) {
+        if (files.length === 0) {
           console.log('无文件')
           this.newToast({
             type: 'warning',
@@ -332,15 +344,15 @@
           return
         }
         // 限制上传文件数量
-        if(files.length>8){
-          files = files.slice(0,8)
+        if (files.length > 8) {
+          files = files.slice(0, 8)
         }
         // 上传按钮变禁用状态
         this.disables.push('imgupload')
         let p = Promise.resolve()
         let vm = this
         let tasks = new Array(files.length).fill(
-          (x) => new Promise((resolve,reject) => {
+          (x) => new Promise((resolve, reject) => {
             x = x || 0
             let data = new FormData()
             data.append('attachment', files[x])
@@ -353,44 +365,48 @@
               x++
               resolve(x)
             })
-          }).catch((e)=>{console.log('tasks',e)})
+          }).catch((e) => {
+            console.log('tasks', e)
+          })
         )
 
         console.log(tasks)
         return tasks.reduce((promise, task) => {
           return promise.then(task)
-        }, Promise.resolve()).then((x)=>{
-          console.log('一共',x,"个文件")
+        }, Promise.resolve()).then((x) => {
+          console.log('一共', x, "个文件")
           // 取消按钮的禁用状态
-          vm.disables.splice(vm.disables.indexOf('imgupload'),1)
+          vm.disables.splice(vm.disables.indexOf('imgupload'), 1)
           // 清空准备上传的文件列表
-          if(type !== 'img'){
+          if (type !== 'img') {
             vm.prepare2uploaddoc = []
-          }else{
+          } else {
             vm.prepare2uploadimg = []
           }
           // 重置fileupload框状态
-          vm.retype=''
-          setTimeout(()=>{
-            vm.retype='file'
-          },0)
+          vm.retype = ''
+          setTimeout(() => {
+            vm.retype = 'file'
+          }, 0)
 
-        }).catch((e)=>{console.log(e)})
+        }).catch((e) => {
+          console.log(e)
+        })
       },
-      removeImg (idx) {
+      removeImg(idx) {
         console.log(idx)
-        this.data.imagePath.splice(idx,1)
+        this.data.imagePath.splice(idx, 1)
         // 创建一个待删除列表。
       },
-      switchItype () {
-        this.retype = (this.retype === 'file')? '':'file'
+      switchItype() {
+        this.retype = (this.retype === 'file') ? '' : 'file'
       },
-      discard () {
+      discard() {
         // 舍弃上传框的东西
-        this.retype=''
-        setTimeout(()=>{
-          this.retype='file'
-        },0)
+        this.retype = ''
+        setTimeout(() => {
+          this.retype = 'file'
+        }, 0)
         this.prepare2uploaddoc = []
         this.prepare2uploadimg = []
       }

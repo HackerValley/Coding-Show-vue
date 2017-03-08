@@ -84,6 +84,10 @@
 <script>
   import Comment from './common/comment'
   import * as api from '../api/request.js'
+  import {
+    mapActions
+  } from 'vuex'
+
   export default {
     name: 'detail-page',
     data() {
@@ -126,6 +130,9 @@
       })
     },
     methods: {
+      ...mapActions([
+        'newToast'
+      ]),
       likes() {
         // 点赞按钮禁用
         this.disables.push('likes')
@@ -135,15 +142,25 @@
         }
         // console.log(this.content._id)
         let pid = this.content._id
-        api.thumbup({ pid }, (err,x) => {
-          if(err){
+        api.thumbup({
+          pid
+        }, (err, x) => {
+          if (err) {
             console.error('api catch', err)
+            this.newToast({
+              type: 'danger',
+              message: '一时赞不上'
+            })
           } else {
-            console.log('success',x)
+            console.log('success', x)
+            this.newToast({
+              type: 'success',
+              message: '已赞！'
+            })
             this.content.star_count += 1
           }
           // 点赞按钮启用
-          this.disables.splice(this.disables.indexOf('likes'),1)
+          this.disables.splice(this.disables.indexOf('likes'), 1)
         })
       },
       partake() {
@@ -151,7 +168,7 @@
       }
     },
     filters: {
-      checkdisable (target, pool) {
+      checkdisable(target, pool) {
         if (pool.indexOf(target))
           return null
         else

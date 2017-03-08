@@ -225,9 +225,14 @@ export function thumbup(data, cb) {
   // console.log(data)
   axios.post('/api/projects/star', data)
     .then((reponse) => {
-      cb(null, reponse.data)
+      // 1200ms 之后才可以继续点赞？！
+      setTimeout(()=>{
+        cb(null, reponse.data)
+      },1200)
     })
     .catch((err) => {
-      cb(err)
+      setTimeout(()=>{
+        cb(err)
+      },1000)
     })
 }
