@@ -6,7 +6,7 @@
     </div>
     <div class="row">
       <div class="col-sm-8">
-        <div class="panel panel-info">
+        <div class="panel panel-default">
           <div class="panel-body">
             <p class="lead">
               项目概要：{{ content.description }}  <router-link :to="'/modi/' + content._id" class='btn btn-primary'>修改项目</router-link>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="col-sm-4">
-        <div class="panel panel-info">
+        <div class="panel panel-default">
           <div class="panel-body">
             <h3 class="panel-title">项目概况</h3>
             <br>
@@ -40,7 +40,7 @@
             <a class="btn btn-default" @click.prevent='likes'><span class="glyphicon glyphicon-thumbs-up"></span> 点赞</a>
           </div>
         </div>
-        <div class="panel panel-info partake">
+        <div class="panel panel-default partake">
           <div class="panel-heading">
             <h3 class="panel-title">参与开发</h3>
           </div>
@@ -61,7 +61,7 @@
             <a class="btn btn-default" :class="{disabled: !partake}" @click.prevent='partake'><span class="glyphicon glyphicon-link"></span> 参与</a>
           </div>
         </div>
-        <div class="panel panel-success">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">已经开发完成的作品</h3>
           </div>
