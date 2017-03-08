@@ -81,7 +81,7 @@ export function getProjComments(id = '', cb) {
  * author: larry
  **/
 export function addComments(comment, cb) {
-  if (!comment.comment) {
+  if (!comment.comment_msg) {
     cb(new Error('需传入comment.'))
     return
   }

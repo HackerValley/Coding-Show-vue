@@ -2,15 +2,9 @@
   <div class="panel-body">
     <form class="form-horizontal" role="form">
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="button" class="btn btn-info" @click='fetch'>获取Comments</button>
-        </div>
-      </div>
-      <div class="form-group">
         <label for="comment" class="col-sm-2 control-label">留言板</label>
         <div class="col-sm-10">
           <textarea class="form-control" rows="3" v-model='commentdata'></textarea>
-          <p class="text-muted"> {{ $route.params.id }}</p>
         </div>
       </div>
       <div class="form-group">
@@ -18,17 +12,14 @@
           <button type="button" class="btn btn-info" @click='addComment'>回复</button>
         </div>
       </div>
-      <div class="panel panel-info">
-        {{ wrap }}
-      </div>
     </form>
     <div class="comments">
-      <div class="comment" v-for="(v, i) in tmp">
-        <div class="figure"><img data-src="holder.js/100%x180" alt="..." src="/static/assets/figure_blank_2.png"></div>
+      <div class="comment" v-for="(v, i) in comments">
+        <div class="figure"><router-link :to='"/user/profile/" + v.user._id'><img data-src="holder.js/100%x180" alt="..." src="/static/assets/figure_blank_2.png"></router-link></div>
         <div class="context">
-          <span class="nick"><b>user {{ i }}</b></span>
-          <span class="time text-muted">· {{ 10 - i }} minutes ago</span>
-          <div class="content">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh udapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh udapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</div>
+          <span class="nick"><b><router-link :to='"/user/profile/" + v.user._id'>{{ v.user.nickname || v.user._id }}</router-link></b></span>
+          <span class="time text-muted">· {{ v.time | showTime }} </span>
+          <div class="content">{{ v.comment_msg }}</div>
         </div>
       </div>
     </div>
@@ -47,6 +38,7 @@ export default {
         length: 6
       }),
       wrap: {},
+      comments:[],
       commentdata:''
     }
   },
@@ -62,20 +54,21 @@ export default {
           // display some global error message
 
         } else {
-          this.wrap = x
+          this.comments.push(...x.data)
         }
       })
     },
     addComment () {
-      let comment = this.commentdata
-      if (comment.length < 5) {
+      let comment_msg = this.commentdata
+      let p_id = this.$route.params.id
+      if (comment_msg.length < 4) {
         this.newToast({
           type: 'danger',
           message: '评论内容太少'
         })
         return
       }
-      api.addComments({comment},(err, x)=>{
+      api.addComments({comment_msg, p_id},(err, x)=>{
         if (err) {
           // display some global error message
           this.newToast({
@@ -89,7 +82,9 @@ export default {
               message: x
             })
           }
-          // console.log(x)
+           console.log(x)
+          this.commentdata = ''
+          this.comments.push(x.date)
         }
       })
     },
@@ -97,6 +92,13 @@ export default {
       'newToast',
       'setPage'
     ])
+  },
+  filters: {
+    showTime: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.substr(0,16).replace('T',' ')
+    }
   }
 }
 </script>
