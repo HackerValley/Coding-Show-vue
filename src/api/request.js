@@ -234,10 +234,16 @@ export function logOut(cb) {
 /*
  * 上传文件
  **/
-export function upload(data, cb) {
+export function upload(data, cb, toast) {
   console.log('上传文件 - 单')
   console.log(data)
-  axios.post('/api/upload', data)
+  var config = {
+    onUploadProgress: function(progressEvent) {
+      var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total )
+      toast(percentCompleted)
+    }
+  }
+  axios.post('/api/upload', data, config)
     .then((rep) => {
       cb(rep.data)
     })
