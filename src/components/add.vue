@@ -325,18 +325,6 @@
           this.prepare2uploaddoc.push(...files)
         }
       },
-      createImage(file) {
-        console.log(file)
-        let image = new Image()
-        let reader = new FileReader()
-        var vm = this
-
-        reader.onload = (e) => {
-          vm.previewimg = e.target.result
-        }
-        reader.readAsDataURL(file)
-
-      },
       upload() {
         // 只管上传不管删除，单文件
         console.log('尝试上传文件')
@@ -359,6 +347,24 @@
         // 不符合的格式文件不上传
         files = files.filter((file, idx) => {
           if (file && supportedTypes.indexOf(file.type) >= 0) {
+            if(file.size > 10 * 1024 * 1024) {
+              this.newToast({
+                type: 'danger',
+                message: `文件 ${file.name} 太大，过滤掉。${Math.floor(file.size/8192)/128}M`
+              })
+              return false
+            }
+            if(file.size > 1024 * 1024) {
+              this.newToast({
+                type: 'warning',
+                message: `文件 ${file.name} 较大，上传会慢。${Math.floor(file.size/8192)/128}M`
+              })
+            } else {
+              this.newToast({
+                type: 'info',
+                message: `文件 ${file.name} , ${Math.floor(file.size/8192)/128}M`
+              })
+            }
             return true
           } else {
             this.newToast({
