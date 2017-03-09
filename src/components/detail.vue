@@ -159,8 +159,10 @@
             })
             this.content.star_count += 1
           }
-          // 点赞按钮启用
-          this.disables.splice(this.disables.indexOf('likes'), 1)
+          // 1200ms 后点赞按钮启用
+          setTimeout(()=>{
+            this.disables.splice(this.disables.indexOf('likes'), 1)
+          },1200)
         })
       },
       partake() {
