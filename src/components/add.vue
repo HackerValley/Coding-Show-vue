@@ -5,7 +5,7 @@
       <hr>
     </div>
     <div class="row">
-      <div class="col-xs-10 col-xs-offset-1">
+      <div class="col-xs-12 col-xs-offset-0">
         <form action="" role="form" class="form-horizontal">
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label ' for="projName">项目名称</label>
@@ -30,18 +30,20 @@
           </div>
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label' for="imgUpload">上传图像</label>
-            <div class="col-xs-8 col-sm-7 col-md-5">
+            <div class="col-xs-5 col-sm-5 col-md-4">
               <input class="form-control" :type="retype" name="imgUpload" id='imgUpload' multiple="multiple" file-type='img' @change='onFileChange'>
             </div>
-            <div class="col-xs-1">
-              <button type="button" class="btn btn-default" @click="uploadMulti('img')" :disabled="'imgupload' | checkdisable(disables)">上传</button>
-              <button type="button" class="btn btn-text" @click='discard' :disabled="'，'">清除</button>
+            <div class="col-xs-4">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" @click="uploadMulti('img')" :disabled="'imgupload' | checkdisable(disables)">上传</button>
+                <button type="button" class="btn btn-default" @click="discard('img')" :disabled="null">清除</button>
+              </div>
             </div>
           </div>
           <div class="row imgpool">
             <div class="col-xs-9 col-xs-offset-3 col-sm-10 col-sm-offset-2">
               <p class='text-muted' v-if='data.imagePath.length'><small>点击以舍弃图片</small></p>
-              <img v-for='(img,idx) in data.imagePath' :src='img' :alt='idx' v-if='img' @click='removeImg(idx)'>
+              <span class="imgwrapper" v-for='(img,idx) in data.imagePath' @click='removeImg(idx)'><img :src='img' :alt='idx' v-if='img'></span>
             </div>
           </div>
           <div class="form-group">
@@ -51,20 +53,25 @@
               <p class="form-control-static text-muted">您项目的视频介绍资料</p>
             </div>
           </div>
+          <!--
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label' for="imgUpload">开发文档</label>
-            <div class="col-xs-8 col-sm-7 col-md-5">
-              <input class="form-control" type="file" file-type='doc' name="docUpload" id='docUpload' placeholder="开发文档">
+            <div class="col-xs-5 col-sm-5 col-md-4">
+              <input class="form-control" :type="redoc" file-type='doc' name="docUpload" id='docUpload' placeholder="开发文档">
             </div>
-            <div class="col-xs-1">
-              <button type="button" class="btn btn-default">上传</button>
+            <div class="col-xs-4">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" @click="uploadMulti('doc')" :disabled="'docupload' | checkdisable(disables)">上传</button>
+                <button type="button" class="btn btn-default" @click='discard(doc)' :disabled="''">清除</button>
+              </div>
             </div>
           </div>
           <div class="row filepool">
             <div class="col-xs-9 col-xs-offset-3 col-sm-10 col-sm-offset-2">
-              <img width="64" height="64" alt='假装是一个文件标识' src=''>
+              <span class="fileitem" v-for='file in '></span>
             </div>
           </div>
+          -->
           <div class="from-group form-group-lg text-right">
             <hr>
             <a v-if='aim.act == "添加"' class="btn btn-lg btn-info" v-on:click='addproj'>{{ aim.act }}</a>
@@ -84,14 +91,39 @@
     padding: 0 0 2em 0;
     overflow: hidden;
   }
-
+  div[class$='pool'] span.imgwrapper{
+    display: block;
+    float:left;
+    position: relative;
+  }
   div[class$='pool'] img {
+    max-width: 160px;
+    box-shadow: 0px 2px 2px 0 rgba(0,0,0,.3);
     border: none;
     border-radius: 6px;
     margin: .6em;
     float: left;
+    transition: all .6s;
+    cursor: pointer;
+    position: relative;
+  }
+  div[class$='pool'] img:hover{
+    max-width: 240px;
   }
 
+  div[class$='pool'] span.imgwrapper:hover::before{
+    display: block;
+    width: 24px;height: 24px;
+    content:'x';
+    color:red;
+    position: absolute;
+    right:5px;top:5px;
+    text-align: center;
+    line-height: 24px;
+    z-index: 9;
+    font-size: 24px;
+    text-shadow: 0 0 1px black
+  }
   .proj {
     overflow: hidden
   }
@@ -182,7 +214,8 @@
         abortuploads: [], // 舍弃的文件，等待删除
         msg: '',
         status: -1,
-        retype: 'file'
+        retype: 'file',
+        redoc: 'file',
       }
     },
     computed: {},
@@ -284,23 +317,13 @@
         console.log(targettype)
         targettype = targettype || 'img'
         if (targettype === 'img') {
+          this.prepare2uploadimg = []
           this.prepare2uploadimg.push(...files)
         } else {
           // 目前只有两种上传场景
+          this.prepare2uploaddoc = []
           this.prepare2uploaddoc.push(...files)
         }
-      },
-      createImage(file) {
-        console.log(file)
-        let image = new Image()
-        let reader = new FileReader()
-        var vm = this
-
-        reader.onload = (e) => {
-          vm.previewimg = e.target.result
-        }
-        reader.readAsDataURL(file)
-
       },
       upload() {
         // 只管上传不管删除，单文件
@@ -324,6 +347,24 @@
         // 不符合的格式文件不上传
         files = files.filter((file, idx) => {
           if (file && supportedTypes.indexOf(file.type) >= 0) {
+            if(file.size > 10 * 1024 * 1024) {
+              this.newToast({
+                type: 'danger',
+                message: `文件 ${file.name} 太大，过滤掉。${Math.floor(file.size/8192)/128}M`
+              })
+              return false
+            }
+            if(file.size > 1024 * 1024) {
+              this.newToast({
+                type: 'warning',
+                message: `文件 ${file.name} 较大，上传会慢。${Math.floor(file.size/8192)/128}M`
+              })
+            } else {
+              this.newToast({
+                type: 'info',
+                message: `文件 ${file.name} , ${Math.floor(file.size/8192)/128}M`
+              })
+            }
             return true
           } else {
             this.newToast({
@@ -364,6 +405,11 @@
               vm.data.imagePath.push(res.data.pic_src)
               x++
               resolve(x)
+            },(toast)=>{
+              this.newToast({
+                type: 'info',
+                message: `当前文件已上传${toast}%`
+              })
             })
           }).catch((e) => {
             console.log('tasks', e)
@@ -401,14 +447,22 @@
       switchItype() {
         this.retype = (this.retype === 'file') ? '' : 'file'
       },
-      discard() {
+      discard(target) {
         // 舍弃上传框的东西
-        this.retype = ''
-        setTimeout(() => {
-          this.retype = 'file'
-        }, 0)
-        this.prepare2uploaddoc = []
-        this.prepare2uploadimg = []
+        if(target === 'img'){
+          this.retype = ''
+          setTimeout(() => {
+            this.retype = 'file'
+          }, 0)
+          this.prepare2uploadimg = []
+        } else if (target === 'doc') {
+          this.redoc = ''
+          setTimeout(() => {
+            this.redoc = 'file'
+          }, 0)
+          this.prepare2uploaddoc = []
+        }
+
       }
     }
   }

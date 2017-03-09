@@ -1,14 +1,14 @@
 <template>
   <nav class="text-center" v-if='display'>
     <ul class="pagination pagination-lg">
-      <li class="previous" :class="{disabled: pagination.prev}">
-        <router-link :to='basePath + "/" +(page_num - 1)'>← </router-link>
+      <li class="previous">
+        <router-link :to='basePath + "/" +(page_num - 1)' tag='button' class='btn btn-default' :disabled="pagination.prev<1?1:null">← </router-link>
       </li>
       <li v-for='page in pagination.available'>
-        <router-link :to='basePath + "/" +page'>{{ page }}</router-link>
+        <router-link :to='basePath + "/" +page' tag='button' class='btn btn-default'>{{ page }}</router-link>
       </li>
-      <li class="next" :class="{disabled: pagination.next}">
-        <router-link :to='basePath + "/" +(page_num + 1)'> →</router-link>
+      <li class="next">
+        <router-link :to='basePath + "/" +(++page_num)' tag='button' class='btn btn-default' :disabled="pagination.next>pagination.available.length ? 1:null"> →</router-link>
       </li>
     </ul>
   </nav>

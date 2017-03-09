@@ -6,7 +6,10 @@ import querystring from 'querystring'
  * 获取项目列表 - 首页，
  * author: larry
  **/
-export function getProjIndex({ page_num = 1, page_size = 12},cb) {
+export function getProjIndex({
+  page_num = 1,
+  page_size = 12
+}, cb) {
   axios.get(`/api/projects/list?page_num=${page_num}&page_size=${page_size}`).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
@@ -19,7 +22,10 @@ export function getProjIndex({ page_num = 1, page_size = 12},cb) {
  * 获取项目列表 - 我发布的项目，
  * author: larry
  **/
-export function getProjRelease({page_num = 1, page_size = 12}, cb) {
+export function getProjRelease({
+  page_num = 1,
+  page_size = 12
+}, cb) {
   axios.get(`/api/projects/mine?query_type=release&page_num=${page_num}&page_size=${page_size}`).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
@@ -32,7 +38,10 @@ export function getProjRelease({page_num = 1, page_size = 12}, cb) {
  * 获取项目列表 - 我开发的项目，
  * author: larry
  **/
-export function getProjDev({page_num = 1, page_size = 12}, cb) {
+export function getProjDev({
+  page_num = 1,
+  page_size = 12
+}, cb) {
   // /api/projects/development Inter Error
   axios.get(`/api/projects/mine?query_type=develop&page_num=${page_num}&page_size=${page_size}`).then((rep) => {
     cb(null, rep.data)
@@ -95,10 +104,15 @@ export function addComments(comment, cb) {
  * 更新项目详细信息
  * author: larry
  **/
-export function updateProj({ id, data }, cb) {
+export function updateProj({
+  id,
+  data
+}, cb) {
   if (!id || !data) {
     console.log('无效更新数据')
-    cb({ msg: 'error' })
+    cb({
+      msg: 'error'
+    })
     return null
   }
   axios.put('/api/projects/' + id, querystring.stringify(data)).then((rep) => {
@@ -112,11 +126,17 @@ export function updateProj({ id, data }, cb) {
 /*
  * 添加一条新的项目
  **/
-export function addProj({ data }, cb) {
-  console.log({ data })
+export function addProj({
+  data
+}, cb) {
+  console.log({
+    data
+  })
   if (!data) {
     console.log('无效数据')
-    cb({ msg: 'error' })
+    cb({
+      msg: 'error'
+    })
     return null
   }
   axios.post('/api/projects/', querystring.stringify(data)).then((rep) => {
@@ -130,11 +150,17 @@ export function addProj({ data }, cb) {
 /*
  * 注册新用户
  **/
-export function userReg(cb, { regdata }) {
-  console.log({ regdata })
+export function userReg(cb, {
+  regdata
+}) {
+  console.log({
+    regdata
+  })
   if (!regdata) {
     console.log('无效数据')
-    cb({ msg: 'client error' })
+    cb({
+      msg: 'client error'
+    })
     return null
   }
   axios.post('/api/user/register', querystring.stringify(regdata)).then((rep) => {
@@ -173,11 +199,15 @@ export function userInfo(id, cb) {
 /*
  * 用户登陆
  **/
-export function userLogin(cb, { logindata }) {
+export function userLogin(cb, {
+  logindata
+}) {
   // console.log({ logindata })
   if (!logindata) {
     console.log('无效数据')
-    cb({ msg: 'client error' })
+    cb({
+      msg: 'client error'
+    })
     return null
   }
   axios.post('/api/user/login', querystring.stringify(logindata)).then((rep) => {
@@ -204,10 +234,16 @@ export function logOut(cb) {
 /*
  * 上传文件
  **/
-export function upload(data, cb) {
+export function upload(data, cb, toast) {
   console.log('上传文件 - 单')
   console.log(data)
-  axios.post('/api/upload', data)
+  var config = {
+    onUploadProgress: function(progressEvent) {
+      var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total )
+      toast(percentCompleted)
+    }
+  }
+  axios.post('/api/upload', data, config)
     .then((rep) => {
       cb(rep.data)
     })
@@ -225,14 +261,9 @@ export function thumbup(data, cb) {
   // console.log(data)
   axios.post('/api/projects/star', data)
     .then((reponse) => {
-      // 1200ms 之后才可以继续点赞？！
-      setTimeout(()=>{
-        cb(null, reponse.data)
-      },1200)
+      cb(null, reponse.data)
     })
     .catch((err) => {
-      setTimeout(()=>{
-        cb(err)
-      },1000)
+      cb(err)
     })
 }

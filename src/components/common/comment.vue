@@ -15,7 +15,9 @@
     </form>
     <div class="comments">
       <div class="comment" v-for="(v, i) in comments">
-        <div class="figure"><router-link :to='"/user/profile/" + v.user._id'><img data-src="holder.js/100%x180" alt="..." src="/static/assets/figure_blank_2.png"></router-link></div>
+        <div class="figure">
+          <router-link :to='"/user/profile/" + v.user._id'><img data-src="holder.js/100%x180" alt="..." src="/static/assets/figure_blank_2.png"></router-link>
+        </div>
         <div class="context">
           <span class="nick"><b><router-link :to='"/user/profile/" + v.user._id'>{{ v.user.nickname || v.user._id }}</router-link></b></span>
           <span class="time text-muted">· {{ v.time | showTime }} </span>
@@ -26,117 +28,124 @@
   </div>
 </template>
 <script>
-import * as api from '../../api/request.js'
-import { mapActions } from 'vuex'
+  import * as api from '../../api/request.js'
+  import {
+    mapActions
+  } from 'vuex'
 
-export default {
-  name: 'Comments',
-  data () {
-    return {
-      list: [],
-      tmp: Array.apply(null, {
-        length: 6
-      }),
-      wrap: {},
-      comments:[],
-      commentdata:''
-    }
-  },
-  beforeMount () {
-    this.fetch()
-  },
-  methods: {
-    fetch () {
-      // console.log(this.$route.params.id)
-      api.getProjComments(this.$route.params.id, (err, x) => {
-        // console.log(x)
-        if (err) {
-          // display some global error message
-
-        } else {
-          this.comments.push(...x.data)
-        }
-      })
-    },
-    addComment () {
-      let comment_msg = this.commentdata
-      let p_id = this.$route.params.id
-      if (comment_msg.length < 4) {
-        this.newToast({
-          type: 'danger',
-          message: '评论内容太少'
-        })
-        return
+  export default {
+    name: 'Comments',
+    data() {
+      return {
+        list: [],
+        tmp: Array.apply(null, {
+          length: 6
+        }),
+        wrap: {},
+        comments: [],
+        commentdata: ''
       }
-      api.addComments({comment_msg, p_id},(err, x)=>{
-        if (err) {
-          // display some global error message
+    },
+    beforeMount() {
+      this.fetch()
+    },
+    methods: {
+      fetch() {
+        // console.log(this.$route.params.id)
+        api.getProjComments(this.$route.params.id, (err, x) => {
+          // console.log(x)
+          if (err) {
+            // display some global error message
+
+          } else {
+            this.comments.push(...x.data)
+          }
+        })
+      },
+      addComment() {
+        let comment_msg = this.commentdata
+        let p_id = this.$route.params.id
+        if (comment_msg.length < 4) {
           this.newToast({
             type: 'danger',
-            message: err
+            message: '评论内容太少'
           })
-        } else {
-          if (x[0] === '<') {
+          return
+        }
+        api.addComments({
+          comment_msg,
+          p_id
+        }, (err, x) => {
+          if (err) {
+            // display some global error message
             this.newToast({
               type: 'danger',
-              message: x
+              message: err
             })
+          } else {
+            if (x[0] === '<') {
+              this.newToast({
+                type: 'danger',
+                message: x
+              })
+            }
+            console.log(x)
+            this.commentdata = ''
+            this.comments.unshift(x.date)
           }
-           console.log(x)
-          this.commentdata = ''
-          this.comments.push(x.date)
-        }
-      })
+        })
+      },
+      ...mapActions([
+        'newToast',
+        'setPage'
+      ])
     },
-    ...mapActions([
-      'newToast',
-      'setPage'
-    ])
-  },
-  filters: {
-    showTime: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.substr(0,16).replace('T',' ')
+    filters: {
+      showTime: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.substr(0, 16).replace('T', ' ')
+      }
     }
   }
-}
+
 </script>
 <style>
-.comments {
-  padding-top: 2em;
-}
+  .comments {
+    padding-top: 2em;
+  }
 
-.comment {
-  min-height: 80px;
-  overflow: hidden;
-  line-height: 2em;
-  padding-bottom: 2em;
-}
+  .comment {
+    min-height: 80px;
+    overflow: hidden;
+    line-height: 2em;
+    padding-bottom: 2em;
+  }
 
-.comment .figure {
-  float: left;
-  height: 100%;
-  margin: 10px;
-}
+  .comment .figure {
+    float: left;
+    height: 100%;
+    margin: 10px;
+  }
 
-.comment .figure img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-}
+  .comment .figure img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
 
-.comment .context {
-  padding-left: 80px;
-}
+  .comment .context {
+    padding-left: 80px;
+  }
 
-.comment .context span {
-  display: inline-block;
-}
+  .comment .context span {
+    display: inline-block;
+  }
 
-.comment .context .nick {}
+  .comment .context .nick {}
 
-.comment .context .content {
-  line-height: 1.4em;
-}
+  .comment .context .content {
+    line-height: 1.4em;
+  }
+
 </style>
