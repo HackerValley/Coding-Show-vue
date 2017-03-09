@@ -36,14 +36,14 @@
             <div class="col-xs-4">
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-default" @click="uploadMulti('img')" :disabled="'imgupload' | checkdisable(disables)">上传</button>
-                <button type="button" class="btn btn-default" @click='discard(img)' :disabled="''">清除</button>
+                <button type="button" class="btn btn-default" @click="discard('img')" :disabled="null">清除</button>
               </div>
             </div>
           </div>
           <div class="row imgpool">
             <div class="col-xs-9 col-xs-offset-3 col-sm-10 col-sm-offset-2">
               <p class='text-muted' v-if='data.imagePath.length'><small>点击以舍弃图片</small></p>
-              <span class="imgwrapper" v-for='(img,idx) in data.imagePath'><img :src='img' :alt='idx' v-if='img' @click='removeImg(idx)'></span>
+              <span class="imgwrapper" v-for='(img,idx) in data.imagePath' @click='removeImg(idx)'><img :src='img' :alt='idx' v-if='img'></span>
             </div>
           </div>
           <div class="form-group">
@@ -53,6 +53,7 @@
               <p class="form-control-static text-muted">您项目的视频介绍资料</p>
             </div>
           </div>
+          <!--
           <div class="form-group">
             <label class='col-xs-3 col-sm-2 control-label' for="imgUpload">开发文档</label>
             <div class="col-xs-5 col-sm-5 col-md-4">
@@ -67,9 +68,10 @@
           </div>
           <div class="row filepool">
             <div class="col-xs-9 col-xs-offset-3 col-sm-10 col-sm-offset-2">
-              <img width="64" height="64" alt='假装是一个文件标识' src=''>
+              <span class="fileitem" v-for='file in '></span>
             </div>
           </div>
+          -->
           <div class="from-group form-group-lg text-right">
             <hr>
             <a v-if='aim.act == "添加"' class="btn btn-lg btn-info" v-on:click='addproj'>{{ aim.act }}</a>
@@ -400,7 +402,7 @@
             },(toast)=>{
               this.newToast({
                 type: 'info',
-                message: `已上传${toast}%`
+                message: `当前文件已上传${toast}%`
               })
             })
           }).catch((e) => {
