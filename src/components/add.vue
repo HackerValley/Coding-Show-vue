@@ -247,7 +247,7 @@
             return
           }
           this.msg = x.msg
-          if (x.msg != 'error') {
+          if (x.status !== 0) {
             // console.log(x)
             this.newToast({
               type: 'success',
@@ -261,7 +261,7 @@
           } else {
             this.newToast({
               type: 'warning',
-              message: '添加未成功'
+              message: x.msg
             })
           }
         })
