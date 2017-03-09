@@ -247,7 +247,8 @@
             return
           }
           this.msg = x.msg
-          if (x.status !== 0) {
+          console.log(x)
+          if (x.status === 0) {
             // console.log(x)
             this.newToast({
               type: 'success',
