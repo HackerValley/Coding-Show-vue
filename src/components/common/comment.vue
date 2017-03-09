@@ -91,7 +91,7 @@
             }
             console.log(x)
             this.commentdata = ''
-            this.comments.push(x.date)
+            this.comments.unshift(x.date)
           }
         })
       },
