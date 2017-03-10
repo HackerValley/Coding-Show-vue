@@ -68,7 +68,7 @@ const routes = [{
   component: Add,
   meta: { requiresAuth: true },
   beforeEnter: (to, from, next) => {
-    console.log(from, to)
+    // console.log(from, to)
     next()
   }
 }, {

@@ -24,7 +24,7 @@
             <p>
               视频介绍：{{ content.project_link }}
             </p>
-            <p>
+            <p v-if='false'>
               开发文档：【NONE】
             </p>
             <hr>

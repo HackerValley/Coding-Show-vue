@@ -1,6 +1,6 @@
 <template>
   <div class="panel-body">
-    <form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form" v-if='$store.state.authed'>
       <div class="form-group">
         <label for="comment" class="col-sm-2 control-label">留言板</label>
         <div class="col-sm-10">
@@ -9,10 +9,13 @@
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="button" class="btn btn-info" @click='addComment'>回复</button>
+          <button type="button" class="btn btn-info" @click='addComment' :disabled='commenting'>回复</button>
         </div>
       </div>
     </form>
+    <div class="alert alert-info" role="alert" v-if='!$store.state.authed'>
+      <router-link to='/user/login' class='btn btn-text'>登入</router-link> 以评论
+    </div>
     <div class="comments">
       <div class="comment" v-for="(v, i) in comments">
         <div class="figure">
@@ -38,12 +41,10 @@
     data() {
       return {
         list: [],
-        tmp: Array.apply(null, {
-          length: 6
-        }),
         wrap: {},
         comments: [],
-        commentdata: ''
+        commentdata: '',
+        commenting: null
       }
     },
     beforeMount() {
@@ -72,6 +73,7 @@
           })
           return
         }
+        this.commenting = 1
         api.addComments({
           comment_msg,
           p_id
@@ -86,12 +88,16 @@
             if (x[0] === '<') {
               this.newToast({
                 type: 'danger',
-                message: x
+                message: '尚未登录'
               })
+              this.commenting = null
+              return
+            } else {
+              // console.log(x)
+              this.commentdata = ''
+              this.comments.unshift(x.date)
+              this.commenting = null
             }
-            console.log(x)
-            this.commentdata = ''
-            this.comments.unshift(x.date)
           }
         })
       },
