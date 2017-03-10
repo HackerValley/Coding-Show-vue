@@ -172,9 +172,11 @@
   } from 'vuex'
   export default {
     components: {},
-    created(){
-      if(this.$store.state.authed){
-        this.$router.replace('/usr/release')
+    created() {
+      if (this.$store.state.authed) {
+        this.$router.replace({
+          path: '/user/release'
+        })
       }
     },
     data() {

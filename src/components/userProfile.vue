@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <h2>个人信息 <span class="fr"><small><router-link to="/">返回首页</router-link></small></span></h2>
+      <h2>信息  -  {{ userdata.nickname }}<span class="fr"><small><router-link to="/">返回首页</router-link></small></span></h2>
       <hr>
     </div>
     <div class="row">
@@ -9,7 +9,11 @@
         <dl>
           <dt>头像</dt>
           <dd>
-            <img v-if='userdata.avatar' :src="userdata.avatar" alt="userdata.nickname"> {{ userdata.avatar }}</dd>
+            <img class='figure' v-if='userdata.avatar' :src="userdata.avatar" alt="userdata.nickname">
+          </dd>
+          <dd v-if='!userdata.avatar'>
+            {{ userdata.avatar }}
+          </dd>
           <dt>昵称</dt>
           <dd>{{ userdata.nickname }}</dd>
           <dt>用户名</dt>
@@ -43,7 +47,11 @@
   dd {
     margin-left: 3em;
   }
-
+  img.figure{
+    max-width: 360px;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.3)
+  }
 </style>
 <script>
   import * as api from '../api/request'

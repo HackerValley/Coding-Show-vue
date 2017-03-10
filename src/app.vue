@@ -31,6 +31,9 @@
   import Toast from './components/common/toast'
   require('../node_modules/bootstrap/dist/css/bootstrap.min.css')
 
+  import {
+    mapActions
+  } from 'vuex'
   export default {
     name: 'app',
     data() {
@@ -43,7 +46,7 @@
       // console.log('find this :',this)
       api.loginInfo((err, x) => {
         // console.log(x)
-        if(err) {
+        if (err) {
           console.error(err)
           return
         }
@@ -80,6 +83,9 @@
       })
     },
     methods: {
+      ...mapActions([
+        'newToast'
+      ]),
       add2: function (tmptip) {
         console.log(tmptip)
         if (this.tips.length > 4) {

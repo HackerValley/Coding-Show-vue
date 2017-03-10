@@ -112,8 +112,7 @@
       }
     },
     beforeRouteEnter(to, from, next) {
-      console.log(from)
-      let fromMine = from.fullPath.indexOf('/usr/release') !== -1
+      let fromMine = from.fullPath.indexOf('/user/release') !== -1
       api.getProjDetail(to.params.id, (err, x) => {
         if (err) {
           // display some global error message

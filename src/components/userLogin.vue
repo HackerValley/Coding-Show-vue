@@ -33,7 +33,6 @@
       <div class="col-xs-10 col-xs-offset-1">
         <hr> 第三方登录：
         <a href="/api/user/oauth2/github" class="btn btn-default">Github</a>
-        <a href="/api/user/oauth2/weibo" class="btn btn-default">weibo</a>
       </div>
     </div>
   </div>
