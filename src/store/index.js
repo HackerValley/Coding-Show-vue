@@ -11,6 +11,7 @@ Vue.use(Vuex)
 const state = {
   authed: null,
   identity: {
+    _id: '',
     username: '',
     avatar: '',
     nickname: '',

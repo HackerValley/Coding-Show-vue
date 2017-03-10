@@ -58,6 +58,7 @@
         }
         this.$store.dispatch('setAuthed', true)
         var identity = {
+          _id: x.data._id,
           avatar: x.data.avatar,
           nickname: x.data.nickname,
           level: x.data.level,

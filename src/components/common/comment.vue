@@ -2,14 +2,18 @@
   <div class="panel-body">
     <form class="form-horizontal" role="form" v-if='$store.state.authed'>
       <div class="form-group">
-        <label for="comment" class="col-sm-2 control-label">留言板</label>
+        <label for="comment" class="col-sm-2 control-label">留言</label>
         <div class="col-sm-10">
           <textarea class="form-control" rows="3" v-model='commentdata'></textarea>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
+          <div class="btn-group pull-right" role="group" >
+          <router-link alt='当前用户' :to="'/user/profile/' + $store.state.identity._id" class="btn btn-text">{{ this.$store.state.identity.nickname || this.$store.state.identity.username }}</router-link>
           <button type="button" class="btn btn-info" @click='addComment' :disabled='commenting'>回复</button>
+        </div>
+          <u></u> &nbsp;
         </div>
       </div>
     </form>

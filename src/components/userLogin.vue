@@ -143,6 +143,16 @@
             })
             // 跳转到首页
             this.$store.dispatch('setAuthed', true)
+              var identity = {
+              _id: x.data._id,
+              avatar: x.data.avatar,
+              nickname: x.data.nickname,
+              level: x.data.level,
+              skill: x.data.skill,
+              last_login_time: x.data.last_login_time,
+              sns_type: x.data.sns_type
+            }
+            this.$store.dispatch('setIdentity', identity)
             this.$store.dispatch('setUser', this.logindata.username)
             this.$router.replace({ path: '/user/release' })
           } else {
@@ -170,6 +180,7 @@
           }
           this.$store.dispatch('setAuthed', true)
           var identity = {
+            _id: x.data._id,
             avatar: x.data.avatar,
             nickname: x.data.nickname,
             level: x.data.level,

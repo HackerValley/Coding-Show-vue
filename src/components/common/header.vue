@@ -120,7 +120,14 @@
           if (x.status === 0) {
             this.$store.dispatch('setAuthed', false)
             this.$store.dispatch('setIdentity', {
-              username: ''
+              _id: null,
+              username: null,
+              avatar: null,
+              nickname: null,
+              level: null,
+              skill: [],
+              last_login_time: null,
+              sns_type: null
             })
             this.$router.push({
               path: '/home'

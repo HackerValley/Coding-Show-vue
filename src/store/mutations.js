@@ -15,11 +15,11 @@ export default {
     localStorage.setItem('user', username)
   },
   [types.SET_LASTUSER] (state, { username }) {
-    state.identity.username = username
+    state.lastuser = username
     localStorage.setItem('lastuser', username)
   },
   [types.SET_IDENTITY] (state, { identity }) {
-    state.identity = identity
+    Object.assign(state.identity, identity)
     localStorage.setItem('lastuser', identity.username)
   }
 }
