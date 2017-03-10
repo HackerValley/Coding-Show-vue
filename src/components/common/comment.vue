@@ -32,7 +32,7 @@
           </div>
         </div>
       </transition-group>
-      <a class="btn btn-block btn-info" @click.prevent='loadmore' v-if='page_num < page_total'>加载更多</a>
+      <button :disabled='loading' class="btn btn-block btn-info" @click.prevent='loadmore' v-if='page_num < page_total'>加载更多</button>
     </div>
   </div>
 </template>
@@ -51,6 +51,7 @@
         comments: [],
         commentdata: '',
         commenting: null,
+        loading:null,
         page_num: 1,
         page_total: 1,
         page_size: 7,
@@ -73,17 +74,19 @@
         id,
         page_num,
         page_size
-      }, cb) {
+      }, cb, errcb) {
         id = id || this.$route.params.id
         page_num = page_num || 1
         page_size = page_size || this.page_size
+        errcb = errcb || function (err){console.info(err)}
         api.getProjComments({
           id,
           page_num,
           page_size
         }, (err, x) => {
           if (err) {
-            console.error('错误', err)
+            // console.error('错误', err)
+            errcb(err)
             return null
           } else {
             this.page_num = x.data.page_num
@@ -94,12 +97,17 @@
       },
       loadmore() {
         let target_page_num = this.page_num + 1
+        this.loading = 'loading'
         this.fetch({
           page_num: target_page_num
         }, (result) => {
           if (result) {
             this.comments.push(...result.list)
+            this.loading = null
           }
+        }, (err)=>{
+          console.error('err:',err)
+          this.loading = null
         })
       },
       addComment() {
