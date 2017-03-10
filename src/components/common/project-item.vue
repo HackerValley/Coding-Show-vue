@@ -48,8 +48,7 @@ export default {
   filters: {
     showTime: function (value) {
       if (!value) return ''
-      value = value.toString()
-      return value.substr(0,16).replace('T',' ')
+      return new Date(value).toLocaleString()
     }
   }
 }
