@@ -6,50 +6,52 @@
     </div>
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1">
-          <dl>
-            <dt>头像</dt>
-            <dd>
-              <img v-if='userdata.avatar' :src="userdata.avatar" alt="userdata.nickname">
-              {{ userdata.avatar }}</dd>
-            <dt>昵称</dt>
-            <dd>{{ userdata.nickname }}</dd>
-            <dt>用户名</dt>
-            <dd>{{ userdata.username }}</dd>
-          </dl>
-          <dl v-if="!publish">
-            <dt>id</dt>
-            <dd>{{ userdata._id }}</dd>
-            <dt>邮箱</dt>
-            <dd>{{ userdata.email }}</dd>
-            <dt>技能</dt>
-            <dd>{{ userdata.skill }}</dd>
-            <dt>最后一次登录时间</dt>
-            <dd>{{ userdata.last_login_time }}</dd>
-            <dt>创建时间</dt>
-            <dd>{{ userdata.create_time }}</dd>
-            <dt>账号绑定</dt>
-            <dd>{{ userdata.sns_id }}</dd>
-            <dt>第三方登陆类型</dt>
-            <dd>{{ userdata.sns_type }}</dd>
-            <dt>电话</dt>
-            <dd>{{ userdata.telephone }}</dd>
-            <dt>等级</dt>
-            <dd>{{ userdata.level }}</dd>
-          </dl>
+        <dl>
+          <dt>头像</dt>
+          <dd>
+            <img v-if='userdata.avatar' :src="userdata.avatar" alt="userdata.nickname"> {{ userdata.avatar }}</dd>
+          <dt>昵称</dt>
+          <dd>{{ userdata.nickname }}</dd>
+          <dt>用户名</dt>
+          <dd>{{ userdata.username }}</dd>
+        </dl>
+        <dl v-if="!publish">
+          <dt>id</dt>
+          <dd>{{ userdata._id }}</dd>
+          <dt>邮箱</dt>
+          <dd>{{ userdata.email }}</dd>
+          <dt>技能</dt>
+          <dd>{{ userdata.skill }}</dd>
+          <dt>最后一次登录时间</dt>
+          <dd>{{ userdata.last_login_time }}</dd>
+          <dt>创建时间</dt>
+          <dd>{{ userdata.create_time }}</dd>
+          <dt>账号绑定</dt>
+          <dd>{{ userdata.sns_id }}</dd>
+          <dt>第三方登陆类型</dt>
+          <dd>{{ userdata.sns_type }}</dd>
+          <dt>电话</dt>
+          <dd>{{ userdata.telephone }}</dd>
+          <dt>等级</dt>
+          <dd>{{ userdata.level }}</dd>
+        </dl>
       </div>
     </div>
   </div>
 </template>
 <style>
-  dd{margin-left: 3em;}
+  dd {
+    margin-left: 3em;
+  }
+
 </style>
 <script>
-import * as api from '../api/request'
+  import * as api from '../api/request'
 
   export default {
-    created () {
+    created() {
       // 渲染页面之前，获取登录信息，如果获取不到，说明不是合法的登陆状态，进行登出操作
-      if(this.$route.params.id){
+      if (this.$route.params.id) {
         this.getUserInfo(this.$route.params.id)
         this.publish = true
       } else {
@@ -57,9 +59,9 @@ import * as api from '../api/request'
         this.publish = false
       }
     },
-    data () {
+    data() {
       return {
-        userdata:{
+        userdata: {
           _id: '',
           realname: '',
           username: '',
@@ -78,13 +80,20 @@ import * as api from '../api/request'
       }
     },
     methods: {
-      getLoginInfo () {
-        api.loginInfo((x)=>{
+      getLoginInfo() {
+        api.loginInfo((err, x) => {
           // console.log(x)
-          if(x[0] === '<') {
+          if (err) {
+            console.error(err)
+            return
+          }
+          // console.log(x)
+          if (x[0] === '<') {
             console.log('没有登陆')
             this.$store.dispatch('setAuthed', false)
-            this.$router.replace({ path: '/user/login' })
+            this.$router.replace({
+              path: '/user/login'
+            })
             return
           }
           if (x.status === 0) {
@@ -92,20 +101,23 @@ import * as api from '../api/request'
           }
         })
       },
-      getUserInfo (id) {
-        api.userInfo(id, (x)=>{
+      getUserInfo(id) {
+        api.userInfo(id, (x) => {
           // console.log('userinfo',x)
-          if(x[0] === '<'){
+          if (x[0] === '<') {
             console.log('未登录')
             this.$store.dispatch('setAuthed', false)
-            this.$router.replace({ path: '/user/login' })
+            this.$router.replace({
+              path: '/user/login'
+            })
             return
           }
-          if( x.status === 0){
+          if (x.status === 0) {
             this.userdata = x.data
           }
         })
       }
     }
   }
+
 </script>

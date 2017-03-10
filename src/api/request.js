@@ -181,10 +181,10 @@ export function userReg({
 export function loginInfo(cb) {
   // console.log(cb)
   axios.get('/api/user/').then((rep) => {
-    cb(rep.data)
+    cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
-    console.log(err.response.statusText)
+    cb(err)
   })
 }
 

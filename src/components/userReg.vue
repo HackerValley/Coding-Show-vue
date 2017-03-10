@@ -172,6 +172,11 @@
   } from 'vuex'
   export default {
     components: {},
+    created(){
+      if(this.$store.state.authed){
+        this.$router.replace('/usr/release')
+      }
+    },
     data() {
       return {
         timers: {},

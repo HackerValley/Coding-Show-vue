@@ -41,7 +41,9 @@
 <script>
   import * as api from '../api/request.js'
   import _ from 'lodash'
-  import { mapActions } from 'vuex'
+  import {
+    mapActions
+  } from 'vuex'
 
   export default {
     beforeCreate() {
@@ -52,12 +54,12 @@
       }
     },
     beforeRouteEnter: (to, from, next) => {
-      next(vm=>{
+      next(vm => {
         vm.fetchLoginStatus()
       })
     },
-    beforeRouteUpdate(){
-      if(this){
+    beforeRouteUpdate() {
+      if (this) {
         this.fetchLoginStatus()
       }
     },
@@ -96,9 +98,9 @@
       }
     },
     methods: {
-    ...mapActions([
-      'newToast'
-    ]),
+      ...mapActions([
+        'newToast'
+      ]),
       setusername: _.debounce(
         function () {
           console.log(this.username)
@@ -133,9 +135,11 @@
           return null
         }
         console.log('尝试登陆')
-        api.userLogin({ logindata: this.logindata }, (err, x) => {
+        api.userLogin({
+          logindata: this.logindata
+        }, (err, x) => {
           // console.log(x)
-          if(err){
+          if (err) {
             console.log(err)
             this.newToast({
               type: 'danger',
@@ -151,7 +155,7 @@
             })
             // 跳转到首页
             this.$store.dispatch('setAuthed', true)
-              var identity = {
+            var identity = {
               _id: x.data._id,
               avatar: x.data.avatar,
               nickname: x.data.nickname,
@@ -162,7 +166,9 @@
             }
             this.$store.dispatch('setIdentity', identity)
             this.$store.dispatch('setUser', this.logindata.username)
-            this.$router.replace({ path: '/user/release' })
+            this.$router.replace({
+              path: '/user/release'
+            })
           } else {
             this.newToast({
               type: 'danger',
@@ -173,9 +179,14 @@
       },
       fetchLoginStatus() {
         console.log('验证登录状态')
-        api.loginInfo(x => {
+        api.loginInfo((err, x) => {
           // console.log(x)
-          if ( typeof x === 'string' && x[0] === '<'){
+          if (err) {
+            console.error(err)
+            return
+          }
+          // console.log(x)
+          if (typeof x === 'string' && x[0] === '<') {
             this.$store.dispatch('setAuthed', false)
             return 0
           }
@@ -204,7 +215,9 @@
             })
             // 并跳转
             this.$store.dispatch('setUser', x.data.username)
-            this.$router.replace({ path: '/user/release' })
+            this.$router.replace({
+              path: '/user/release'
+            })
           } else {
             // 需要补充用户的注册信息，至少补充一个用户名
             this.newToast({
@@ -212,7 +225,9 @@
               message: '需补充信息，至少填写一下用户名'
             })
             this.$store.dispatch('setUser', '')
-            this.$router.replace({ path: '/user/profile' })
+            this.$router.replace({
+              path: '/user/profile'
+            })
           }
         })
       }
@@ -224,4 +239,5 @@
   .thirdLogin {
     padding-top: 2em;
   }
+
 </style>

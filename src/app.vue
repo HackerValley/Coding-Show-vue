@@ -41,8 +41,12 @@
     },
     beforeCreate() {
       // console.log('find this :',this)
-      api.loginInfo(x => {
+      api.loginInfo((err, x) => {
         // console.log(x)
+        if(err) {
+          console.error(err)
+          return
+        }
         if (typeof x === 'string' && x[0] === '<') {
           this.$store.dispatch('setAuthed', false)
           this.$store.dispatch('setIdentity', {})
