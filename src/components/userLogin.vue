@@ -133,8 +133,16 @@
           return null
         }
         console.log('尝试登陆')
-        api.userLogin((x) => {
+        api.userLogin({ logindata: this.logindata }, (err, x) => {
           // console.log(x)
+          if(err){
+            console.log(err)
+            this.newToast({
+              type: 'danger',
+              message: err
+            })
+            return
+          }
           if (x.status === 0) {
             console.log('登陆成功')
             this.newToast({
@@ -161,7 +169,7 @@
               message: x.msg
             })
           }
-        }, { logindata: this.logindata })
+        })
       },
       fetchLoginStatus() {
         console.log('验证登录状态')

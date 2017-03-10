@@ -150,9 +150,9 @@ export function addProj({
 /*
  * 注册新用户
  **/
-export function userReg(cb, {
+export function userReg({
   regdata
-}) {
+}, cb) {
   console.log({
     regdata
   })
@@ -164,10 +164,10 @@ export function userReg(cb, {
     return null
   }
   axios.post('/api/user/register', querystring.stringify(regdata)).then((rep) => {
-    cb(rep.data)
+    cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
-    console.log(err.response.statusText)
+    cb(err)
   })
 }
 
@@ -199,9 +199,9 @@ export function userInfo(id, cb) {
 /*
  * 用户登陆
  **/
-export function userLogin(cb, {
+export function userLogin({
   logindata
-}) {
+},cb) {
   // console.log({ logindata })
   if (!logindata) {
     console.log('无效数据')
@@ -211,10 +211,10 @@ export function userLogin(cb, {
     return null
   }
   axios.post('/api/user/login', querystring.stringify(logindata)).then((rep) => {
-    cb(rep.data)
+    cb(null, rep.data)
   }).catch(err => {
     // 处理方式等待更新
-    console.log(err.response.statusText)
+    cb(err)
   })
 }
 
@@ -238,17 +238,17 @@ export function upload(data, cb, toast) {
   console.log('上传文件 - 单')
   console.log(data)
   var config = {
-    onUploadProgress: function(progressEvent) {
-      var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total )
+    onUploadProgress: function (progressEvent) {
+      var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
       toast(percentCompleted)
     }
   }
   axios.post('/api/upload', data, config)
     .then((rep) => {
-      cb(rep.data)
+      cb(null, rep.data)
     })
     .catch((err) => {
-      console.log('api', err)
+      cb(err)
     })
 }
 

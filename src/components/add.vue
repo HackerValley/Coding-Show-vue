@@ -91,14 +91,16 @@
     padding: 0 0 2em 0;
     overflow: hidden;
   }
-  div[class$='pool'] span.imgwrapper{
+
+  div[class$='pool'] span.imgwrapper {
     display: block;
-    float:left;
+    float: left;
     position: relative;
   }
+
   div[class$='pool'] img {
     max-width: 160px;
-    box-shadow: 0px 2px 2px 0 rgba(0,0,0,.3);
+    box-shadow: 0px 2px 2px 0 rgba(0, 0, 0, .3);
     border: none;
     border-radius: 6px;
     margin: .6em;
@@ -107,23 +109,27 @@
     cursor: pointer;
     position: relative;
   }
-  div[class$='pool'] img:hover{
+
+  div[class$='pool'] img:hover {
     max-width: 240px;
   }
 
-  div[class$='pool'] span.imgwrapper:hover::before{
+  div[class$='pool'] span.imgwrapper:hover::before {
     display: block;
-    width: 24px;height: 24px;
-    content:'x';
-    color:red;
+    width: 24px;
+    height: 24px;
+    content: 'x';
+    color: red;
     position: absolute;
-    right:5px;top:5px;
+    right: 5px;
+    top: 5px;
     text-align: center;
     line-height: 24px;
     z-index: 9;
     font-size: 24px;
     text-shadow: 0 0 1px black
   }
+
   .proj {
     overflow: hidden
   }
@@ -331,7 +337,7 @@
         console.log('尝试上传文件')
         let data = new FormData()
         data.append('attachment', this.prepare2uploadimg[0]);
-        api.upload(data, (x) => {
+        api.upload(data, (err, x) => {
           console.log(x)
           this.data.imagePath.push(x.data.pic_src)
         })
@@ -348,14 +354,14 @@
         // 不符合的格式文件不上传
         files = files.filter((file, idx) => {
           if (file && supportedTypes.indexOf(file.type) >= 0) {
-            if(file.size > 10 * 1024 * 1024) {
+            if (file.size > 10 * 1024 * 1024) {
               this.newToast({
                 type: 'danger',
                 message: `文件 ${file.name} 太大，过滤掉。${Math.floor(file.size/8192)/128}M`
               })
               return false
             }
-            if(file.size > 1024 * 1024) {
+            if (file.size > 1024 * 1024) {
               this.newToast({
                 type: 'warning',
                 message: `文件 ${file.name} 较大，上传会慢。${Math.floor(file.size/8192)/128}M`
@@ -401,12 +407,16 @@
             // console.log(x)
             // console.log(files[x])
 
-            api.upload(data, (res) => {
-              // console.log(x.data)
-              vm.data.imagePath.push(res.data.pic_src)
+            api.upload(data, (err, res) => {
               x++
+              // console.log(x.data)
+              if(err){
+                resolve(x)
+                return
+              }
+              vm.data.imagePath.push(res.data.pic_src)
               resolve(x)
-            },(toast)=>{
+            }, (toast) => {
               this.newToast({
                 type: 'info',
                 message: `当前文件已上传${toast}%`
@@ -450,7 +460,7 @@
       },
       discard(target) {
         // 舍弃上传框的东西
-        if(target === 'img'){
+        if (target === 'img') {
           this.retype = ''
           setTimeout(() => {
             this.retype = 'file'
