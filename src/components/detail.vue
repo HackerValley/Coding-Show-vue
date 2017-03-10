@@ -10,7 +10,7 @@
           <div class="panel-body">
             <p class="lead">
               项目概要：{{ content.description }}
-              <router-link :to="'/modi/' + content._id" class='btn btn-primary pull-right'>修改项目</router-link>
+              <router-link v-if='fromMine' :to="'/modi/' + content._id" class='btn btn-primary pull-right'>修改项目</router-link>
             </p>
             <p>
               项目要求：{{ content.detail }}
@@ -107,10 +107,13 @@
           url: 'http://...github.com...',
           following: 21020,
           stars: 12040,
-        }]
+        }],
+        fromMine: false
       }
     },
     beforeRouteEnter(to, from, next) {
+      console.log(from)
+      let fromMine = from.fullPath.indexOf('/usr/release') !== -1
       api.getProjDetail(to.params.id, (err, x) => {
         if (err) {
           // display some global error message
@@ -122,6 +125,7 @@
           }
           next(vm => {
             // 按照_id获取，只获取第一个。
+            vm.fromMine = fromMine
             vm.content = x.data[0]
             vm.status = x.status
             vm.msg = x.msg

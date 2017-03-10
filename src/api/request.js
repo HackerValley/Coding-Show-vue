@@ -73,12 +73,16 @@ export function getProjDetail(id = '', cb) {
  * 根据id获取项目的评论内容，
  * author: larry
  **/
-export function getProjComments(id = '', cb) {
+export function getProjComments({
+  id = '',
+  page_num = 1,
+  page_size = 10
+}, cb) {
   if (!id) {
     cb(new Error('需传入项目_id.'))
     return
   }
-  axios.get('/api/comment/' + id).then((rep) => {
+  axios.get(`/api/comment/${id}?page_num=${page_num}&page_size=${page_size}`).then((rep) => {
     cb(null, rep.data)
   }).catch(err => {
     cb(err)
@@ -201,7 +205,7 @@ export function userInfo(id, cb) {
  **/
 export function userLogin({
   logindata
-},cb) {
+}, cb) {
   // console.log({ logindata })
   if (!logindata) {
     console.log('无效数据')

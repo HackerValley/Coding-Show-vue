@@ -9,10 +9,10 @@
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          <div class="btn-group pull-right" role="group" >
-          <router-link alt='当前用户' :to="'/user/profile/' + $store.state.identity._id" class="btn btn-text">{{ this.$store.state.identity.nickname || this.$store.state.identity.username }}</router-link>
-          <button type="button" class="btn btn-info" @click='addComment' :disabled='commenting'>回复</button>
-        </div>
+          <div class="btn-group pull-right" role="group">
+            <router-link alt='当前用户' :to="'/user/profile/' + $store.state.identity._id" class="btn btn-text">{{ this.$store.state.identity.nickname || this.$store.state.identity.username }}</router-link>
+            <button type="button" class="btn btn-info" @click='addComment' :disabled='commenting'>回复</button>
+          </div>
           <u></u> &nbsp;
         </div>
       </div>
@@ -21,16 +21,18 @@
       <router-link to='/user/login' class='btn btn-text'>登入</router-link> 以评论
     </div>
     <div class="comments">
-      <div class="comment" v-for="(v, i) in comments">
-        <div class="figure">
-          <router-link :to='"/user/profile/" + v.user._id'><img data-src="holder.js/100%x180" alt="..." src="/static/assets/figure_blank_2.png"></router-link>
+      <transition-group name='b-complete'>
+        <div class="comment b-complete-item" v-for="(v, i) in comments" :key='v._id' :id='v._id'>
+          <div class="figure"><img data-src="holder.js/100%x180" alt="..." src="/static/assets/figure_blank_2.png">
+          </div>
+          <div class="context">
+            <span class="nick"><b><router-link :to='"/user/profile/" + v.user._id'>{{ v.user.nickname || v.user._id }}</router-link></b></span>
+            <span class="time text-muted">· {{ v.time | showTime }} </span>
+            <div class="content">{{ v.comment_msg }}</div>
+          </div>
         </div>
-        <div class="context">
-          <span class="nick"><b><router-link :to='"/user/profile/" + v.user._id'>{{ v.user.nickname || v.user._id }}</router-link></b></span>
-          <span class="time text-muted">· {{ v.time | showTime }} </span>
-          <div class="content">{{ v.comment_msg }}</div>
-        </div>
-      </div>
+      </transition-group>
+      <a class="btn btn-block btn-info" @click.prevent='loadmore' v-if='page_num < page_total'>加载更多</a>
     </div>
   </div>
 </template>
@@ -48,22 +50,55 @@
         wrap: {},
         comments: [],
         commentdata: '',
-        commenting: null
+        commenting: null,
+        page_num: 1,
+        page_total: 1,
+        page_size: 7,
+        record_total: 1,
       }
     },
     beforeMount() {
-      this.fetch()
+      this.init()
     },
     methods: {
-      fetch() {
+      init() {
         // console.log(this.$route.params.id)
-        api.getProjComments(this.$route.params.id, (err, x) => {
-          // console.log(x)
+        this.fetch({}, (result) => {
+          if (result) {
+            this.comments.push(...result.list)
+          }
+        })
+      },
+      fetch({
+        id,
+        page_num,
+        page_size
+      }, cb) {
+        id = id || this.$route.params.id
+        page_num = page_num || 1
+        page_size = page_size || this.page_size
+        api.getProjComments({
+          id,
+          page_num,
+          page_size
+        }, (err, x) => {
           if (err) {
-            // display some global error message
-
+            console.error('错误', err)
+            return null
           } else {
-            this.comments.push(...x.data)
+            this.page_num = x.data.page_num
+            this.page_total = x.data.page_total
+            cb(x.data)
+          }
+        })
+      },
+      loadmore() {
+        let target_page_num = this.page_num + 1
+        this.fetch({
+          page_num: target_page_num
+        }, (result) => {
+          if (result) {
+            this.comments.push(...result.list)
           }
         })
       },
@@ -99,6 +134,7 @@
             } else {
               // console.log(x)
               this.commentdata = ''
+              this.comments.pop()
               this.comments.unshift(x.date)
               this.commenting = null
             }
@@ -156,5 +192,14 @@
   .comment .context .content {
     line-height: 1.4em;
   }
-
+  .b-complete-item{
+    transition: all .3s;
+  }
+  .b-complete-enter, .b-complete-leave-active {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  .b-complete-leave-active {
+    position: absolute;width: 100%;
+  }
 </style>
