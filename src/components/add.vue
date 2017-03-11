@@ -82,7 +82,7 @@
     </div>
   </div>
 </template>
-<style>
+<style scoped>
   .fr {
     float: right
   }

@@ -4,12 +4,13 @@
     <div class="caption">
       <h4><router-link :to="'/detail/' + itemdata._id">{{ itemdata.project_name }}</router-link></h4>
       <div class="intro">
-        <p><router-link :to="'/user/profile/' + itemdata.uid"><em>{{ itemdata.uid }}</em></router-link> <br> {{ itemdata.create_time | showTime }} </p>
+        <p>{{ itemdata.create_time | showTime }} </p>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+          <router-link :to="'/detail/' + itemdata._id"><span class="glyphicon glyphicon-thumbs-up"></span></router-link>
           <span>{{ itemdata.star_count }}</span>
+          <router-link class='pull-right' :to="'/user/profile/' + itemdata.uid"><span class="glyphicon glyphicon-user"></span></router-link>
         </div>
       </div>
     </div>
@@ -53,7 +54,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
   .item {
     overflow: hidden;
     box-sizing: border-box;

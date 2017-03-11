@@ -186,7 +186,7 @@
   }
 
 </script>
-<style>
+<style scoped>
   .partake .panel-body span {
     display: inline-block;
     padding-right: .6em;
@@ -212,5 +212,9 @@
   .imgpool img {
     max-width: 320px;
   }
-
+@media screen and ( max-width:576px ) {
+  .imgpool img {
+    max-width: 100%;
+  }
+}
 </style>
