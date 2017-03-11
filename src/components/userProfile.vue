@@ -1,44 +1,47 @@
 <template>
   <div>
     <div class="row">
-      <h2>信息  -  {{ userdata.nickname }}<span class="fr"><small><router-link to="/">返回首页</router-link></small></span></h2>
+      <h2>信息 - {{ userdata.nickname || userdata.username }}<span class="fr"><small><router-link to="/">返回首页</router-link></small></span></h2>
       <hr>
     </div>
-    <div class="row">
-      <div class="col-xs-10 col-xs-offset-1">
-        <dl>
-          <dt>头像</dt>
-          <dd>
-            <img class='figure' v-if='userdata.avatar' :src="userdata.avatar" alt="userdata.nickname">
-          </dd>
-          <dd v-if='!userdata.avatar'>
-            {{ userdata.avatar }}
-          </dd>
-          <dt>昵称</dt>
-          <dd>{{ userdata.nickname }}</dd>
-          <dt>用户名</dt>
-          <dd>{{ userdata.username }}</dd>
-        </dl>
-        <dl v-if="!publish">
-          <dt>id</dt>
-          <dd>{{ userdata._id }}</dd>
-          <dt>邮箱</dt>
-          <dd>{{ userdata.email }}</dd>
-          <dt>技能</dt>
-          <dd>{{ userdata.skill }}</dd>
-          <dt>最后一次登录时间</dt>
-          <dd>{{ userdata.last_login_time }}</dd>
-          <dt>创建时间</dt>
-          <dd>{{ userdata.create_time }}</dd>
-          <dt>账号绑定</dt>
-          <dd>{{ userdata.sns_id }}</dd>
-          <dt>第三方登陆类型</dt>
-          <dd>{{ userdata.sns_type }}</dd>
-          <dt>电话</dt>
-          <dd>{{ userdata.telephone }}</dd>
-          <dt>等级</dt>
-          <dd>{{ userdata.level }}</dd>
-        </dl>
+    <div class="row profile">
+      <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
+        <div class="row">
+          <div class="col-xs-12 text-center public">
+            <div class="col-xs-5">
+              <img class='figure' v-if='userdata.avatar' :src="userdata.avatar" alt="userdata.nickname">
+            </div>
+            <div class="col-xs-7 meta">昵称 {{ userdata.nickname }}</div>
+            <div class="col-xs-7 meta">用户名 {{ userdata.username }}</div>
+            <div class="col-xs-7 meta">等级 {{ userdata.level }}</div>
+          </div>
+          <div class="col-xs-10 col-xs-offset-1">
+            技能 {{ userdata.skill }}
+          </div>
+        </div>
+        <div class="row" v-if="!publish">
+          <div class="col-xs-10 col-xs-offset-1">
+            id {{ userdata._id }}
+          </div>
+          <div class="col-xs-10 col-xs-offset-1">
+            邮箱 {{ userdata.email }}
+          </div>
+          <div class="col-xs-10 col-xs-offset-1">
+            电话 {{ userdata.telephone }}
+          </div>
+          <div class="col-xs-10 col-xs-offset-1">
+            账号绑定 {{ userdata.sns_id }}
+          </div>
+          <div class="col-xs-10 col-xs-offset-1">
+            第三方登陆类型 {{ userdata.sns_type }}
+          </div>
+          <div class="col-xs-10 col-xs-offset-1">
+            最后一次登录时间 {{ userdata.last_login_time | showTime }}
+          </div>
+          <div class="col-xs-10 col-xs-offset-1">
+            创建时间 {{ userdata.create_time | showTime }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -47,11 +50,24 @@
   dd {
     margin-left: 3em;
   }
-  img.figure{
-    max-width: 360px;
+
+  img.figure {
+    max-width: 100%;
     border-radius: 2px;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.3)
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .3)
   }
+
+  .profile .meta {
+    line-height: 3em
+  }
+  .profile .public {
+    padding-bottom: 2em
+  }
+  @media screen and ( max-width:576px ) {
+  .profile .meta {
+    line-height: 2em
+  }
+}
 </style>
 <script>
   import * as api from '../api/request'
@@ -63,7 +79,7 @@
         this.getUserInfo(this.$route.params.id)
         this.publish = true
       } else {
-        this.getLoginInfo()
+        // this.getLoginInfo()
         this.publish = false
       }
     },
@@ -124,6 +140,12 @@
             this.userdata = x.data
           }
         })
+      }
+    },
+    filters: {
+      showTime: function (value) {
+        if (!value) return ''
+        return new Date(value).toLocaleString()
       }
     }
   }
