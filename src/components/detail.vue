@@ -152,7 +152,7 @@
             console.error('api catch', err)
             this.newToast({
               type: 'danger',
-              message: '一时赞不上'
+              message: '未登录'
             })
           } else {
             console.log('success', x)
