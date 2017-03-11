@@ -29,7 +29,6 @@
             </p>
             <hr>
           </div>
-          <comment></comment>
         </div>
       </div>
       <div class="col-sm-4">
@@ -75,6 +74,13 @@
                 <span class="stars"><i class="glyphicon glyphicon-star"></i> {{ item.stars }}</span>
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <comment></comment>
           </div>
         </div>
       </div>
@@ -163,9 +169,9 @@
             this.content.star_count += 1
           }
           // 1200ms 后点赞按钮启用
-          setTimeout(()=>{
+          setTimeout(() => {
             this.disables.splice(this.disables.indexOf('likes'), 1)
-          },1200)
+          }, 1200)
         })
       },
       partake() {
@@ -212,9 +218,11 @@
   .imgpool img {
     max-width: 320px;
   }
-@media screen and ( max-width:576px ) {
-  .imgpool img {
-    max-width: 100%;
+
+  @media screen and ( max-width:576px) {
+    .imgpool img {
+      max-width: 100%;
+    }
   }
-}
+
 </style>
