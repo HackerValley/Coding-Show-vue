@@ -77,9 +77,9 @@
       // 渲染页面之前，获取登录信息，如果获取不到，说明不是合法的登陆状态，进行登出操作
       if (this.$route.params.id) {
         this.getUserInfo(this.$route.params.id)
-        this.publish = true
+        this.publish = false
       } else {
-        // this.getLoginInfo()
+        this.getLoginInfo()
         this.publish = false
       }
     },
