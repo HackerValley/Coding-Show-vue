@@ -271,3 +271,19 @@ export function thumbup(data, cb) {
       cb(err)
     })
 }
+
+/*
+ * 参与开发
+ *  */
+export function join(data, cb) {
+  // console.log('点赞')
+  // TODO 节流
+  // console.log(data)
+  axios.post('/api/developers', data)
+    .then((reponse) => {
+      cb(null, reponse.data)
+    })
+    .catch((err) => {
+      cb(err)
+    })
+}

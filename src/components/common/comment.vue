@@ -111,6 +111,12 @@
         })
       },
       addComment() {
+        if(!this.$store.state.authed){
+          return this.newToast({
+            type:'danger',
+            message: '请先登录'
+          })
+        }
         let comment_msg = this.commentdata
         let p_id = this.$route.params.id
         if (comment_msg.length < 4) {

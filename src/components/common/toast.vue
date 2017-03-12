@@ -1,7 +1,7 @@
 <template>
   <transition-group name='a-complete'>
     <div :class="'alert-' + toast.type" class="alert alert-dismissible a-complete-item" role="alert" :key='toast.id' v-for='(toast,idx) in allToasts'>
-      <strong>.</strong> {{ toast.message }}.
+      <strong></strong> {{ toast.message }}
     </div>
   </transition-group>
 </template>
@@ -42,7 +42,7 @@ export default {
 <style>
 /**/
 
-.row.tip{ 
+.row.tip{
   position: fixed;
   top:15%;
   width: 35%;

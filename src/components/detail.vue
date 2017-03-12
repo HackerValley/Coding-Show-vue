@@ -46,19 +46,19 @@
           </div>
           <div class="panel-body">
             <span>
-              <input type="radio" name="partake" id="frontend" value="frontend" v-model='partake'>
+              <input type="radio" name="partake" id="frontend" value="1" v-model='partake'>
               <label for="frontend">前端</label>
             </span><span>
-              <input type="radio" name="partake" id="backend" value="backend" v-model='partake'>
+              <input type="radio" name="partake" id="backend" value="2" v-model='partake'>
               <label for="backend">后端</label>
             </span><span>
-              <input type="radio" name="partake" id="android" value="android" v-model='partake'>
+              <input type="radio" name="partake" id="android" value="3" v-model='partake'>
               <label for="android">安卓</label>
             </span><span>
-              <input type="radio" name="partake" id="ios" value="ios" v-model='partake'>
+              <input type="radio" name="partake" id="ios" value="4" v-model='partake'>
               <label for="ios">iOS</label>
             </span>
-            <a class="btn btn-default" :class="{disabled: !partake}" @click.prevent='partake'><span class="glyphicon glyphicon-link"></span> 参与</a>
+            <a class="btn btn-default" :class="{disabled: (!partake || !$store.state.authed)}" @click.prevent='join'><span class="glyphicon glyphicon-link"></span> 参与</a> <span v-if='partake && !$store.state.authed' class="text-muted small">未登录</span>
           </div>
         </div>
         <div class="panel panel-default" v-show='false'>
@@ -102,6 +102,7 @@
         status: null,
         msg: null,
         partake: null, // 参与开发
+        partaking: false, // 参与开发按钮
         disables: [],
         works: [{
           name: '作品1',
@@ -174,7 +175,41 @@
           }, 1200)
         })
       },
-      partake() {
+      join() {
+        if(!this.$store.state.authed){
+          return this.newToast({
+            type:'danger',
+            message: '请先登录'
+          })
+        }
+        let postdata = {
+          pid: this.$route.params.id,
+          develop_skills : this.partake
+        }
+        console.log(postdata)
+        api.join(postdata, (err,x)=>{
+          if(err){
+            return console.error(err)
+          } else {
+            console.log(x)
+            if (typeof x === 'string' && x[0] === '<') {
+              this.newToast({
+                type:'warning',
+                message:'未登录'
+              })
+            } else if(x.status === 0){
+              this.newToast({
+                type:'success',
+                message:'已参与'
+              })
+            }else{
+              this.newToast({
+                type:'info',
+                message: x.msg
+              })
+            }
+          }
+        })
         console.log('参与 + ')
       }
     },
